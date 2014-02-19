@@ -1,0 +1,123 @@
+﻿body {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1.38;
+}
+
+.friend-chat {
+    display: block;
+    cursor: pointer;
+}
+
+    .friend-chat:hover {
+        background-color: #84c1e5;
+    }
+
+
+#list-chat {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    /*width: 80%;*/
+    /*height: 400px;*/
+    background-color: #b6ff00;
+}
+
+.window-chat {
+    height: 285px;
+    width: 260px;
+    /*background-color: #808080;*/
+    float: right;
+    margin-left: 3px;
+    position: relative;
+    /*top: 50px;*/
+    z-index: 9999;
+    /*bottom: 3px;*/
+}
+
+.window-chat-header {
+    background-color: #7D91BC;
+    height: 22px;
+    margin-bottom: 0;
+    color: #ffffff;
+}
+
+.window-chat-body {
+    margin-top: 0;
+    /*width: 234px;*/
+    height: 232px;
+    overflow-y: scroll;
+    background-color: #EDEFF4;
+}
+
+    .window-chat-body p {
+        width: inherit;
+        word-wrap: break-word;
+    }
+
+        .window-chat-body p a {
+            word-wrap: break-word;
+        }
+
+.msg {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    max-width: 170px;
+    padding: 10px;
+    position: relative;
+}
+
+.msg-curent-user {
+    margin-left: 5px;
+    background: #ffffff;
+    border-color: #ffffff;
+    border-radius: 20px 25px;
+}
+
+    .msg-curent-user:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 20px;
+        border-top: 20px solid #ffffff;
+        border-top-color: inherit;
+        border-left: 0.1px solid transparent;
+        border-right: 15px solid transparent;
+    }
+
+.msg-friend {
+    margin-right: 5px;
+    margin-left: auto;
+    background: #fba5ca;
+    border-color: #fba5ca;
+    border-radius: 25px 20px;
+}
+
+    .msg-friend:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: 20px;
+        border-top: 20px solid #fba5ca;
+        border-top-color: inherit;
+        border-left: 15px solid transparent;
+        border-right: 0.1px solid transparent;
+    }
+
+
+
+.window-chat-footer {
+    border: none;
+}
+
+    .window-chat-footer input {
+        border: 1px solid #c9d0da;
+        width: 260px;
+        height: 40px;
+        padding: 2px;
+    }
+
+        .window-chat-footer input:focus {
+            outline: none;
+        }
