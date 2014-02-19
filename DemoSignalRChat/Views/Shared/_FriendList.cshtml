@@ -1,0 +1,8 @@
+﻿@using DemoSignalRChat.ViewModels
+@model IEnumerable<UserViewModel>
+<ul>
+    @foreach (UserViewModel u in Model)
+    {
+        <li class="friend-chat" data-userName="@u.UserName" id="@u.UserId">@u.UserName</li>
+    }
+</ul>
