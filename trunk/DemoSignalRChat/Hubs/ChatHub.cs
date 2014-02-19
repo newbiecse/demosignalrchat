@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Microsoft.AspNet.SignalR;
 using DemoSignalRChat.Models;
 using DemoSignalRChat.DAL;
@@ -9,93 +7,101 @@ using Microsoft.Ajax.Utilities;
 using DemoSignalRChat.ViewModels;
 using System.Threading.Tasks;
 
+
 namespace DemoSignalRChat.Hubs
 {
     public class ChatHub : Hub
     {
         #region members
 
-        static List<User> ConnectedUsers = new List<User>();
-        static List<MessageDetail> CurrentMessage = new List<MessageDetail>();
+        static List<UserChatViewModel> ConnectedUsers = new List<UserChatViewModel>();
 
-        ApplicationDbContext db = new ApplicationDbContext();
-        User _curUser;
-        List<string> _friendIdList;
-        List<UserChatViewModel> _friendListOnline = new List<UserChatViewModel>();
-        //List<string> _connectedIdList;
+        ApplicationDbContext _db = new ApplicationDbContext();
+        UserChatViewModel _curUser;
+        List<string> _friendListId;
+        List<UserChatViewModel> _friendListConnected = new List<UserChatViewModel>();
 
         #endregion
 
+        /// <summary>
+        /// des:    get current user in ConnectedUsers
+        /// </summary>
         public void SetCurUser()
         {
-            // find current user in ConnectedUsers
-            this._curUser = ConnectedUsers.Find(u => u.ConnectionID == Context.ConnectionId);
-            this._curUser.UserName = this.db.Users.Single(u => u.Id == this._curUser.Id).UserName;
+            // find current
+            this._curUser = ConnectedUsers.Find(u => u.ConnectionId == Context.ConnectionId);
         }
 
-        public User GetUserById(string userId)
+        /// <summary>
+        /// des:    get User Chat when knew userId
+        /// goal:   find connectionId of user retrieve in private message
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public UserChatViewModel GetUserById(string userId)
         {
-            //var App = (User)this.db.Users.ToList().Find(u => u.Id == userId);
-            var appUser = this.db.Users.Single(u => u.Id == userId);
-
-            var user = new User { Id = appUser.Id, UserName = appUser.UserName };
-
-            var uConnected = ConnectedUsers.Find(u => u.Id == user.Id);
-
-            if (uConnected != null)
-            {
-                user.ConnectionID = uConnected.ConnectionID;
-            }
-            return user;
+             return ConnectedUsers.Find(u => u.UserId == userId);
         }
         
+        /// <summary>
+        /// des: find friend list of current user
+        /// </summary>
         public void SetFriendIdList()
         {
             // get friend list of current user
-            var listFriend_1 = from f in this.db.Friends
-                               where f.FriendId == this._curUser.Id
+            var listFriend_1 = from f in this._db.Friends
+                               where f.FriendId == this._curUser.UserId
                                select f.UserId;
 
-            var listFriend_2 = from f in this.db.Friends
-                               where f.UserId == this._curUser.Id
+            var listFriend_2 = from f in this._db.Friends
+                               where f.UserId == this._curUser.UserId
                                select f.FriendId;
 
-            this._friendIdList = listFriend_1.Union(listFriend_2).Distinct().ToList();
+            this._friendListId = listFriend_1.Union(listFriend_2).Distinct().ToList();
         }
        
+        /// <summary>
+        /// des:    get friend list ONLINE of current user
+        /// </summary>
         public void SetFriendListOnline()
         {
-            this._friendListOnline = (from u in ConnectedUsers
-                                      where this._friendIdList.Contains(u.Id)
-                                      select new UserChatViewModel { UserId = u.Id, ConnectionId = u.ConnectionID }).ToList();
+            this._friendListConnected = (from u in ConnectedUsers
+                                      where this._friendListId.Contains(u.UserId)
+                                      select new UserChatViewModel { UserId = u.UserId, ConnectionId = u.ConnectionId }).ToList();
         }
 
+        /// <summary>
+        /// des:    invoke some nessecery method
+        /// </summary>
         public void init()
         {
             this.SetCurUser();
             this.SetFriendIdList();
-            //this.SetConnectedIdList();
             this.SetFriendListOnline();
         }
 
-        public void Connect(string userID)
+        /// <summary>
+        /// des:    connect chat hub
+        /// </summary>
+        /// <param name="userId">userId connect</param>
+        public void Connect(string userId)
         {
-            var id = Context.ConnectionId;
+            var curConnectionId = Context.ConnectionId;
 
-            if (ConnectedUsers.Count(x => x.ConnectionID == id) == 0)
+            if (ConnectedUsers.Count(x => x.ConnectionId == curConnectionId) == 0)
             {
-                ConnectedUsers.Add(new User { ConnectionID = id, Id = userID });
+                ConnectedUsers.Add(new UserChatViewModel { ConnectionId = curConnectionId, UserId = userId });
 
                 this.init();
 
-                var tFriendIdListOnline = (from f in this._friendListOnline
+                var friendListId_Online = (from f in this._friendListConnected
                                            select f.UserId).ToList();
 
                 // send to all except caller client
-                Clients.AllExcept(id).onNewUserConnected(userID);
+                Clients.AllExcept(curConnectionId).onNewUserConnected(userId);
 
                 // send to caller
-                Clients.Caller.onConnected(tFriendIdListOnline);
+                Clients.Caller.onConnected(friendListId_Online);
             }
         }
 
@@ -105,40 +111,36 @@ namespace DemoSignalRChat.Hubs
 
             this.init();
 
-            var tFriendIdListOnline = (from f in this._friendListOnline
+            var friendListId_Online = (from f in this._friendListConnected
                                        select f.UserId).ToList();
 
-            // send to all except caller client
-            var tConnectionIdListOnline = (from f in this._friendListOnline
+            // send to all friend list online
+            var friendListConnectionId = (from f in this._friendListConnected
                                            select f.ConnectionId).ToList();
 
-            ConnectedUsers.Remove(ConnectedUsers.Where(u => u.ConnectionID == id).Single());
+            ConnectedUsers.Remove(ConnectedUsers.Where(u => u.ConnectionId == id).Single());
 
-            Clients.Clients(tConnectionIdListOnline).signOut(this._curUser.Id);
-            
-            // Add your own code here.
-            // For example: in a chat application, mark the user as offline, 
-            // delete the association between the current connection id and user name.
+            Clients.Clients(friendListConnectionId).signOut(this._curUser.UserId);
             return base.OnDisconnected();
         }
 
         public void TurnOffChat()
         {
-                var id = Context.ConnectionId;
+                var curConnectionId = Context.ConnectionId;
 
                 this.init();
 
-                var tFriendIdListOnline = (from f in this._friendListOnline
+                var tFriendIdListOnline = (from f in this._friendListConnected
                                            select f.UserId).ToList();
 
                 // send to caller
                 Clients.Caller.onConnected(tFriendIdListOnline);
 
                 // Broad cast message to friend list
-                var fListConnectionId = (from f in this._friendListOnline
+                var fListConnectionId = (from f in this._friendListConnected
                                            select f.ConnectionId).ToList();
 
-                Clients.Clients(fListConnectionId).offLine(this._curUser.Id);
+                Clients.Clients(fListConnectionId).offLine(this._curUser.UserId);
         }
 
         public void SendMessageToAll(string userName, string message)
@@ -146,16 +148,22 @@ namespace DemoSignalRChat.Hubs
             this.init();
 
             // store message to database
-            this.db.StatusMessages.Add(new StatusMessage { UserId = this._curUser.Id, Message = message });
-            this.db.SaveChanges();
+            this._db.StatusMessages.Add(new StatusMessage { UserId = this._curUser.UserId, Message = message });
+            this._db.SaveChanges();
 
-            var fListConnectionId = (from f in this._friendListOnline
+            var friendListConnectionId = (from f in this._friendListConnected
                                      select f.ConnectionId).ToList();
 
             // Broad cast message to friend list
-            Clients.Clients(fListConnectionId).messageReceived(userName, message);
+            Clients.Clients(friendListConnectionId).messageReceived(userName, message);
         }
 
+
+        /// <summary>
+        /// des:    sent message chat
+        /// </summary>
+        /// <param name="userRetrieved_Id"></param>
+        /// <param name="message"></param>
         public void SendPrivateMessage(string userRetrieved_Id, string message)
         {
             this.init();
@@ -163,16 +171,13 @@ namespace DemoSignalRChat.Hubs
             var fromUser = this.GetUserById(userRetrieved_Id);
 
             // store message to database
-            this.db.PrivateMessages.Add(new PrivateMessage { UserSent_Id = this._curUser.Id, UserRetrieved_Id = userRetrieved_Id, Content = message });
-            db.SaveChanges();
+            this._db.PrivateMessages.Add(new PrivateMessage { UserSent_Id = this._curUser.UserId, UserRetrieved_Id = userRetrieved_Id, Content = message });
+            _db.SaveChanges();
 
-            /*
-             * Broad cast message to friend
-             */
-            // friend is online
-            if (fromUser.ConnectionID != null)
+            // friend online
+            if (fromUser.ConnectionId != null)
             {
-                Clients.Client(fromUser.ConnectionID).privateMessageReceived(this._curUser.Id, message);
+                Clients.Client(fromUser.ConnectionId).privateMessageReceived(this._curUser.UserId, message);
             }
         }
 

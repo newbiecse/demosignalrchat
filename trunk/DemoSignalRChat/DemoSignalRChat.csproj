@@ -245,6 +245,10 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DemoSignalRChat.mdf" />
+    <Content Include="App_Data\DemoSignalRChat_log.ldf">
+      <DependentUpon>DemoSignalRChat.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\myStyle.css" />
@@ -312,9 +316,7 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201402080702412_init.resx">
       <DependentUpon>201402080702412_init.cs</DependentUpon>
