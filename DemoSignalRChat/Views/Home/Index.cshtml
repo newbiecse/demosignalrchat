@@ -76,10 +76,10 @@ Link:
             /****************************************CHAT-CLIENT*******************************************************/
 
             // Create a function that the hub can call back to display messages.
-            chat.client.messageReceived = function (userName, message) {
+            chat.client.messageReceived = function (userName, src) {
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + userName
-                    + '</strong>: ' + message + '</li>');
+                    + '</strong>: ' + "<img src='" + src + "' />" + '</li>');
             };
 
             /*

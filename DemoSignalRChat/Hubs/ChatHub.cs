@@ -6,6 +6,11 @@ using DemoSignalRChat.DAL;
 using Microsoft.Ajax.Utilities;
 using DemoSignalRChat.ViewModels;
 using System.Threading.Tasks;
+using System.Net;
+using NSoup.Nodes;
+using NSoup.Select;
+using DemoSignalRChat.Preview;
+using System;
 
 
 namespace DemoSignalRChat.Hubs
@@ -154,8 +159,39 @@ namespace DemoSignalRChat.Hubs
             var friendListConnectionId = (from f in this._friendListConnected
                                      select f.ConnectionId).ToList();
 
+            string src;
+
+            using (var client = new WebClient())
+            { 
+                //client.DownloadData
+                string html = client.DownloadString(message);
+                Document doc = NSoup.NSoupClient.Parse(html);
+
+                Elements imgs = doc.Select("img");
+
+                List<Img> images = new List<Img>();
+                foreach (var i in imgs)
+                {
+                    string imgWidth = i.Attr("Width");
+                    int width = 0;
+                    Int32.TryParse(imgWidth, out width);
+
+                    string imgHeight = i.Attr("Height");
+                    int height = 0;
+                    Int32.TryParse(imgHeight, out height);
+
+                    images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
+                }
+
+                List<Img> imagesSorted = (from i in images
+                                          select i).OrderByDescending(i => i.Height * i.Width).ToList();
+
+                src = imagesSorted.First().Src;
+            }
+
             // Broad cast message to friend list
-            Clients.Clients(friendListConnectionId).messageReceived(userName, message);
+            friendListConnectionId.Add(Context.ConnectionId);
+            Clients.Clients(friendListConnectionId).messageReceived(userName, src);
         }
 
 
