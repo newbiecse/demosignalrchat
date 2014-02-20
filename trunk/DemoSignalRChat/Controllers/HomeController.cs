@@ -67,7 +67,7 @@ namespace DemoSignalRChat.Controllers
 
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public JsonResult PostLink(string Content)
         {
             var client = new WebClient();
