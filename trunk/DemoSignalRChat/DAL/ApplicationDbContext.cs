@@ -17,7 +17,6 @@ namespace DemoSignalRChat.DAL
         }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<StatusMessage> StatusMessages { get; set; }
-        public DbSet<StatusLink> StatusLinks { get; set; }
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -46,15 +45,6 @@ namespace DemoSignalRChat.DAL
             modelBuilder.Entity<StatusMessage>()
                 .HasRequired<ApplicationUser>(s => s.User)
                 .WithMany(u => u.StatusMessageList)
-                .HasForeignKey(s => s.UserId)
-                .WillCascadeOnDelete(true);
-            #endregion
-
-            #region config-relation user-statusLink
-            // one-to-many
-            modelBuilder.Entity<StatusLink>()
-                .HasRequired<ApplicationUser>(s => s.User)
-                .WithMany(u => u.StatusLinkList)
                 .HasForeignKey(s => s.UserId)
                 .WillCascadeOnDelete(true);
             #endregion
