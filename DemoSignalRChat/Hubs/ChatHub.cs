@@ -146,7 +146,7 @@ namespace DemoSignalRChat.Hubs
                 var fListConnectionId = (from f in this._friendListConnected
                                            select f.ConnectionId).ToList();
 
-                Clients.Clients(fListConnectionId).offLine(this._curUser.UserId);
+                Clients.Clients(fListConnectionId).offChat(this._curUser.UserId);
         }
 
         public void SendMessageToAll(string userName, string message)
@@ -204,6 +204,15 @@ namespace DemoSignalRChat.Hubs
                         images.Add(new Img(i.Attr("height"), i.Attr("width"), i.Attr("src")));
                     }
                     src = Img.GetSrcLargetestImage(images);
+
+                    if(string.IsNullOrEmpty(src))
+                    {
+                        var EleIcons = doc.Select("link[rel=icon]");
+                        if(EleIcons.Count > 0)
+                        {
+                            src = EleIcons.First.Attr("href");
+                        }
+                    }
                 }
             }
 
