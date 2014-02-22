@@ -11,6 +11,7 @@ using NSoup.Nodes;
 using NSoup.Select;
 using DemoSignalRChat.Preview;
 using System;
+using System.Text;
 
 
 namespace DemoSignalRChat.Hubs
@@ -159,39 +160,54 @@ namespace DemoSignalRChat.Hubs
             var friendListConnectionId = (from f in this._friendListConnected
                                      select f.ConnectionId).ToList();
 
-            string src;
-
-            using (var client = new WebClient())
-            { 
-                //client.DownloadData
-                string html = client.DownloadString(message);
-                Document doc = NSoup.NSoupClient.Parse(html);
-
-                Elements imgs = doc.Select("img");
-
-                List<Img> images = new List<Img>();
-                foreach (var i in imgs)
-                {
-                    string imgWidth = i.Attr("Width");
-                    int width = 0;
-                    Int32.TryParse(imgWidth, out width);
-
-                    string imgHeight = i.Attr("Height");
-                    int height = 0;
-                    Int32.TryParse(imgHeight, out height);
-
-                    images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
-                }
-
-                List<Img> imagesSorted = (from i in images
-                                          select i).OrderByDescending(i => i.Height * i.Width).ToList();
-
-                src = imagesSorted.First().Src;
-            }
-
             // Broad cast message to friend list
             friendListConnectionId.Add(Context.ConnectionId);
-            Clients.Clients(friendListConnectionId).messageReceived(userName, src);
+
+
+            string title = "";
+            string description = "";
+            string src = "";
+            string url = "";
+
+            var link = new Link(message) ;
+            if(!string.IsNullOrEmpty(link.Url))
+            {
+                url = link.Url;
+                using (var client = new WebClient())
+                { 
+                    //client.DownloadData
+                    client.Encoding = Encoding.UTF8;
+                    string html = client.DownloadString(url);
+                    Document doc = NSoup.NSoupClient.Parse(html);
+
+                    // get title
+                    title = doc.Select("title").First.Text();               
+
+                    // get description
+                    if (doc.Select("meta[name=description]") != null)
+                    {
+                        if (doc.Select("meta[name=description]").First != null)
+                        { 
+                            description = doc.Select("meta[name=description]").First.Attr("content");
+                            if (string.IsNullOrEmpty(description))
+                            {
+                                description = title;
+                            }
+                        }
+                    }
+                
+                    // get image
+                    Elements imgs = doc.Select("img");
+                    List<Img> images = new List<Img>();
+                    foreach (var i in imgs)
+                    {
+                        images.Add(new Img(i.Attr("height"), i.Attr("width"), i.Attr("src")));
+                    }
+                    src = Img.GetSrcLargetestImage(images);
+                }
+            }
+
+            Clients.Clients(friendListConnectionId).messageReceived(userName, src, title, description);
         }
 
 

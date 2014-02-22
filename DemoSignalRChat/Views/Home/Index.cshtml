@@ -18,12 +18,12 @@ Link:
     <div class="col-md-10">
 
         <div class="row">
-            @foreach (Img i in ViewBag.imgSrcs)
+            @*@foreach (Img i in ViewBag.imgSrcs)
             {
                 <h2>width: @i.Width - height: @i.Height</h2>
                 <img src="@i.Src" />
                 <br />
-            }
+            }*@
         </div>
 
         <div class="row">
@@ -76,10 +76,10 @@ Link:
             /****************************************CHAT-CLIENT*******************************************************/
 
             // Create a function that the hub can call back to display messages.
-            chat.client.messageReceived = function (userName, src) {
+            chat.client.messageReceived = function (userName, src, title, decription) {
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + userName
-                    + '</strong>: ' + "<img src='" + src + "' />" + '</li>');
+                    + '</strong>: ' + "<img src='" + src + "' />" + "title: " + title + "<br />Decription: " + decription + '</li>');
             };
 
             /*

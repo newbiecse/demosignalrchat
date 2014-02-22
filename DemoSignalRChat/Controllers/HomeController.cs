@@ -31,30 +31,30 @@ namespace DemoSignalRChat.Controllers
             var friendList = new FriendListViewModel(user.UserId);
             ViewBag.FriendList = friendList.FriendList;
 
-            var client = new WebClient();
-            string html = client.DownloadString("http://www.aao.hcmut.edu.vn/");
-            Document doc = NSoup.NSoupClient.Parse(html);
+            //var client = new WebClient();
+            //string html = client.DownloadString("http://www.aao.hcmut.edu.vn/");
+            //Document doc = NSoup.NSoupClient.Parse(html);
 
-            Elements imgs = doc.Select("img");
+            //Elements imgs = doc.Select("img");
 
-            List<Img> images = new List<Img>();
-            foreach (var i in imgs)
-            {
-                string imgWidth = i.Attr("Width");
-                int width = 0;
-                Int32.TryParse(imgWidth, out width);
+            //List<Img> images = new List<Img>();
+            //foreach (var i in imgs)
+            //{
+            //    string imgWidth = i.Attr("Width");
+            //    int width = 0;
+            //    Int32.TryParse(imgWidth, out width);
 
-                string imgHeight = i.Attr("Height");
-                int height = 0;
-                Int32.TryParse(imgHeight, out height);
+            //    string imgHeight = i.Attr("Height");
+            //    int height = 0;
+            //    Int32.TryParse(imgHeight, out height);
 
-                images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
-            }
+            //    images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
+            //}
 
-            List<Img> imagesSorted = (from i in images
-                                      select i).OrderByDescending(i => i.Height * i.Width).ToList();
+            //List<Img> imagesSorted = (from i in images
+            //                          select i).OrderByDescending(i => i.Height * i.Width).ToList();
 
-            ViewBag.imgSrcs = imagesSorted;
+            //ViewBag.imgSrcs = imagesSorted;
 
             //Document doc = NSoup.NSoupClient.Parse(responseString);
             //string imgSrc = doc.Select("");
@@ -70,34 +70,26 @@ namespace DemoSignalRChat.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult PostLink(string Content)
         {
-            var client = new WebClient();
-            //client.DownloadData
-            string html = client.DownloadString(Content);
-            Document doc = NSoup.NSoupClient.Parse(html);
+            //var client = new WebClient();
+            ////client.DownloadData
+            //string html = client.DownloadString(Content);
+            //Document doc = NSoup.NSoupClient.Parse(html);
 
-            Elements imgs = doc.Select("img");
+            //Elements imgs = doc.Select("img");
 
-            List<Img> images = new List<Img>();
-            foreach (var i in imgs)
-            {
-                string imgWidth = i.Attr("Width");
-                int width = 0;
-                Int32.TryParse(imgWidth, out width);
+            //List<Img> images = new List<Img>();
+            //foreach (var i in imgs)
+            //{
+            //    images.Add(new Img(i.Attr("Height"), i.Attr("Width"), i.Attr("src")));
+            //}
 
-                string imgHeight = i.Attr("Height");
-                int height = 0;
-                Int32.TryParse(imgHeight, out height);
+            //List<Img> imagesSorted = (from i in images
+            //                          select i).OrderByDescending(i => i.Height * i.Width).ToList();
 
-                images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
-            }
-
-            List<Img> imagesSorted = (from i in images
-                                      select i).OrderByDescending(i => i.Height * i.Width).ToList();
-
-            var src = imagesSorted.First().Src;
+            //var src = imagesSorted.First().Src;
 
             //return Json(src, JsonRequestBehavior.AllowGet);
-            return Json(src);
+            return Json("");
         }
 
         public ActionResult About()

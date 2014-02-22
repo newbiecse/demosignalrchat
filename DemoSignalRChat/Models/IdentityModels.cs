@@ -14,7 +14,6 @@ namespace DemoSignalRChat.Models
         public virtual ICollection<Friend> FriendList { get; set; }
         public virtual ICollection<Friend> UserList { get; set; }
         public virtual ICollection<StatusMessage> StatusMessageList { get; set; }
-        public virtual ICollection<StatusLink> StatusLinkList { get; set; }
         public virtual ICollection<StatusImage> StatusImageList { get; set; }
         public virtual ICollection<PrivateMessage> PrivateMessageList_Sent { get; set; }
         public virtual ICollection<PrivateMessage> PrivateMessageList_Retrieved { get; set; }

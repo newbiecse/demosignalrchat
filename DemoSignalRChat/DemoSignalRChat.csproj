@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201402080901051_add-location-to-status.Designer.cs">
       <DependentUpon>201402080901051_add-location-to-status.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402230205246_delete-status-link.cs" />
+    <Compile Include="Migrations\201402230205246_delete-status-link.Designer.cs">
+      <DependentUpon>201402230205246_delete-status-link.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Friend.cs" />
@@ -235,10 +239,10 @@
     <Compile Include="Models\MessageDetail.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\StatusImage.cs" />
-    <Compile Include="Models\StatusLink.cs" />
     <Compile Include="Models\StatusMessage.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Preview\Img.cs" />
+    <Compile Include="Preview\Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\FriendListViewModel.cs" />
@@ -362,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201402080901051_add-location-to-status.resx">
       <DependentUpon>201402080901051_add-location-to-status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402230205246_delete-status-link.resx">
+      <DependentUpon>201402230205246_delete-status-link.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
