@@ -10,6 +10,7 @@ using NSoup.Select;
 using DemoSignalRChat.Preview;
 using System;
 using System.Linq;
+using System.IO;
 
 namespace DemoSignalRChat.Controllers
 {
@@ -17,6 +18,9 @@ namespace DemoSignalRChat.Controllers
     public class HomeController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
+
+        
+
         public ActionResult Index()
         {
             // get current user
@@ -31,39 +35,39 @@ namespace DemoSignalRChat.Controllers
             var friendList = new FriendListViewModel(user.UserId);
             ViewBag.FriendList = friendList.FriendList;
 
-            //var client = new WebClient();
-            //string html = client.DownloadString("http://www.aao.hcmut.edu.vn/");
-            //Document doc = NSoup.NSoupClient.Parse(html);
-
-            //Elements imgs = doc.Select("img");
-
-            //List<Img> images = new List<Img>();
-            //foreach (var i in imgs)
-            //{
-            //    string imgWidth = i.Attr("Width");
-            //    int width = 0;
-            //    Int32.TryParse(imgWidth, out width);
-
-            //    string imgHeight = i.Attr("Height");
-            //    int height = 0;
-            //    Int32.TryParse(imgHeight, out height);
-
-            //    images.Add(new Img { Src = i.Attr("src"), Width = width, Height = height });
-            //}
-
-            //List<Img> imagesSorted = (from i in images
-            //                          select i).OrderByDescending(i => i.Height * i.Width).ToList();
-
-            //ViewBag.imgSrcs = imagesSorted;
-
-            //Document doc = NSoup.NSoupClient.Parse(responseString);
-            //string imgSrc = doc.Select("");
-
-            //int x = 9;
-
-
             return View(user);
         }
+
+        //[HttpPost]
+        public ActionResult Upload()
+        {
+            // get current user
+            string curUserId = User.Identity.GetUserId();
+
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    // create folder for user if it doesn't exist
+                    var pathExist = Server.MapPath(@"~/Uploads/Users/" + curUserId + "/Post/Images");
+                    if (!System.IO.Directory.Exists(pathExist))
+                    {
+                        System.IO.Directory.CreateDirectory(pathExist);
+                    }
+
+
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(pathExist, string.Format(@"{0}-{1}", Guid.NewGuid(), fileName));
+                    file.SaveAs(path);
+                }
+            }
+
+            return null;
+        }
+
 
 
         [HttpPost]
