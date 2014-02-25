@@ -12,7 +12,7 @@ namespace DemoSignalRChat.Models
         {
             this.TimePost = DateTime.Now;
         }
-        public int Id { get; set; }
+        public string Id { get; set; }
         public DateTime TimePost { get; set; }
         public string Location { get; set; }
 

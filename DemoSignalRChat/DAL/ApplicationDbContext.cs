@@ -17,6 +17,7 @@ namespace DemoSignalRChat.DAL
         }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<StatusMessage> StatusMessages { get; set; }
+        public DbSet<StatusImage> StatusImages { get; set; }
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
