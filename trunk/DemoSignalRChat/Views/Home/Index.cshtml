@@ -32,15 +32,19 @@ Link:
             <ul id="discussion"></ul>
         </div>
 
-        <hr />
+        <h1>Upload image</h1>
 
-        <div class="row">
-            UserId: <input type="text" id="txt_userId" /><br />
-
-            Message: <input type="text" id="txt_prvmessage" />
-            <input type="button" id="send_prvmessage" value="Send private message" />
-            <ul id="private_discussion"></ul><!--\#private_discussion-->
+        <div id="formupload" class="row">
+            <div id="images">
+            </div>
+            <div class="browse-wrap">
+                <div class="title">Choose image</div>
+                <input type="file" name="etlfileToUpload" class="etlfileToUpload" title="Choose image" />
+            </div>
         </div>
+        <input type="button" id="btn-ajax-upload" value="ajax-upload" />
+        <span id="uploading"></span>
+
     </div>
     <div class="col-md-2">
         @Html.Partial("_FriendList", (List<UserViewModel>)ViewBag.FriendList)
@@ -113,6 +117,94 @@ Link:
 
             });// end submit
         });// end ready
+
+    </script>
+
+
+    @* upload image *@
+    <script>
+        $("#btn-ajax-upload").click(function () {
+            UploadFile();
+        });
+    </script>
+
+    <script>
+        function readURLAjax(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#images").append("<img src='" + e.target.result + "' />");
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+    <script>
+        $("#formupload").on("change", ".etlfileToUpload", function () {
+            readURLAjax(this);
+            //alert($(this).attr("class"));
+            $(".browse-wrap").append("<input type='file' name='etlfileToUpload' class='etlfileToUpload' />");
+            $(this).hide('fast');
+        });
+    </script>
+
+    <script>
+            // Call this function on upload button click after user has selected the file
+            function UploadFile() {
+                var eles = document.getElementsByClassName('etlfileToUpload');
+
+                //for(var i = 0; i < eles.length; i++)
+                //{
+                //    console.log(eles[i].files[0]);
+                //}
+
+                //console.log(files);
+
+                for(var i = 0; i < eles.length; i++)
+                {
+                    var file = eles[i].files[0]
+
+                    //var fileName = file.name;
+                    var fd = new FormData();
+                    fd.append("fileData", file);
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) { UploadProgress(evt); }, false);
+                    xhr.addEventListener("load", function (evt) { UploadComplete(evt); }, false);
+                    xhr.addEventListener("error", function (evt) { UploadFailed(evt); }, false);
+                    xhr.addEventListener("abort", function (evt) { UploadCanceled(evt); }, false);
+                    xhr.open("POST", "@Url.Action("Upload","Home")", true);
+                        xhr.send(fd);
+                }
+            }
+
+
+            function UploadProgress(evt) {
+                if (evt.lengthComputable) {
+
+                    var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                    while (percentComplete < 100)
+                    {
+                        UploadProgress(evt);
+                    }
+                    $("#uploading").text(percentComplete + "% ");
+                }
+            }
+
+            function UploadComplete(evt) {
+                if (evt.target.status == 200)
+                    //alert(evt.target.responseText);
+                    console.log("complete");
+                else {
+                    alert("Error Uploading File");
+                }
+            }
+
+            function UploadFailed(evt) {
+                alert("There was an error attempting to upload the file.");
+            }
 
     </script>
 }
