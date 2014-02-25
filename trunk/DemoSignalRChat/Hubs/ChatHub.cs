@@ -22,6 +22,8 @@ namespace DemoSignalRChat.Hubs
 
         static List<UserChatViewModel> ConnectedUsers = new List<UserChatViewModel>();
 
+        private IStatusMessageRepository _statusMessageRepository;
+
         ApplicationDbContext _db = new ApplicationDbContext();
         UserChatViewModel _curUser;
         List<string> _friendListId;
@@ -154,8 +156,8 @@ namespace DemoSignalRChat.Hubs
             this.init();
 
             // store message to database
-            this._db.StatusMessages.Add(new StatusMessage { UserId = this._curUser.UserId, Message = message });
-            this._db.SaveChanges();
+            this._statusMessageRepository.InsertStatusMessage(new StatusMessage { UserId = this._curUser.UserId, Message = message });
+            this._statusMessageRepository.Save();
 
             var friendListConnectionId = (from f in this._friendListConnected
                                      select f.ConnectionId).ToList();

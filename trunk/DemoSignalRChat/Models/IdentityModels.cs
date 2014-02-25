@@ -11,6 +11,8 @@ namespace DemoSignalRChat.Models
     {
         public int Sex { get; set; }
 
+        public string Avatar { get; set; }
+
         public virtual ICollection<Friend> FriendList { get; set; }
         public virtual ICollection<Friend> UserList { get; set; }
         public virtual ICollection<StatusMessage> StatusMessageList { get; set; }
