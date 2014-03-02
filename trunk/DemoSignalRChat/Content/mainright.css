@@ -1,0 +1,30 @@
+﻿#main-right {
+    background-color: #FFFFFF;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+}
+
+#chat-list{
+    padding: 5px;
+}
+
+.img28x28 {
+    width: 28px;
+    height: 28px;
+}
+
+.new {
+    padding: 5px 5px 10px 5px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.user-chat {
+    display: block;
+    width: 205px;
+    height: 32px;
+    cursor: pointer;
+}
+
+    .user-chat:hover {
+        background-color: #E5E5E5;
+    }

@@ -6,12 +6,13 @@ using System.Web;
 
 namespace DemoSignalRChat.Models
 {
-    public class StatusImage
+    public class StatusLocation
     {
-        public string ImageId { get; set; }
+        //[Key]
         public string StatusId { get; set; }
         public virtual Status Status { get; set; }
 
-        public string Image { get; set; }
+
+        public string Location { get; set; }
     }
 }

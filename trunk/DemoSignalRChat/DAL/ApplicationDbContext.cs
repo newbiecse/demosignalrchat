@@ -16,9 +16,14 @@ namespace DemoSignalRChat.DAL
             //public DbSet<ApplicationUser> Users { get; set; }
         }
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<Status> Status { get; set; }
         public DbSet<StatusMessage> StatusMessages { get; set; }
+        public DbSet<StatusLocation> StatusLocations { get; set; }
         public DbSet<StatusImage> StatusImages { get; set; }
         public DbSet<PrivateMessage> PrivateMessages { get; set; }
+
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Share> Shares { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,21 +48,66 @@ namespace DemoSignalRChat.DAL
 
             #region config-relation user-statusMessage
             // one-to-many Friend
-            modelBuilder.Entity<StatusMessage>()
+            modelBuilder.Entity<Status>()
                 .HasRequired<ApplicationUser>(s => s.User)
-                .WithMany(u => u.StatusMessageList)
+                .WithMany(u => u.StatusList)
                 .HasForeignKey(s => s.UserId)
                 .WillCascadeOnDelete(true);
             #endregion
 
-            #region config-relation user-statusImage
-            // one-to-many
-            modelBuilder.Entity<StatusImage>()
-                .HasRequired<ApplicationUser>(s => s.User)
-                .WithMany(u => u.StatusImageList)
-                .HasForeignKey(s => s.UserId)
+
+            modelBuilder.Entity<StatusMessage>()
+                .HasKey(msg => msg.StatusId)
+                .HasRequired<Status>(msg => msg.Status)
+                .WithRequiredDependent(s => s.StatusMessage)
+                //.WithRequiredPrincipal(s => s.StatusMessage)
+                //.HasForeignKey(msg => msg.StatusId)
                 .WillCascadeOnDelete(true);
-            #endregion
+
+            modelBuilder.Entity<StatusLocation>()
+                .HasKey(loc => loc.StatusId)
+                .HasRequired<Status>(loc => loc.Status)
+                .WithRequiredDependent(s => s.StatusLocation)
+                //.WithRequiredPrincipal(s => s.StatusMessage)
+                //.HasForeignKey(msg => msg.StatusId)
+                .WillCascadeOnDelete(true);
+
+
+            modelBuilder.Entity<StatusImage>()
+                .HasKey(img => img.ImageId)
+                .HasRequired<Status>(img => img.Status)
+                .WithMany(s => s.StatusImages)
+                .HasForeignKey(img => img.StatusId)
+                .WillCascadeOnDelete(true);
+
+
+            modelBuilder.Entity<Like>()
+                .HasKey(l => new{ l.UserId , l.StatusId})
+                .HasRequired<Status>(l => l.Status)
+                .WithMany(s => s.Likes)
+                .HasForeignKey(l => l.StatusId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Like>()
+                .HasRequired<ApplicationUser>(l => l.User)
+                .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.UserId)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Share>()
+                .HasKey(l => new { l.UserId, l.StatusId })
+                .HasRequired<Status>(l => l.Status)
+                .WithMany(s => s.Shares)
+                .HasForeignKey(l => l.StatusId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Share>()
+                .HasRequired<ApplicationUser>(l => l.User)
+                .WithMany(u => u.Shares)
+                .HasForeignKey(l => l.UserId)
+                .WillCascadeOnDelete(false);
+
 
 
             #region config-relation user-privateMessage

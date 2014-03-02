@@ -1,7 +1,25 @@
 ﻿body{
-    background-color: #E5E5E5;
+    background-color: #ffffff;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1.38;
+    /*font-size: 11px !important;
+    font-family: Arial !important;
+    line-height: 1.38;*/
 }
 
 #main{
     padding-top: 10px;
+    margin-left: 40px;
+    margin-right: 1px;
 }
+
+a.peple-name{
+    font-weight: bold;
+}
+
+/*div{
+    border-style: solid;
+    border-color: #eeeeee;
+    border-width: 1px;
+}*/
