@@ -153,72 +153,72 @@ namespace DemoSignalRChat.Hubs
 
         public void SendMessageToAll(string userName, string message)
         {
-            this.init();
+            //this.init();
 
-            // store message to database
-            this._statusMessageRepository.InsertStatusMessage(new StatusMessage { UserId = this._curUser.UserId, Message = message });
-            this._statusMessageRepository.Save();
+            //// store message to database
+            //this._statusMessageRepository.InsertStatusMessage(new StatusMessage { UserId = this._curUser.UserId, Message = message });
+            //this._statusMessageRepository.Save();
 
-            var friendListConnectionId = (from f in this._friendListConnected
-                                     select f.ConnectionId).ToList();
+            //var friendListConnectionId = (from f in this._friendListConnected
+            //                         select f.ConnectionId).ToList();
 
-            // Broad cast message to friend list
-            friendListConnectionId.Add(Context.ConnectionId);
+            //// Broad cast message to friend list
+            //friendListConnectionId.Add(Context.ConnectionId);
 
 
-            string title = "";
-            string description = "";
-            string src = "";
-            string url = "";
+            //string title = "";
+            //string description = "";
+            //string src = "";
+            //string url = "";
 
-            var link = new Link(message) ;
-            if(!string.IsNullOrEmpty(link.Url))
-            {
-                url = link.Url;
-                using (var client = new WebClient())
-                { 
-                    //client.DownloadData
-                    client.Encoding = Encoding.UTF8;
-                    string html = client.DownloadString(url);
-                    Document doc = NSoup.NSoupClient.Parse(html);
+            //var link = new Link(message) ;
+            //if(!string.IsNullOrEmpty(link.Url))
+            //{
+            //    url = link.Url;
+            //    using (var client = new WebClient())
+            //    { 
+            //        //client.DownloadData
+            //        client.Encoding = Encoding.UTF8;
+            //        string html = client.DownloadString(url);
+            //        Document doc = NSoup.NSoupClient.Parse(html);
 
-                    // get title
-                    title = doc.Select("title").First.Text();               
+            //        // get title
+            //        title = doc.Select("title").First.Text();               
 
-                    // get description
-                    if (doc.Select("meta[name=description]") != null)
-                    {
-                        if (doc.Select("meta[name=description]").First != null)
-                        { 
-                            description = doc.Select("meta[name=description]").First.Attr("content");
-                            if (string.IsNullOrEmpty(description))
-                            {
-                                description = title;
-                            }
-                        }
-                    }
+            //        // get description
+            //        if (doc.Select("meta[name=description]") != null)
+            //        {
+            //            if (doc.Select("meta[name=description]").First != null)
+            //            { 
+            //                description = doc.Select("meta[name=description]").First.Attr("content");
+            //                if (string.IsNullOrEmpty(description))
+            //                {
+            //                    description = title;
+            //                }
+            //            }
+            //        }
                 
-                    // get image
-                    Elements imgs = doc.Select("img");
-                    List<Img> images = new List<Img>();
-                    foreach (var i in imgs)
-                    {
-                        images.Add(new Img(i.Attr("height"), i.Attr("width"), i.Attr("src")));
-                    }
-                    src = Img.GetSrcLargetestImage(images);
+            //        // get image
+            //        Elements imgs = doc.Select("img");
+            //        List<Img> images = new List<Img>();
+            //        foreach (var i in imgs)
+            //        {
+            //            images.Add(new Img(i.Attr("height"), i.Attr("width"), i.Attr("src")));
+            //        }
+            //        src = Img.GetSrcLargetestImage(images);
 
-                    if(string.IsNullOrEmpty(src))
-                    {
-                        var EleIcons = doc.Select("link[rel=icon]");
-                        if(EleIcons.Count > 0)
-                        {
-                            src = EleIcons.First.Attr("href");
-                        }
-                    }
-                }
-            }
+            //        if(string.IsNullOrEmpty(src))
+            //        {
+            //            var EleIcons = doc.Select("link[rel=icon]");
+            //            if(EleIcons.Count > 0)
+            //            {
+            //                src = EleIcons.First.Attr("href");
+            //            }
+            //        }
+            //    }
+            //}
 
-            Clients.Clients(friendListConnectionId).messageReceived(userName, src, title, description);
+            //Clients.Clients(friendListConnectionId).messageReceived(userName, src, title, description);
         }
 
 

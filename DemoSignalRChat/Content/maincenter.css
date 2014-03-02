@@ -1,0 +1,33 @@
+﻿#suggest-friends{
+    background-color: #ffffff;
+}
+
+.float-left{
+    float: left;
+}
+
+.clear-both{
+    clear: both;
+}
+
+.img50x50{
+    width: 50px;
+    height: 50px;
+}
+
+.suggest-friend{
+    border-bottom: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+}
+
+.sf-info, .sf-image{
+    margin: 5px;
+}
+
+/*.sf-info, .sf-image{
+    margin: 30px;
+}*/
+
+.suggest-friend a{
+    display: block;
+}

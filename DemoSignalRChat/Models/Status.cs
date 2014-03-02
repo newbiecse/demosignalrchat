@@ -12,11 +12,17 @@ namespace DemoSignalRChat.Models
         {
             this.TimePost = DateTime.Now;
         }
-        public string Id { get; set; }
+        public string StatusId { get; set; }
         public DateTime TimePost { get; set; }
-        public string Location { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        public virtual StatusLocation StatusLocation { get; set; }
+        public virtual StatusMessage StatusMessage { get; set; }
+        public virtual ICollection<StatusImage> StatusImages { get; set; }
+
+        public virtual ICollection<Like> Likes { get; set; }
+        public virtual ICollection<Share> Shares { get; set; }
     }
 }
