@@ -1,4 +1,7 @@
-﻿    <div id="groups" class="col-md-2">
+﻿@using DemoSignalRChat.ViewModels
+@model UserViewModel
+
+    <div id="groups" class="col-md-2">
         <h3>Favorites</h3>
         <p><a>Lap trinh c#</a></p>
         <p><a>Make money online</a></p>
@@ -25,13 +28,11 @@
             @Html.Partial("_News")
         </div>
         <div class="row">
-            @Html.Partial("_ChatList")
+            @Html.Partial("_ChatList", ViewData["friendList"])
         </div>
     </div><!--\#main-right-->
 
-    <div id="window-chat-list">
-
-    </div>
+    <div id="window-chat-list"></div>
 
 @section Scripts{
 

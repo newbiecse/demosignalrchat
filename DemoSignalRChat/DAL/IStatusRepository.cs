@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace DemoSignalRChat.DAL
 {
-    interface IStatusMessageRepository : IDisposable
+    interface IStatusRepository : IDisposable
     {
         IEnumerable<StatusMessage> GetStatusMessages();
         StatusMessage GetStatusMessageByID(string statusId);
-        void InsertStatusMessage(StatusMessage statusMessage);
+
+
+        void AddStatus(Status status);
+        void AddStatusLocation(StatusLocation statusLocation);
+        void AddStatusImage(StatusImage statusImage);
+        void AddStatusMessage(StatusMessage statusMessage);
+
+
         void DeleteStatusMessage(int statusId);
         void UpdateStatusMessage(StatusMessage statusMessage);
         void Save();

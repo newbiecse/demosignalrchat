@@ -21,7 +21,7 @@ $(".friend-chat").click(function () {
             + "    </div>"
             + "</div>";
 
-        $("#list-chat").append(strNewWindowChat);
+        $("#window-chat-list").append(strNewWindowChat);
     } // end doesn't exist
     else {
         alert("Already existing :)");
