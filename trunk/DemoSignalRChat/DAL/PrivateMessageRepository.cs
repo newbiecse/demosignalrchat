@@ -25,6 +25,7 @@ namespace DemoSignalRChat.DAL
         public void InsertPrivateMessage(PrivateMessage privateMessage)
         {
             this._db.PrivateMessages.Add(privateMessage);
+            this.Save();
         }
 
         public void Save()

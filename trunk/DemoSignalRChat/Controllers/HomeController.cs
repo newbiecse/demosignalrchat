@@ -17,25 +17,25 @@ namespace DemoSignalRChat.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
-
-        
+        IFriendRepository _friendRepository;
+        IUserRepository _userRepository;
+        ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         public ActionResult Index()
         {
             // get current user
             string curUserId = User.Identity.GetUserId();
+            this._userRepository = new UserRepository(_dbContext);
+            var curUser = this._userRepository.GetUserById(curUserId);
 
-            ApplicationUser tUser = db.Users.Find(curUserId);
+            // get fiendlist
+            this._friendRepository = new FriendRepository(_dbContext);
+            var friendList = this._friendRepository.GetFriendList(curUserId);
 
-            //ApplicationUser tUser = (ApplicationUser)Session["user"];
-            var user = new UserViewModel { UserId = tUser.Id, UserName = tUser.UserName };
+            // store friendlist
+            ViewData["friendList"] = friendList;
 
-            // get friend list
-            var friendList = new FriendListViewModel(user.UserId);
-            ViewBag.FriendList = friendList.FriendList;
-
-            return View(user);
+            return View(curUser);
         }
 
         //[HttpPost]

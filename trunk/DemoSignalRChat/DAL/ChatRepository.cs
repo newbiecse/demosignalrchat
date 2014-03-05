@@ -43,6 +43,23 @@ namespace DemoSignalRChat.DAL
                     .ToList();
         }
 
+        public List<string> GetFriendListId_Online(List<UserChatViewModel> friendListOnline)
+        {
+            return (from f in friendListOnline
+                    select f.UserId).ToList();
+        }
+
+        public List<string> GetFriendList_ConnectionId(List<UserChatViewModel> friendListOnline)
+        {
+            return (from f in friendListOnline
+                    select f.ConnectionId).ToList();
+        }
+
+        public void RemoveUserConnected(List<UserChatViewModel> connectedUsers, UserChatViewModel user)
+        {
+            connectedUsers.Remove(user);
+        }
+
         private bool disposed = false;
  
         protected virtual void Dispose(bool disposing)

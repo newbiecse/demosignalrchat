@@ -1,19 +1,12 @@
-﻿<div id="chat-list">
-        <div class="user-chat">
-            <img class="img28x28" src="~/Uploads/Users/backham.jpg" />
-            <span>Bạn Thằng Tèo</span>
+﻿@using DemoSignalRChat.ViewModels
+@model IEnumerable<UserViewModel>
+<div id="chat-list">
+    @foreach (UserViewModel f in Model)
+    {
+        <div id="@f.UserId" class="user-chat friend-chat" data-username="@f.UserName">
+            <img class="img28x28" src="@f.Avatar" />
+            <span>@f.UserName</span>
         </div>
-        <div class="user-chat">
-            <img class="img28x28" src="~/Uploads/Users/backham.jpg" />
-            <span>Bạn Thằng Tèo</span>
-        </div>
-        <div class="user-chat">
-            <img class="img28x28" src="~/Uploads/Users/backham.jpg" />
-            <span>Bạn Thằng Tèo</span>
-        </div>
-        <div class="user-chat">
-            <img class="img28x28" src="~/Uploads/Users/backham.jpg" />
-            <span>Bạn Thằng Tèo</span>
-        </div>
+    }
 </div>
 

@@ -7,10 +7,10 @@ using System.Web;
 
 namespace DemoSignalRChat.DAL
 {
-    public class StatusMessageRepository : IStatusMessageRepository
+    public class StatusRepository : IStatusRepository
     {
         private ApplicationDbContext _db;
-        public StatusMessageRepository(ApplicationDbContext dbContext)
+        public StatusRepository(ApplicationDbContext dbContext)
         {
             this._db = dbContext;
         }
@@ -24,11 +24,28 @@ namespace DemoSignalRChat.DAL
             return this._db.StatusMessages.Find(statusId);
         }
 
-        public void InsertStatusMessage(StatusMessage statusMessage)
+        //--------------------------------------------//--------------------------------------------
+        public void AddStatus(Status status)
+        {
+            this._db.Status.Add(status);
+            this.Save();
+        }
+        public void AddStatusLocation(StatusLocation statusLocation)
+        {
+            this._db.StatusLocations.Add(statusLocation);
+            this.Save();
+        }
+        public void AddStatusImage(StatusImage statusImage)
+        {
+            this._db.StatusImages.Add(statusImage);
+            this.Save();
+        }
+        public void AddStatusMessage(StatusMessage statusMessage)
         {
             this._db.StatusMessages.Add(statusMessage);
+            this.Save();
         }
-
+        //--------------------------------------------//--------------------------------------------
         public void DeleteStatusMessage(int statusId)
         {
             StatusMessage statusMessage = this._db.StatusMessages.Find(statusId);
