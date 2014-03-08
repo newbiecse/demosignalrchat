@@ -18,7 +18,9 @@ namespace DemoSignalRChat.DAL
 
         public UserChatViewModel GetUserByConnectionId(List<UserChatViewModel> connectedUsers, string connectionId)
         {
-            return connectedUsers.Find(u => u.ConnectionId == connectionId);
+            var userId = connectedUsers.Find(u => u.ConnectionId == connectionId).UserId;
+            var userName = _db.Users.Find(userId).UserName;
+            return new UserChatViewModel { ConnectionId = connectionId, UserId = userId, UserName = userName };
         }
 
         public UserChatViewModel GetUserByUserId(List<UserChatViewModel> connectedUsers, string userId)

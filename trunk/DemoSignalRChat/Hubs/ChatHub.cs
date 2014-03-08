@@ -12,6 +12,7 @@ using NSoup.Select;
 using DemoSignalRChat.Preview;
 using System;
 using System.Text;
+using DemoSignalRChat.ProcessPreData;
 
 
 namespace DemoSignalRChat.Hubs
@@ -24,9 +25,11 @@ namespace DemoSignalRChat.Hubs
         IFriendRepository _friendRepository;
         IChatRepository _chatRepository;
         IPrivateMessageRepository _privateMessageRepository;
+        IStatusRepository _statusRepository;
         
         List<string> _friendListId;
-        List<UserChatViewModel> _friendListConnected = new List<UserChatViewModel>();
+        List<UserChatViewModel> _friendListOnline;
+        List<string> _friendListConnectionId_Online;
 
         string _curConnectionId;
         UserChatViewModel _curUser;
@@ -42,6 +45,7 @@ namespace DemoSignalRChat.Hubs
             this._chatRepository = new ChatRepository(this._dbContext);
             this._friendRepository = new FriendRepository(this._dbContext);
             this._privateMessageRepository = new PrivateMessageRepository(this._dbContext);
+            this._statusRepository = new StatusRepository(this._dbContext);
 
             // get current connectionId
             this._curConnectionId = this.Context.ConnectionId;
@@ -53,7 +57,10 @@ namespace DemoSignalRChat.Hubs
             this._friendListId = this._friendRepository.GetFriendListId(this._curUser.UserId).ToList();
 
             // get friendListOnline
-            this._friendListConnected = this._chatRepository.GetFriendListOnline(ConnectedUsers, this._friendListId, this._curUser.UserId);
+            this._friendListOnline = this._chatRepository.GetFriendListOnline(ConnectedUsers, this._friendListId, this._curUser.UserId);
+
+            // get friendListConnectionId
+            this._friendListConnectionId_Online = this._chatRepository.GetFriendList_ConnectionId(this._friendListOnline);
         }
         
 
@@ -78,7 +85,7 @@ namespace DemoSignalRChat.Hubs
                 Clients.AllExcept(this._curConnectionId).onNewUserConnected(userId);
 
                 // send to friend list online
-                var friendListId_OnLine = this._chatRepository.GetFriendListId_Online(this._friendListConnected);
+                var friendListId_OnLine = this._chatRepository.GetFriendListId_Online(this._friendListOnline);
                 Clients.Caller.onConnected(friendListId_OnLine);
             }
         }
@@ -88,10 +95,10 @@ namespace DemoSignalRChat.Hubs
             this.Init();
 
             // get friend list id online
-            var friendListId_OnLine = this._chatRepository.GetFriendListId_Online(this._friendListConnected);
+            var friendListId_OnLine = this._chatRepository.GetFriendListId_Online(this._friendListOnline);
 
             // send to all friend list online
-            var friendList_connectionID = this._chatRepository.GetFriendList_ConnectionId(this._friendListConnected);
+            var friendList_connectionID = this._chatRepository.GetFriendList_ConnectionId(this._friendListOnline);
 
             // remove current user
             this._chatRepository.RemoveUserConnected(ConnectedUsers, this._curUser);
@@ -107,87 +114,43 @@ namespace DemoSignalRChat.Hubs
 
                 this.Init();
 
-                var tFriendIdListOnline = (from f in this._friendListConnected
+                var tFriendIdListOnline = (from f in this._friendListOnline
                                            select f.UserId).ToList();
 
                 // send to caller
                 Clients.Caller.onConnected(tFriendIdListOnline);
 
                 // Broad cast message to friend list
-                var fListConnectionId = (from f in this._friendListConnected
+                var fListConnectionId = (from f in this._friendListOnline
                                            select f.ConnectionId).ToList();
 
                 Clients.Clients(fListConnectionId).offChat(this._curUser.UserId);
         }
 
-        public void SendMessageToAll(string userName, string message)
+        public void SendMessageToAll(string message, string location)
         {
             this.Init();
 
-            //// store message to database
-            //this._statusMessageRepository.InsertStatusMessage(new StatusMessage { UserId = this._curUser.UserId, Message = message });
-            //this._statusMessageRepository.Save();
+            var statusId = GeneratorGUID.CreateGuid();
 
-            //var friendListConnectionId = (from f in this._friendListConnected
-            //                         select f.ConnectionId).ToList();
+            Status status = new Status{StatusId = statusId, UserId = this._curUser.UserId};
+            this._statusRepository.AddStatus(status);
+            
+            if(location != null)
+            {
+                StatusLocation sttLocation = new StatusLocation { StatusId = statusId, Location = location.ToString() };
+                this._statusRepository.AddStatusLocation(sttLocation);
+            }
 
-            //// Broad cast message to friend list
-            //friendListConnectionId.Add(Context.ConnectionId);
+
+            message = ProcessMessage.ProcessMessageStatus(this._curUser, message);
+
+            // broadcast
+            var clientMessage = this._friendListConnectionId_Online;
+            clientMessage.Add(this._curUser.ConnectionId);
 
 
-            //string title = "";
-            //string description = "";
-            //string src = "";
-            //string url = "";
-
-            //var link = new Link(message) ;
-            //if(!string.IsNullOrEmpty(link.Url))
-            //{
-            //    url = link.Url;
-            //    using (var client = new WebClient())
-            //    { 
-            //        //client.DownloadData
-            //        client.Encoding = Encoding.UTF8;
-            //        string html = client.DownloadString(url);
-            //        Document doc = NSoup.NSoupClient.Parse(html);
-
-            //        // get title
-            //        title = doc.Select("title").First.Text();               
-
-            //        // get description
-            //        if (doc.Select("meta[name=description]") != null)
-            //        {
-            //            if (doc.Select("meta[name=description]").First != null)
-            //            { 
-            //                description = doc.Select("meta[name=description]").First.Attr("content");
-            //                if (string.IsNullOrEmpty(description))
-            //                {
-            //                    description = title;
-            //                }
-            //            }
-            //        }
-                
-            //        // get image
-            //        Elements imgs = doc.Select("img");
-            //        List<Img> images = new List<Img>();
-            //        foreach (var i in imgs)
-            //        {
-            //            images.Add(new Img(i.Attr("height"), i.Attr("width"), i.Attr("src")));
-            //        }
-            //        src = Img.GetSrcLargetestImage(images);
-
-            //        if(string.IsNullOrEmpty(src))
-            //        {
-            //            var EleIcons = doc.Select("link[rel=icon]");
-            //            if(EleIcons.Count > 0)
-            //            {
-            //                src = EleIcons.First.Attr("href");
-            //            }
-            //        }
-            //    }
-            //}
-
-            //Clients.Clients(friendListConnectionId).messageReceived(userName, src, title, description);
+            Clients.Clients(clientMessage).messageReceived(this._curUser.UserName, message);
         }
 
 
