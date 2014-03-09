@@ -11,10 +11,10 @@ namespace DemoSignalRChat.Preview
 {
     public class LinkPreview
     {
-        string title = "";
-        string description = "";
-        string src = "";
-        string url = "";
+        public string title = "";
+        public string description = "";
+        public string src = "";
+        public string url = "";
 
         public LinkPreview GetFirstLinkPreView(string message)
         {

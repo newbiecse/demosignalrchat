@@ -7,7 +7,15 @@ namespace DemoSignalRChat.ViewModels
 {
     public class StatusViewModel
     {
-        //public int Id { get; set; }
-        public string Content { get; set; }
+        public string StatusId { get; set; }
+        public DateTime TimePost { get; set; }
+        public string Location { get; set; }
+        public string Message { get; set; }
+        public IEnumerable<string> Images { get; set; }
+        public UserViewModel UserOwner { get; set; }
+        public IEnumerable<UserViewModel> ListUserLiked { get; set; }
+        public List<UserViewModel> ListUserShared { get; set; }
+        public IEnumerable<CommentViewModel> ListCommented { get; set; }
+        public bool IsLiked { get; set; }
     }
 }

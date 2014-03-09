@@ -7,13 +7,13 @@ namespace DemoSignalRChat.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class AddLikeTable : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLikeTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201403020749297_Add-Like-Table"; }
+            get { return "201403100130535_init"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,4 +1,5 @@
 ﻿using DemoSignalRChat.Models;
+using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,15 +15,87 @@ namespace DemoSignalRChat.DAL
         {
             this._db = dbContext;
         }
-        public IEnumerable<StatusMessage> GetStatusMessages()
+
+        public IEnumerable<string> GetListStatusId(string userId)
         {
-            return this._db.StatusMessages.ToList();
+            return this._db.Status
+                .OrderByDescending(stt => stt.StatusId)
+                .Take(10)
+                .Select(stt => stt.StatusId);
         }
 
-        public StatusMessage GetStatusMessageByID(string statusId)
+        public IEnumerable<string> GetListStatusIdNewest(string userId)
         {
-            return this._db.StatusMessages.Find(statusId);
+            IFriendRepository friendRepository = new FriendRepository(this._db);
+            var friendAndMe_UserId = friendRepository.GetFriendListId(userId);
+
+            friendAndMe_UserId.ToList().Add(userId);
+
+            List<string> listStatusIdNewest = new List<string>();
+            foreach(var id in friendAndMe_UserId)
+            {
+                var listStatusId = this.GetListStatusId(id);
+                listStatusIdNewest.AddRange(listStatusId);
+            }
+
+            return listStatusIdNewest.OrderByDescending(p => p)
+                .Take(5);
         }
+
+        public Status GetStatusByStatusId(string statusId)
+        {
+            return this._db.Status.Find(statusId);
+        }
+
+        public StatusViewModel GetStatusViewModelByStatusId(string statusId)
+        {
+            Status status = this.GetStatusByStatusId(statusId);
+            IStatusLocationRepository sttLocation = new StatusLocationRepository(this._db);
+            IStatusMessageRepository sttMessageRepository = new StatusMessageRepository(this._db);
+            IStatusImageRepository sttImageRepository = new StatusImageRepository(this._db);
+            IUserRepository userRepository = new UserRepository(this._db);
+            ILikeRepository likeRepository = new LikeRepository(this._db);
+            IShareRepository shareRepository = new ShareRepository(this._db);
+            ICommentRepository commentRepository = new CommentRepository(this._db);
+
+            var statusViewModel = new
+                StatusViewModel
+                {
+                    StatusId = statusId,
+                    TimePost = status.TimePost,
+                    Location = sttLocation.GetLocationForStatus(statusId),
+                    Message = sttMessageRepository.GetMessageByStatusId(statusId),
+                    Images = sttImageRepository.GetListImage(statusId),
+                    UserOwner = userRepository.GetUserById(status.UserId),
+                    ListUserLiked = likeRepository.GetListUserLiked(statusId),
+                    ListCommented = commentRepository.GetCommentForStatus(statusId)
+                };
+            return null;
+        }
+
+        public IEnumerable<StatusViewModel>  GetListStatusNewest(string userId)
+        {
+            var listStatusIdNewest = this.GetListStatusIdNewest(userId);
+
+            List<StatusViewModel> listStatusNewest = new List<StatusViewModel>();
+
+            foreach(string statusId in listStatusIdNewest)
+            {
+                var statusNewest = this.GetStatusViewModelByStatusId(statusId);
+                listStatusNewest.Add(statusNewest);
+            }
+
+            return listStatusNewest;
+        }
+
+        public List<Status> GetMoreListStatus(string userId, DateTime TimePost)
+        {
+            return this._db.Status.Where(stt => stt.UserId == userId && stt.TimePost > TimePost)
+                .OrderByDescending(stt => stt.TimePost)
+                .Take(3).ToList();
+        }
+
+
 
         //--------------------------------------------//--------------------------------------------
         public void AddStatus(Status status)
