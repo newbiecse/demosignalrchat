@@ -19,6 +19,7 @@ namespace DemoSignalRChat.Controllers
     {
         IFriendRepository _friendRepository;
         IUserRepository _userRepository;
+        IStatusRepository _statusRepository;
         ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         public ActionResult Index()
@@ -34,6 +35,10 @@ namespace DemoSignalRChat.Controllers
 
             // store friendlist
             ViewData["friendList"] = friendList;
+
+            // get status newest
+            this._statusRepository = new StatusRepository(this._dbContext);
+            var listStatusNewest = this._statusRepository.GetListStatusNewest(curUserId);
 
             return View(curUser);
         }

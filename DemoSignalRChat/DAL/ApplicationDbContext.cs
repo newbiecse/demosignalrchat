@@ -24,6 +24,8 @@ namespace DemoSignalRChat.DAL
 
         public DbSet<Like> Likes { get; set; }
         public DbSet<Share> Shares { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<LikeComment> LikeComments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -86,7 +88,7 @@ namespace DemoSignalRChat.DAL
                 .HasRequired<Status>(l => l.Status)
                 .WithMany(s => s.Likes)
                 .HasForeignKey(l => l.StatusId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Like>()
                 .HasRequired<ApplicationUser>(l => l.User)
@@ -100,7 +102,7 @@ namespace DemoSignalRChat.DAL
                 .HasRequired<Status>(l => l.Status)
                 .WithMany(s => s.Shares)
                 .HasForeignKey(l => l.StatusId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Share>()
                 .HasRequired<ApplicationUser>(l => l.User)
@@ -108,6 +110,31 @@ namespace DemoSignalRChat.DAL
                 .HasForeignKey(l => l.UserId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Comment>()
+                .HasRequired<ApplicationUser>(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Comment>()
+                .HasRequired<Status>(c => c.Status)
+                .WithMany(s => s.Comments)
+                .HasForeignKey(s => s.StatusId)
+                .WillCascadeOnDelete(true);
+
+
+            modelBuilder.Entity<LikeComment>()
+                .HasKey(lc => new { lc.UserId, lc.CommentId })
+                .HasRequired<Comment>(l => l.Comment)
+                .WithMany(c => c.LikeComments)
+                .HasForeignKey(lc => lc.CommentId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<LikeComment>()
+                .HasRequired<ApplicationUser>(lc => lc.User)
+                .WithMany(u => u.LikeComments)
+                .HasForeignKey(lc => lc.UserId)
+                .WillCascadeOnDelete(false);
 
 
             #region config-relation user-privateMessage

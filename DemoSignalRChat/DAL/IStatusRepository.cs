@@ -1,4 +1,5 @@
 ﻿using DemoSignalRChat.Models;
+using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,12 @@ namespace DemoSignalRChat.DAL
 {
     interface IStatusRepository : IDisposable
     {
-        IEnumerable<StatusMessage> GetStatusMessages();
-        StatusMessage GetStatusMessageByID(string statusId);
-
+        IEnumerable<string> GetListStatusId(string userId);
+        IEnumerable<string> GetListStatusIdNewest(string userId);
+        Status GetStatusByStatusId(string statusId);
+        StatusViewModel GetStatusViewModelByStatusId(string statusId);
+        IEnumerable<StatusViewModel> GetListStatusNewest(string userId);
+        List<Status> GetMoreListStatus(string userId, DateTime TimePost);
 
         void AddStatus(Status status);
         void AddStatusLocation(StatusLocation statusLocation);

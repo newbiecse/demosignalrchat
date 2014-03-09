@@ -24,19 +24,59 @@
     margin-bottom: 15px;
 }
 
+.status{
+    margin-bottom: 40px;
+}
+
+.status-header{
+    position: relative;
+    border-top: 1px solid #eeeeee;
+}
+
 .status-user{
     float: left;
+    width: 60px;
     margin-right: 10px;
+}
+
+.status-content{
 }
 
 .comment-content, .txtComment{
     margin-left: 10px;
 }
 
-.status{
-    margin-bottom: 40px;
+.preview{
+    margin-left: 70px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    min-height: 95px;
+    border: 1px solid #acc;
 }
 
-.status-header{
-    border-top: 1px solid #eeeeee;
+.preview-image{
+    float: left;
+}
+
+.preview-image{
+    width: 90px;
+    margin-right: 13px;
+}
+
+.link-preview{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link-preview:hover{
+    text-decoration: none;
+}
+
+.preview-description p{
+    color: #333333;
+}
+
+.box-like-share{
+    margin-left: 70px;
+    clear: left;
 }

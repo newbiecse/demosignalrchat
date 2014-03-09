@@ -1,4 +1,10 @@
-﻿img.img60x60{
+﻿img.img90x90{
+    width: 90px;
+    height: 90px;
+}
+
+
+img.img60x60{
     width: 60px;
     height: 60px;
 }

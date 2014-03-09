@@ -8,7 +8,7 @@ namespace DemoSignalRChat.Models
 {
     public class StatusImage
     {
-        public string ImageId { get; set; }
+        public int ImageId { get; set; }
         public string StatusId { get; set; }
         public virtual Status Status { get; set; }
 

@@ -21,8 +21,8 @@ namespace DemoSignalRChat.Models
         public virtual StatusLocation StatusLocation { get; set; }
         public virtual StatusMessage StatusMessage { get; set; }
         public virtual ICollection<StatusImage> StatusImages { get; set; }
-
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Share> Shares { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

@@ -186,9 +186,6 @@ G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\Microsoft.Owin.Secur
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.dll
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.pdb
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csprojResolveAssemblyReference.cache
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.init.resources
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csproj.GenerateResource.Cache
-G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.Modifydatabase.resources
-G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.AddLikeTable.resources
-G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csprojResolveAssemblyReference.cache
-G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.AddShareTable.resources
