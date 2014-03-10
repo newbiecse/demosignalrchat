@@ -83,7 +83,7 @@ namespace DemoSignalRChat.DAL
 
         public IEnumerable<StatusViewModel>  GetListStatusNewest(string userId)
         {
-            var listStatusIdNewest = this.GetListStatusIdNewest(userId);
+            var listStatusIdNewest = this.GetListStatusIdNewest(userId).Distinct();
 
             List<StatusViewModel> listStatusNewest = new List<StatusViewModel>();
 
