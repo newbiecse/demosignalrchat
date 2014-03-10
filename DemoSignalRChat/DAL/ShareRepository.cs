@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoSignalRChat.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,22 @@ namespace DemoSignalRChat.DAL
         public ShareRepository(ApplicationDbContext dbContext)
         {
             this._db = dbContext;
+        }
+
+        public void AddShare(Share share)
+        {
+            this._db.Shares.Add(share);
+            this.Save();
+        }
+
+        public int GetNumShare(string statusId)
+        {
+            return this._db.Shares.Count(sh => sh.StatusId == statusId);
+        }
+
+        private void Save()
+        {
+            this._db.SaveChanges();
         }
 
         private bool disposed = false;

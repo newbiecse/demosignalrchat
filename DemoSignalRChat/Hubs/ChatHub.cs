@@ -22,16 +22,20 @@ namespace DemoSignalRChat.Hubs
         #region members
 
         ApplicationDbContext _dbContext;
+
         IFriendRepository _friendRepository;
         IChatRepository _chatRepository;
         IPrivateMessageRepository _privateMessageRepository;
         IStatusRepository _statusRepository;
         IStatusMessageRepository _statusMessageRepository;
         IStatusLocationRepository _statusLocationRepository;
-        
+        ILikeRepository _likeRepository;
+        IShareRepository _shareRepository;
+
         List<string> _friendListId;
         List<UserChatViewModel> _friendListOnline;
         List<string> _friendListConnectionId_Online;
+        List<string> _allUserRelate_ConnectionId;
 
         string _curConnectionId;
         UserChatViewModel _curUser;
@@ -50,6 +54,8 @@ namespace DemoSignalRChat.Hubs
             this._statusRepository = new StatusRepository(this._dbContext);
             this._statusMessageRepository = new StatusMessageRepository(this._dbContext);
             this._statusLocationRepository = new StatusLocationRepository(this._dbContext);
+            this._likeRepository = new LikeRepository(this._dbContext);
+            this._shareRepository = new ShareRepository(this._dbContext);
 
             // get current connectionId
             this._curConnectionId = this.Context.ConnectionId;
@@ -65,6 +71,8 @@ namespace DemoSignalRChat.Hubs
 
             // get friendListConnectionId
             this._friendListConnectionId_Online = this._chatRepository.GetFriendList_ConnectionId(this._friendListOnline);
+
+            this._allUserRelate_ConnectionId = this._chatRepository.GetAllUserRelate_ConnectionId(this._friendListConnectionId_Online, this._curUser.ConnectionId);
         }
         
 
@@ -131,6 +139,16 @@ namespace DemoSignalRChat.Hubs
                 Clients.Clients(fListConnectionId).offChat(this._curUser.UserId);
         }
 
+
+        public void Like(string statusId)
+        {
+            this.Init();
+            var like = new Like { TimeLiked = DateTime.Now, StatusId = statusId, UserId = this._curUser.UserId };
+            this._likeRepository.Like(like);
+
+            Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUser.UserName, statusId);
+        }
+
         public void SendMessageToAll(string message, string location)
         {
             this.Init();
@@ -152,12 +170,7 @@ namespace DemoSignalRChat.Hubs
 
             message = ProcessMessage.ProcessMessageStatus(userViewModel, message);
 
-            // broadcast
-            var clientMessage = this._friendListConnectionId_Online;
-            clientMessage.Add(this._curUser.ConnectionId);
-
-
-            Clients.Clients(clientMessage).messageReceived(this._curUser.UserName, message);
+            Clients.Clients(this._allUserRelate_ConnectionId).messageReceived(this._curUser.UserName, message);
         }
 
 
@@ -172,7 +185,7 @@ namespace DemoSignalRChat.Hubs
             this._privateMessageRepository.InsertPrivateMessage(msg);
 
             // friend online
-            if (fromUser.ConnectionId != null)
+            if (fromUser != null)
             {
                 Clients.Client(fromUser.ConnectionId).privateMessageReceived(this._curUser.UserId, message);
             }

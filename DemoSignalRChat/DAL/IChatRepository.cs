@@ -18,6 +18,7 @@ namespace DemoSignalRChat.DAL
         List<UserChatViewModel> GetFriendListOnline(List<UserChatViewModel> connectedUsers, List<string> friendListId, string userId);
         List<string> GetFriendListId_Online(List<UserChatViewModel> friendListOnline);
         List<string> GetFriendList_ConnectionId(List<UserChatViewModel> friendListOnline);
+        List<string> GetAllUserRelate_ConnectionId(List<string> friendList_ConnectionId, string meConnectionId);
         void RemoveUserConnected(List<UserChatViewModel> connectedUsers, UserChatViewModel user);
     }
 }

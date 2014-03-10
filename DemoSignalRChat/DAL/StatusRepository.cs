@@ -84,6 +84,7 @@ namespace DemoSignalRChat.DAL
                     Images = sttImageRepository.GetListImage(statusId),
                     UserOwner = userOwner,
                     LinkPreview = linkPreview,
+                    NumShared = shareRepository.GetNumShare(statusId),
                     ListUserLiked = likeRepository.GetListUserLiked(statusId),
                     ListCommented = commentRepository.GetCommentForStatus(statusId)
                 };

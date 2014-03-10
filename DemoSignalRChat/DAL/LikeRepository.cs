@@ -40,17 +40,17 @@ namespace DemoSignalRChat.DAL
             return false;
         }
 
-        public void FuncLike(string statusId, string userId)
+        public void Like(Like like)
         {
-            this._db.Likes.Add(new Like { UserId = userId, StatusId = statusId });
+            this._db.Likes.Add(like);
             this.Save();
         }
 
 
-        public void FuncUnLike(string statusId, string userId)
+        public void UnLike(string statusId, string userId)
         {
-            var unLike = this._db.Likes.Find(statusId, userId);
-            this._db.Likes.Remove(unLike);
+            var liked = this._db.Likes.Find(userId, statusId);
+            this._db.Likes.Remove(liked);
             this.Save();
         }
 

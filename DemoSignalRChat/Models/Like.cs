@@ -7,11 +7,6 @@ namespace DemoSignalRChat.Models
 {
     public class Like
     {
-        public Like()
-        {
-            this.TimeLiked = DateTime.Now;
-        }
-
         public string StatusId { get; set; }
         public string UserId { get; set; }
 

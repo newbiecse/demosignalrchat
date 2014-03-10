@@ -10,7 +10,7 @@ namespace DemoSignalRChat.Models
         public string StatusId { get; set; }
         public string UserId { get; set; }
 
-        public DateTime Time { get; set; }
+        public DateTime TimeShared { get; set; }
 
         public virtual Status Status { get; set; }
         public virtual ApplicationUser User { get; set; }
