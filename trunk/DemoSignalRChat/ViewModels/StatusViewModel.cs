@@ -18,7 +18,7 @@ namespace DemoSignalRChat.ViewModels
         public IEnumerable<string> Images { get; set; }
         public UserViewModel UserOwner { get; set; }
         public IEnumerable<UserViewModel> ListUserLiked { get; set; }
-        public List<UserViewModel> ListUserShared { get; set; }
+        public int NumShared { get; set; }
         public IEnumerable<CommentViewModel> ListCommented { get; set; }
         public bool IsLiked { get; set; }
     }

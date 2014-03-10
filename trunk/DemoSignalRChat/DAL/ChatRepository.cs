@@ -57,6 +57,13 @@ namespace DemoSignalRChat.DAL
                     select f.ConnectionId).ToList();
         }
 
+        public List<string> GetAllUserRelate_ConnectionId(List<string> friendList_ConnectionId, string meConnectionId)
+        {
+            var meAndFriend_ConnectionId = friendList_ConnectionId;
+            meAndFriend_ConnectionId.Add(meConnectionId);
+            return meAndFriend_ConnectionId;
+        }
+
         public void RemoveUserConnected(List<UserChatViewModel> connectedUsers, UserChatViewModel user)
         {
             connectedUsers.Remove(user);

@@ -98,7 +98,7 @@ namespace DemoSignalRChat.DAL
 
 
             modelBuilder.Entity<Share>()
-                .HasKey(l => new { l.UserId, l.StatusId })
+                .HasKey(l => new { l.UserId, l.StatusId, l.TimeShared })
                 .HasRequired<Status>(l => l.Status)
                 .WithMany(s => s.Shares)
                 .HasForeignKey(l => l.StatusId)

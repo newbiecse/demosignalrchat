@@ -38,8 +38,8 @@
                                     </a>
                     }
                     <div class="box-like-share">
-                        <a class="like" id="like-@status.StatusId">Like</a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
-                        <a class="share" id="share-@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.ListUserShared.Count()</span>
+                        <a class="like" data-statusid="@status.StatusId">Like</a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
+                        <a class="share" data-statusid="@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.NumShared</span>
                     </div>
                 
 
