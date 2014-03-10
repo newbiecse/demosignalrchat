@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoSignalRChat.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ namespace DemoSignalRChat.DAL
     interface IStatusMessageRepository : IDisposable
     {
         string GetMessageByStatusId(string statusId);
+
+        void AddMessage(StatusMessage statusMessage);
+
         void Save();
     }
 }

@@ -29,16 +29,20 @@ namespace DemoSignalRChat.Controllers
             this._userRepository = new UserRepository(_dbContext);
             var curUser = this._userRepository.GetUserById(curUserId);
 
+
             // get fiendlist
             this._friendRepository = new FriendRepository(_dbContext);
             var friendList = this._friendRepository.GetFriendList(curUserId);
-
             // store friendlist
             ViewData["friendList"] = friendList;
+
 
             // get status newest
             this._statusRepository = new StatusRepository(this._dbContext);
             var listStatusNewest = this._statusRepository.GetListStatusNewest(curUserId);
+            // store status newest
+            ViewData["listStatusNewest"] = listStatusNewest;
+
 
             return View(curUser);
         }

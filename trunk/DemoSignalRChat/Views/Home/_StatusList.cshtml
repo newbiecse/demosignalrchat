@@ -1,5 +1,10 @@
-﻿
+﻿@using DemoSignalRChat.ViewModels
+@model IEnumerable<StatusViewModel>
+
     <div id="status-list" class="row">
+
+    @foreach(StatusViewModel status in Model)
+    { 
 
         <div class="status">
 
@@ -7,12 +12,12 @@
 
                 <div class="status-user">
                     <a href='#'>
-                        <img src="~/Uploads/Users/backham.jpg" alt="..." class="img-circle img60x60" />
+                        <img src="@status.UserOwner.Avatar" class="img-circle img60x60" />
                     </a>
                 </div><!-- .status-user -->
 
                 <div class="status-content">
-                    <a class="peple-name" href='#'>Tan</a>aaaaaaaaaaaaaaaaaaaaaa
+                    <a class="peple-name" href='#'>@status.UserOwner.UserName</a>@status.Message
                     <a class='link-preview' href="http://hn.24h.com.vn/" target="_blank">
                         <div class="preview">
                             <div class="preview-image">
@@ -42,23 +47,22 @@
                 <hr />
 
             <div class="list-comment">
+            @foreach(CommentViewModel comment in status.ListCommented)
+            {
                     <div class="row comment">
                         <div class="col-md-1">
                             <a href="#">
-                                <img src="~/Uploads/Users/backham.jpg" alt="..." class="img-rounded img33x33">
+                                <img src="@comment.UserOwner.Avatar" class="img-rounded img33x33">
                             </a>
                         </div><!-- .comment-user -->
                         <div class="col-md-10">
                             <p class="comment-content">
-                                <a href="#">Tan</a>
-                                (SRV; Cộng hòa Xã hội chủ nghĩa Việt Nam (About this sound listen)), is the easternmost country on the Indochina Peninsula in Southeast Asia. With an estimated 90.3 million inhabitants as of 2012, it is the world's 13th-most-populous country, and the eighth-most-populous Asian country. The name Vietnam translates as "Southern Viet" (synonymous with the much older term Nam Viet); it was first officially adopted in 1802 by Emperor Gia Long, and was adopted again in 1945 with the founding of the Democratic Republic of Vietnam under Ho Chi Minh. The country is bordered by China to the north, Laos to the northwest, Cambodia to the southwest, and the South China Sea to the east.[8] Its capital city has been Hanoi since the reunification of North and South Vietnam in 1976.
-                                The Vietnamese became independent from Imperial China in AD 938, following the resounding Vietnamese victory in the Battle of Bạch Đằng River. Successive Vietnamese royal dynasties flourished as the nation expanded geographically and politically into Southeast Asia, until the Indochina Peninsula was colonized by the French in the mid-19th century. Following a Japanese occupation in the 1940s, the Vietnamese fought French rule in the First Indochina War, eventually expelling the French in 1954. Thereafter, Vietnam was divided politically into two rival states, North and South Vietnam. Conflict between the two sides intensified, with heavy intervention from the United States, in what is known as the Vietnam War. The war ended with a North Vietnamese victory in 1975.
-                                Vietnam was then unified under a Communist government but remained impoverished and politically isolated. In 1986, the government initiated a series of economic and political reforms which began Vietnam's path towards integration into the world economy.[9] By 2000, it had established diplomatic relations with most nations. Since 2000, Vietnam's economic growth rate has been among the highest in the world,[9] and in 2011 it had the highest Global Growth Generators Index among 11 major economies.[10] Its successful economic reforms resulted in its joining the World Trade Organization in 2007. However, the country still experiences high levels of income inequality, disparities in access to healthcare, and a lack of
-
+                                <a href="#">@comment.UserOwner.UserName</a>
+                                @comment.Content
                             </p>
                         </div><!-- .user-info -->
                     </div><!-- comment -->
-
+            }
                     <div class="row block-textarea">
                         <div class="col-md-1">
                             <a href="#">
@@ -75,5 +79,6 @@
 
 
 
-        </div><!-- .status-message -->
+        </div><!-- .status -->
+    }
     </div><!-- #status-list -->
