@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoSignalRChat.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,12 @@ namespace DemoSignalRChat.DAL
                 return null;
             }
             return sttMessage.Message;
+        }
+
+        public void AddMessage(StatusMessage statusMessage)
+        {
+            this._db.StatusMessages.Add(statusMessage);
+            this.Save();
         }
 
         public void Save()

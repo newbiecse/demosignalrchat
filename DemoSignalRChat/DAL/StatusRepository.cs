@@ -27,12 +27,20 @@ namespace DemoSignalRChat.DAL
         public IEnumerable<string> GetListStatusIdNewest(string userId)
         {
             IFriendRepository friendRepository = new FriendRepository(this._db);
-            var friendAndMe_UserId = friendRepository.GetFriendListId(userId);
 
-            friendAndMe_UserId.ToList().Add(userId);
+            List<string> listUserIdBoardcast = new List<string>();
+
+            var friendListUserId = friendRepository.GetFriendListId(userId);
+
+            if(friendListUserId != null && friendListUserId.Count() > 0)
+            {
+                listUserIdBoardcast.AddRange(friendListUserId);
+            }
+
+            listUserIdBoardcast.Add(userId);
 
             List<string> listStatusIdNewest = new List<string>();
-            foreach(var id in friendAndMe_UserId)
+            foreach (var id in listUserIdBoardcast)
             {
                 var listStatusId = this.GetListStatusId(id);
                 listStatusIdNewest.AddRange(listStatusId);
@@ -70,7 +78,7 @@ namespace DemoSignalRChat.DAL
                     ListUserLiked = likeRepository.GetListUserLiked(statusId),
                     ListCommented = commentRepository.GetCommentForStatus(statusId)
                 };
-            return null;
+            return statusViewModel;
         }
 
         public IEnumerable<StatusViewModel>  GetListStatusNewest(string userId)
@@ -81,7 +89,7 @@ namespace DemoSignalRChat.DAL
 
             foreach(string statusId in listStatusIdNewest)
             {
-                var statusNewest = this.GetStatusViewModelByStatusId(statusId);
+               var statusNewest = this.GetStatusViewModelByStatusId(statusId);
                 listStatusNewest.Add(statusNewest);
             }
 

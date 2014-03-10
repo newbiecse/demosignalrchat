@@ -26,6 +26,7 @@ namespace DemoSignalRChat.Hubs
         IChatRepository _chatRepository;
         IPrivateMessageRepository _privateMessageRepository;
         IStatusRepository _statusRepository;
+        IStatusMessageRepository _statusMessageRepository;
         
         List<string> _friendListId;
         List<UserChatViewModel> _friendListOnline;
@@ -46,6 +47,7 @@ namespace DemoSignalRChat.Hubs
             this._friendRepository = new FriendRepository(this._dbContext);
             this._privateMessageRepository = new PrivateMessageRepository(this._dbContext);
             this._statusRepository = new StatusRepository(this._dbContext);
+            this._statusMessageRepository = new StatusMessageRepository(this._dbContext);
 
             // get current connectionId
             this._curConnectionId = this.Context.ConnectionId;
@@ -135,6 +137,8 @@ namespace DemoSignalRChat.Hubs
 
             Status status = new Status{StatusId = statusId, UserId = this._curUser.UserId};
             this._statusRepository.AddStatus(status);
+
+            this._statusMessageRepository.AddMessage(new StatusMessage { StatusId = statusId, Message = message });
             
             if(location != null)
             {
