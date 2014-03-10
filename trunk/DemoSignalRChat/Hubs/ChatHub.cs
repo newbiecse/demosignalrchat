@@ -133,7 +133,7 @@ namespace DemoSignalRChat.Hubs
         {
             this.Init();
 
-            var statusId = GeneratorGUID.CreateGuid();
+            var statusId = SequentialGuid.Create();
 
             Status status = new Status{StatusId = statusId, UserId = this._curUser.UserId};
             this._statusRepository.AddStatus(status);
