@@ -1,4 +1,6 @@
 ﻿@using DemoSignalRChat.ViewModels
+@using DemoSignalRChat.Preview
+@using System.Text.RegularExpressions
 @model IEnumerable<StatusViewModel>
 
     <div id="status-list" class="row">
@@ -17,10 +19,27 @@
                 </div><!-- .status-user -->
 
                 <div class="status-content">
-                    <a class="peple-name" href='#'>@status.UserOwner.UserName</a>@status.Message
+                    <a class="peple-name" href='#'>@status.UserOwner.UserName</a>@Html.Raw(status.Message)
+                    @if (status.LinkPreview != null)
+                    {
+                                    <a class='link-preview' href='@status.LinkPreview.url' target='_blank'>
+		                                    <div class='preview'>
+				                                    <div class='preview-image'>
+						                                    <img src='@status.LinkPreview.src' class='img90x90' />
+				                                    </div>
+				                                    <div class='preview-description'>
+						                                    <b>@status.LinkPreview.title</b>
+                                                            <p>
+                                                                @Regex.Match(status.LinkPreview.url, @"://(.+?)/").Groups[1].Value <br />
+						                                        @status.LinkPreview.description
+                                                            </p>
+				                                    </div>
+		                                    </div>
+                                    </a>
+                    }
                     <div class="box-like-share">
-                        <a>Like</a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span class="numLike">0</span>
-                        <a>Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span class="numShare">0</span>
+                        <a class="like" id="like-@status.StatusId">Like</a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
+                        <a class="share" id="share-@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.ListUserShared.Count()</span>
                     </div>
                 
 

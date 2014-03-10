@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoSignalRChat.Preview;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,9 @@ namespace DemoSignalRChat.ViewModels
         public DateTime TimePost { get; set; }
         public string Location { get; set; }
         public string Message { get; set; }
+
+        public LinkPreview LinkPreview { get; set; }
+
         public IEnumerable<string> Images { get; set; }
         public UserViewModel UserOwner { get; set; }
         public IEnumerable<UserViewModel> ListUserLiked { get; set; }

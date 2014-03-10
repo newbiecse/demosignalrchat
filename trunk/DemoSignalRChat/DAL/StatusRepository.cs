@@ -1,4 +1,5 @@
 ﻿using DemoSignalRChat.Models;
+using DemoSignalRChat.Preview;
 using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -66,15 +67,23 @@ namespace DemoSignalRChat.DAL
             IShareRepository shareRepository = new ShareRepository(this._db);
             ICommentRepository commentRepository = new CommentRepository(this._db);
 
+            var message = sttMessageRepository.GetMessageByStatusId(statusId);
+            var messageProcessed = ProcessMessage.ProcMessage(message);
+
+            LinkPreview linkPreview = ProcessMessage.GetFirstLinkPreview(message);
+
+            var userOwner = userRepository.GetUserById(status.UserId);
+
             var statusViewModel = new
                 StatusViewModel
                 {
                     StatusId = statusId,
                     TimePost = status.TimePost,
                     Location = sttLocation.GetLocationForStatus(statusId),
-                    Message = sttMessageRepository.GetMessageByStatusId(statusId),
+                    Message = messageProcessed,
                     Images = sttImageRepository.GetListImage(statusId),
-                    UserOwner = userRepository.GetUserById(status.UserId),
+                    UserOwner = userOwner,
+                    LinkPreview = linkPreview,
                     ListUserLiked = likeRepository.GetListUserLiked(statusId),
                     ListCommented = commentRepository.GetCommentForStatus(statusId)
                 };
@@ -110,32 +119,6 @@ namespace DemoSignalRChat.DAL
         {
             this._db.Status.Add(status);
             this.Save();
-        }
-        public void AddStatusLocation(StatusLocation statusLocation)
-        {
-            this._db.StatusLocations.Add(statusLocation);
-            this.Save();
-        }
-        public void AddStatusImage(StatusImage statusImage)
-        {
-            this._db.StatusImages.Add(statusImage);
-            this.Save();
-        }
-        public void AddStatusMessage(StatusMessage statusMessage)
-        {
-            this._db.StatusMessages.Add(statusMessage);
-            this.Save();
-        }
-        //--------------------------------------------//--------------------------------------------
-        public void DeleteStatusMessage(int statusId)
-        {
-            StatusMessage statusMessage = this._db.StatusMessages.Find(statusId);
-            this._db.StatusMessages.Remove(statusMessage);
-        }
-
-        public void UpdateStatusMessage(StatusMessage statusMessage)
-        {
-            this._db.Entry(statusMessage).State = EntityState.Modified;
         }
  
         public void Save()

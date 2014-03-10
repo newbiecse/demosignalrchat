@@ -7,9 +7,9 @@ using System.Web;
 
 namespace DemoSignalRChat.Preview
 {
-    public class ProcessMessage
+    public static class ProcessMessage
     {
-        public static string ProcessMessageStatus(UserChatViewModel curUser, string message)
+        public static string ProcessMessageStatus(UserViewModel curUser, string message)
         {
             // Get first Url Preview
             var firstLinkPreview = new LinkPreview().GetFirstLinkPreView(message);
@@ -22,12 +22,28 @@ namespace DemoSignalRChat.Preview
                 return ProcessMessage.StrMessageNotLink(curUser, message);
             }
 
-            
             return ProcessMessage.StrMessageHaveLink(curUser, message, firstLinkPreview);
         }
 
 
-        public static string StrMessageHaveLink(UserChatViewModel curUser, string message, LinkPreview linkPreview)
+        public static LinkPreview GetFirstLinkPreview(string message)
+        {
+            // Get first Url Preview
+            LinkPreview firstLinkPreview = new LinkPreview().GetFirstLinkPreView(message);
+            if(firstLinkPreview != null)
+            {
+                return firstLinkPreview;
+            }
+            return null;
+        }
+
+        public static string ProcMessage(string message)
+        {
+            return Link.ReplaceAllLink(message);
+        }
+
+
+        public static string StrMessageHaveLink(UserViewModel curUser, string message, LinkPreview linkPreview)
         {
             return
             "<div class='status'>"
@@ -81,7 +97,7 @@ namespace DemoSignalRChat.Preview
             +"</div>";
         }
 
-        public static string StrMessageNotLink(UserChatViewModel curUser, string message)
+        public static string StrMessageNotLink(UserViewModel curUser, string message)
         {
             return
             "<div class='status'>"

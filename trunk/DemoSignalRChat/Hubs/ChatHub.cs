@@ -27,6 +27,7 @@ namespace DemoSignalRChat.Hubs
         IPrivateMessageRepository _privateMessageRepository;
         IStatusRepository _statusRepository;
         IStatusMessageRepository _statusMessageRepository;
+        IStatusLocationRepository _statusLocationRepository;
         
         List<string> _friendListId;
         List<UserChatViewModel> _friendListOnline;
@@ -48,6 +49,7 @@ namespace DemoSignalRChat.Hubs
             this._privateMessageRepository = new PrivateMessageRepository(this._dbContext);
             this._statusRepository = new StatusRepository(this._dbContext);
             this._statusMessageRepository = new StatusMessageRepository(this._dbContext);
+            this._statusLocationRepository = new StatusLocationRepository(this._dbContext);
 
             // get current connectionId
             this._curConnectionId = this.Context.ConnectionId;
@@ -140,14 +142,15 @@ namespace DemoSignalRChat.Hubs
 
             this._statusMessageRepository.AddMessage(new StatusMessage { StatusId = statusId, Message = message });
             
-            if(location != null)
+            if(!string.IsNullOrEmpty(location))
             {
-                StatusLocation sttLocation = new StatusLocation { StatusId = statusId, Location = location.ToString() };
-                this._statusRepository.AddStatusLocation(sttLocation);
+                this._statusLocationRepository.AddLocation(statusId, location);
             }
 
 
-            message = ProcessMessage.ProcessMessageStatus(this._curUser, message);
+            var userViewModel = new UserViewModel { UserId = this._curUser.UserId, UserName = this._curUser.UserId, Avatar = this._curUser.Avatar };
+
+            message = ProcessMessage.ProcessMessageStatus(userViewModel, message);
 
             // broadcast
             var clientMessage = this._friendListConnectionId_Online;
