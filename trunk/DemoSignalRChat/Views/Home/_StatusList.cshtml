@@ -51,7 +51,7 @@
 
                 <hr />
 
-            <div class="list-comment">
+            <div class="list-comment" id="list-comment-@status.StatusId">
             @foreach(CommentViewModel comment in status.ListCommented)
             {
                     <div class="row comment">
@@ -68,16 +68,16 @@
                         </div><!-- .user-info -->
                     </div><!-- comment -->
             }
-                    <div class="row block-textarea">
-                        <div class="col-md-1">
-                            <a href="#">
-                                <img src="~/Uploads/Users/backham.jpg" alt="..." class="img-rounded img33x33">
-                            </a>
-                        </div>
-                        <div class="col-md-10">
-                            <textarea name="txtComment" rows="1" cols="50" class="form-control txtComment" placeholder="Enter comment..."></textarea>
-                        </div>
+                <div class="row block-textarea" id="block-txtComment-@status.StatusId">
+                    <div class="col-md-1">
+                        <a href="#">
+                            <img src="" class="img-rounded img33x33 cur-user-avatar">
+                        </a>
                     </div>
+                    <div class="col-md-10">
+                        <textarea data-statusid="@status.StatusId" name="txtComment" rows="1" cols="50" class="form-control txtComment" placeholder="Enter comment..."></textarea>
+                    </div>
+                </div>
 
 
             </div><!-- .list-comment -->

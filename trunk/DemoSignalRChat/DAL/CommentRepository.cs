@@ -1,4 +1,5 @@
-﻿using DemoSignalRChat.ViewModels;
+﻿using DemoSignalRChat.Models;
+using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DemoSignalRChat.DAL
         {
             this._db = dbContext;
         }
+
         public CommentViewModel GetCommentByCommentId(string commentId)
         {
             var comment = this._db.Comments.ToList().Find(cmt => cmt.CommentId == commentId);
@@ -49,6 +51,18 @@ namespace DemoSignalRChat.DAL
                 commentList.Add(this.GetCommentByCommentId(commentId));
             }
             return commentList;
+        }
+
+
+        public void AddComment(Comment comment)
+        {
+            this._db.Comments.Add(comment);
+            this.Save();
+        }
+
+        private void Save()
+        {
+            this._db.SaveChanges();
         }
 
         private bool disposed = false;
