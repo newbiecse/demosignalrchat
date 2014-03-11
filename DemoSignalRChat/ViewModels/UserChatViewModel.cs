@@ -5,11 +5,8 @@ using System.Web;
 
 namespace DemoSignalRChat.ViewModels
 {
-    public class UserChatViewModel
+    public class UserChatViewModel : UserViewModel
     {
-        public string UserId { get; set; }
         public string ConnectionId { get; set; }
-        public string UserName { get; set; }
-        public string Avatar { get; set; }
     }
 }
