@@ -156,7 +156,7 @@ namespace DemoSignalRChat.Hubs
 
             this._commentRepository.AddComment(comment);
 
-            string commentDisplay = ProcessComment.ProcessMessage(this._curUserChat, cmtMessage);
+            string commentDisplay = ProcessComment.ProcessNewComment(this._curUserChat, cmtMessage);
 
             Clients.Clients(this._allUserRelate_ConnectionId).comment(this._curUserChat.UserName, statusId, commentDisplay);
         }

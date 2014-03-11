@@ -15,7 +15,7 @@ namespace DemoSignalRChat.Preview
             var firstLinkPreview = new LinkPreview().GetFirstLinkPreView(message);
 
             // Detect Url after replace it Achor tag
-            message = Link.ReplaceAllLink(message);
+            message = ProcessComment.ProcessMessage(message);
 
             if(firstLinkPreview == null)
             {

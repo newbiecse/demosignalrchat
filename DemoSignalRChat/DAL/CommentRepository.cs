@@ -1,4 +1,5 @@
 ﻿using DemoSignalRChat.Models;
+using DemoSignalRChat.Preview;
 using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace DemoSignalRChat.DAL
                 {
                     CommentId = comment.CommentId,
                     TimeCommented = comment.TimeComment,
-                    Content = comment.Content,
+                    Content = ProcessComment.ProcessMessage(comment.Content),
                     UserOwner = userOwner,
                     ListUserLiked = listUserLiked
                 };

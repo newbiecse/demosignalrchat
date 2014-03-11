@@ -19,7 +19,7 @@
                 </div><!-- .status-user -->
 
                 <div class="status-content">
-                    <a class="peple-name" href='#'>@status.UserOwner.UserName</a>@Html.Raw(status.Message)
+                    <a class="peple-name" href='#'>@status.UserOwner.UserName</a> @Html.Raw(status.Message)
                     @if (status.LinkPreview != null)
                     {
                                     <a class='link-preview' href='@status.LinkPreview.url' target='_blank'>
@@ -63,7 +63,7 @@
                         <div class="col-md-10">
                             <p class="comment-content">
                                 <a href="#">@comment.UserOwner.UserName</a>
-                                @comment.Content
+                                @Html.Raw(comment.Content)
                             </p>
                         </div><!-- .user-info -->
                     </div><!-- comment -->

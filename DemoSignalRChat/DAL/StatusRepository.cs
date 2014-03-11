@@ -68,7 +68,7 @@ namespace DemoSignalRChat.DAL
             ICommentRepository commentRepository = new CommentRepository(this._db);
 
             var message = sttMessageRepository.GetMessageByStatusId(statusId);
-            var messageProcessed = ProcessMessage.ProcMessage(message);
+            var messageProcessed = ProcessComment.ProcessMessage(message);
 
             LinkPreview linkPreview = ProcessMessage.GetFirstLinkPreview(message);
 

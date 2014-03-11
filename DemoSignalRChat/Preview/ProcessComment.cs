@@ -8,8 +8,11 @@ namespace DemoSignalRChat.Preview
 {
     public static class ProcessComment
     {
-        public static string ProcessMessage(UserViewModel userComment, string message)
+        public static string ProcessNewComment(UserViewModel userComment, string message)
         {
+            var messageProcessed = Emotions.ReplaceEmotions(message);
+            messageProcessed = Link.ReplaceAllLink(messageProcessed);
+
             return
                      "<div class='row comment'>"
                         + "<div class='col-md-1'>"
@@ -20,10 +23,17 @@ namespace DemoSignalRChat.Preview
                         + "<div class='col-md-10'>"
                             + "<p class='comment-content'>"
                                 + "<a href='#'>" + userComment.UserName + "</a>&nbsp;"
-                                + message
+                                + messageProcessed
                             + "</p>"
                         + "</div>"
                     + "</div>";
+        }
+
+        public static string ProcessMessage(string message)
+        {
+            var messageProcessed = Emotions.ReplaceEmotions(message);
+            messageProcessed = Link.ReplaceAllLink(messageProcessed);
+            return messageProcessed;
         }
     }
 }
