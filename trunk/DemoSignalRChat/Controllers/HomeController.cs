@@ -20,6 +20,7 @@ namespace DemoSignalRChat.Controllers
         IFriendRepository _friendRepository;
         IUserRepository _userRepository;
         IStatusRepository _statusRepository;
+        ISearchRepository _searchRepository;
         ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         public ActionResult Index()
@@ -47,35 +48,62 @@ namespace DemoSignalRChat.Controllers
             return View(curUser);
         }
 
-        //[HttpPost]
-        public ActionResult Upload()
+        [HttpPost]
+        public JsonResult Search(string paramSearch)
         {
-            // get current user
-            string curUserId = User.Identity.GetUserId();
+            this._searchRepository = new SearchRepository(this._dbContext);
 
+            var result = this._searchRepository.Search(paramSearch);
+            //return View(this._searchRepository.Search(paramSearch));
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpPost]
+        public void Upload()
+        {
             if (Request.Files.Count > 0)
             {
                 var file = Request.Files[0];
 
                 if (file != null && file.ContentLength > 0)
                 {
-                    // create folder for user if it doesn't exist
-                    var pathExist = Server.MapPath(@"~/Uploads/Users/" + curUserId + "/Post/Images");
-                    if (!System.IO.Directory.Exists(pathExist))
-                    {
-                        System.IO.Directory.CreateDirectory(pathExist);
-                    }
-
-
                     var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(pathExist, string.Format(@"{0}-{1}", Guid.NewGuid(), fileName));
+                    var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
                     file.SaveAs(path);
                 }
             }
-
-            return null;
         }
+
+
+        //[HttpPost]
+        //public ActionResult Upload()
+        //{
+        //    // get current user
+        //    string curUserId = User.Identity.GetUserId();
+
+
+        //    if (Request.Files.Count > 0)
+        //    {
+        //        var file = Request.Files[0];
+
+        //        if (file != null && file.ContentLength > 0)
+        //        {
+        //            // create folder for user if it doesn't exist
+        //            var pathExist = Server.MapPath(@"~/Uploads/Users/" + curUserId + "/Post/Images");
+        //            if (!System.IO.Directory.Exists(pathExist))
+        //            {
+        //                System.IO.Directory.CreateDirectory(pathExist);
+        //            }
+
+
+        //            var fileName = Path.GetFileName(file.FileName);
+        //            var path = Path.Combine(pathExist, string.Format(@"{0}-{1}", Guid.NewGuid(), fileName));
+        //            file.SaveAs(path);
+        //        }
+        //    }
+
+        //    return null;
+        //}
 
 
 

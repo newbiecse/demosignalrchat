@@ -1,0 +1,31 @@
+﻿<div id="modal-post-image" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                
+                <textarea class="form-control textarea-auto-expand" name="msgPost" rows="3" placeholder="post here..."></textarea>
+
+                <div id="formupload" class="row">
+                    <div id="images">
+                    </div>
+                    <div class="browse-wrap">
+                        <div class="title">Choose image</div>
+                        <input type="file" name="etlfileToUpload" class="etlfileToUpload" title="Choose image" />
+                    </div>
+                </div>
+                <input type="button" id="btn-ajax-upload" value="ajax-upload" />
+                <span id="uploading"></span>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-post-image" class="btn btn-primary">Post</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -9,7 +9,7 @@ namespace DemoSignalRChat.Preview
 {
     public static class ProcessMessage
     {
-        public static string ProcessMessageStatus(UserViewModel curUser, string message)
+        public static string ProcessMessageStatus(UserViewModel curUser, string message, string[] imageNames)
         {
             // Get first Url Preview
             var firstLinkPreview = new LinkPreview().GetFirstLinkPreView(message);
@@ -19,7 +19,7 @@ namespace DemoSignalRChat.Preview
 
             if(firstLinkPreview == null)
             {
-                return ProcessMessage.StrMessageNotLink(curUser, message);
+                return ProcessMessage.StrMessageNotLink(curUser, message, imageNames);
             }
 
             return ProcessMessage.StrMessageHaveLink(curUser, message, firstLinkPreview);
@@ -97,7 +97,17 @@ namespace DemoSignalRChat.Preview
             +"</div>";
         }
 
-        public static string StrMessageNotLink(UserViewModel curUser, string message)
+        public static string StrImages(string[] imageNames)
+        {
+            string htmlImages = "";
+            foreach(var image in imageNames)
+            {
+                htmlImages += "<img src='/images/" + image + "' />";
+            }
+            return htmlImages;
+        }
+
+        public static string StrMessageNotLink(UserViewModel curUser, string message, string[] imageNames)
         {
             return
             "<div class='status'>"
@@ -116,6 +126,11 @@ namespace DemoSignalRChat.Preview
                                             + "<a>Share</a> &nbsp;<span class='glyphicon glyphicon-share-alt'></span> <span class='numShare'>0</span>"
                                     + "</div>"
                             + "</div>"
+
+                            + "<div class='images'>"
+                                    + StrImages(imageNames)
+                            + "</div>"
+
                     + "</div>"
 
                     + "<hr />"

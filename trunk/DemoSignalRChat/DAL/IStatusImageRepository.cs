@@ -10,7 +10,6 @@ namespace DemoSignalRChat.DAL
     {
         IEnumerable<string> GetListImage(string statusId);
         void AddImage(string statusId, string image);
-        void AddRangeImage(string statusId, IEnumerable<string> image);
-        void Save();
+        void AddRangeImage(string statusId, string[] image);
     }
 }
