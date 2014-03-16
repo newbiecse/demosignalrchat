@@ -26,9 +26,12 @@ namespace DemoSignalRChat.Hubs
         IFriendRepository _friendRepository;
         IChatRepository _chatRepository;
         IPrivateMessageRepository _privateMessageRepository;
+
         IStatusRepository _statusRepository;
         IStatusMessageRepository _statusMessageRepository;
         IStatusLocationRepository _statusLocationRepository;
+        IStatusImageRepository _statusImageRepository;
+
         ILikeRepository _likeRepository;
         IShareRepository _shareRepository;
         ICommentRepository _commentRepository;
@@ -52,9 +55,12 @@ namespace DemoSignalRChat.Hubs
             this._chatRepository = new ChatRepository(this._dbContext);
             this._friendRepository = new FriendRepository(this._dbContext);
             this._privateMessageRepository = new PrivateMessageRepository(this._dbContext);
+
             this._statusRepository = new StatusRepository(this._dbContext);
             this._statusMessageRepository = new StatusMessageRepository(this._dbContext);
             this._statusLocationRepository = new StatusLocationRepository(this._dbContext);
+            this._statusImageRepository = new StatusImageRepository(this._dbContext);
+
             this._likeRepository = new LikeRepository(this._dbContext);
             this._shareRepository = new ShareRepository(this._dbContext);
             this._commentRepository = new CommentRepository(this._dbContext);
@@ -170,6 +176,25 @@ namespace DemoSignalRChat.Hubs
             Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUserChat.UserName, statusId);
         }
 
+        public void PostImage(string message, string[] imageNames)
+        {
+            this.Init();
+
+            var statusId = SequentialGuid.Create();
+
+            Status status = new Status { StatusId = statusId, UserId = this._curUserChat.UserId };
+            this._statusRepository.AddStatus(status);
+
+            this._statusMessageRepository.AddMessage(new StatusMessage { StatusId = statusId, Message = message });
+            message = ProcessMessage.ProcessMessageStatus(this._curUserChat, message, imageNames);
+
+            this._statusImageRepository.AddRangeImage(statusId, imageNames);
+
+
+
+            Clients.Clients(this._allUserRelate_ConnectionId).postImage(this._curUserChat.UserName, message);
+        }
+
         public void SendMessageToAll(string message, string location)
         {
             this.Init();
@@ -186,7 +211,7 @@ namespace DemoSignalRChat.Hubs
                 this._statusLocationRepository.AddLocation(statusId, location);
             }
 
-            message = ProcessMessage.ProcessMessageStatus(this._curUserChat, message);
+            message = ProcessMessage.ProcessMessageStatus(this._curUserChat, message, null);
 
             Clients.Clients(this._allUserRelate_ConnectionId).messageReceived(this._curUserChat.UserName, message);
         }

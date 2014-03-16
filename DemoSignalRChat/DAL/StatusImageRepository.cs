@@ -20,7 +20,7 @@ namespace DemoSignalRChat.DAL
             this.Save();
         }
 
-        public void AddRangeImage(string statusId, IEnumerable<string> images)
+        public void AddRangeImage(string statusId, string[] images)
         {
             foreach(var img in images)
             {
@@ -37,7 +37,7 @@ namespace DemoSignalRChat.DAL
                 .Select(sttImg => sttImg.Image);
         }
 
-        public void Save()
+        private void Save()
         {
             this._db.SaveChanges();
         }
