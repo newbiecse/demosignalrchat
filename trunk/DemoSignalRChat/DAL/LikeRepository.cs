@@ -49,7 +49,7 @@ namespace DemoSignalRChat.DAL
 
         public void UnLike(string statusId, string userId)
         {
-            var liked = this._db.Likes.Find(userId, statusId);
+            var liked = this._db.Likes.First(l => l.UserId == userId && l.StatusId == statusId);
             this._db.Likes.Remove(liked);
             this.Save();
         }

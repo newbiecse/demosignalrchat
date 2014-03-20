@@ -176,6 +176,15 @@ namespace DemoSignalRChat.Hubs
             Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUserChat.UserName, statusId);
         }
 
+        public void UnLike(string statusId)
+        {
+            this.Init();
+            this._likeRepository.UnLike(statusId, this._curUserChat.UserId);
+
+            Clients.Clients(this._allUserRelate_ConnectionId).unLike(this._curUserChat.UserName, statusId);
+        }
+
+
         public void PostImage(string message, string[] imageNames)
         {
             this.Init();

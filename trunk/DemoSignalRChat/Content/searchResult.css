@@ -1,4 +1,12 @@
-﻿.user-search{
+﻿#search-result{
+    width: 298px;
+    background-color: #ffffff;
+    position:absolute;
+    top: 35px;
+    left: 0px
+}
+
+.user-search{
     display: block;
     height: 60px;
     width: 100%;
