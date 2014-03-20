@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - TripTrip</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/Content/myStyle.css" />
@@ -30,7 +30,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Trip Trip", "Index", "Home", null, new { @class = "navbar-brand" })
                 </div><!--\.navbar-header-->
 
                 <div class="navbar-collapse collapse">
@@ -40,7 +40,9 @@
                             <a id="btn-req-Friends" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span id="numWaitAccept" class="label label-warning">5</span>+<span class="glyphicon glyphicon-user"></span>
                             </a><!--\#btn-req-Friends-->
-                            <ul id="listWaitAccept" class="dropdown-menu" style="width: 300px;"></ul><!--\ul#listWaitAccept-->
+                            <ul id="listWaitAccept" class="dropdown-menu" style="width: 300px;">
+                                
+                            </ul><!--\ul#listWaitAccept-->
                         </li><!-- \li#req-Friends -->
 
                         <li class="dropdown">
@@ -61,16 +63,7 @@
                                         <span class="glyphicon glyphicon-search"></span>
                                     </button>
                                 </span><!-- \span -->
-                                <div id="search-result" style="width: 298px; height: 500px; background-color: #ffd800; position:absolute; top: 35px; left: 0px">
-                                    <a class="user-search">
-                                        <div class="search-image">
-                                            <img src="~/Uploads/Users/scholes.jpg" />
-                                        </div>
-                                        <div class="search-info">
-                                            <span>Nguyen Van Tan</span>
-                                            <span>University of technology</span>
-                                        </div>
-                                    </a>
+                                <div id="search-result">
                                 </div>
                             </div><!-- \.input-group -->
                         </div><!-- \.form-group -->

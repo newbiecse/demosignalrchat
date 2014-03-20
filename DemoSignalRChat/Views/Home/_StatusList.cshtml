@@ -3,6 +3,10 @@
 @using System.Text.RegularExpressions
 @model IEnumerable<StatusViewModel>
 
+@{
+    UserViewModel curUser = ViewBag.curUser;
+}
+
     <div id="status-list" class="row">
 
     @foreach(StatusViewModel status in Model)
@@ -38,7 +42,23 @@
                                     </a>
                     }
                     <div class="box-like-share">
-                        <a class="like" data-statusid="@status.StatusId">Like</a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
+                        @{
+                            int isLiked = 0;
+                            if(status.ListUserLiked.Select(u => u.UserId).Count(uId => uId == curUser.UserId) > 0)
+                            {
+                                isLiked = 1;
+                            }
+                        }
+                        <a class="like" data-isliked="@isLiked" data-statusid="@status.StatusId">
+                            @if(isLiked == 0)
+                            {
+                                @:like
+                            }
+                            else
+                            {
+                                @:unlike
+                            }
+                        </a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
                         <a class="share" data-statusid="@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.NumShared</span>
                     </div>
                 

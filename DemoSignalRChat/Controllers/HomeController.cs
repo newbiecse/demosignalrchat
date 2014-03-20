@@ -29,7 +29,7 @@ namespace DemoSignalRChat.Controllers
             string curUserId = User.Identity.GetUserId();
             this._userRepository = new UserRepository(_dbContext);
             var curUser = this._userRepository.GetUserById(curUserId);
-
+            ViewBag.curUser = curUser;
 
             // get fiendlist
             this._friendRepository = new FriendRepository(_dbContext);
