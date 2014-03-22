@@ -18,7 +18,7 @@
             @Html.Partial("_SuggestAttraction")
         </div>
         <div class="row">
-            @Html.Partial("_SuggestFriend")
+            @Html.Partial("_SuggestFriend", ViewData["friendListSugest"])
         </div>
     </div><!--\#main-center-->
 
@@ -31,6 +31,8 @@
             @Html.Partial("_ChatList", ViewData["friendList"])
         </div>
     </div><!--\#main-right-->
+
+    <ul id="notify-bottom-left"></ul>
 
     <div id="window-chat-list"></div>
 
@@ -82,6 +84,14 @@
     <script src="~/Scripts/myScripts/Chats/replaceURLWithHTMLLinks.js"></script>
     <script src="~/Scripts/myScripts/Chats/replaceEmotion.js"></script>
 
+    <!-- friend -->
+    <script src="~/Scripts/myScripts/FriendWaitAccept/friendwaitaccept.js"></script>
+    <!-- AddFriend -->
+    <script src="~/Scripts/myScripts/FriendAdd/client/addfriend.js"></script>
+    <script src="~/Scripts/myScripts/FriendAdd/server/addfriend.js"></script>
+    <!-- FriendAccept -->
+    <script src="~/Scripts/myScripts/FriendAccept/client/accept.js"></script>
+    <script src="~/Scripts/myScripts/FriendAccept/server/accept.js"></script>
 
     <script src="~/Scripts/myScripts/UploadImage/uploadImage.js"></script>
 

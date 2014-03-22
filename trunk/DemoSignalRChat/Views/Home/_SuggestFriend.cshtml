@@ -1,36 +1,18 @@
-﻿<div id="suggest-friends">
+﻿@using DemoSignalRChat.ViewModels
+@model IEnumerable<FriendSugestViewModel>
+<div id="suggest-friends">
+@foreach(FriendSugestViewModel friendSuggest in Model)
+{ 
     <div class="suggest-friend">
         <div class="sf-image float-left">
-            <img class="img50x50" src="~/Uploads/Users/scholes.jpg" />
+            <img class="img50x50" src="@friendSuggest.Avatar" />
         </div>
         <div class="sf-info float-left">
-            <a class="sf-name">Paul Scholes</a>
-            <a class="sf-manufet">2 ban chung</a>
-            <a class="add-friend">+1 ket ban</a>
+            <a class="sf-name">@friendSuggest.UserName</a>
+            <a class="sf-manufet">@friendSuggest.ListFriendMutual.Count() mutual friend</a>
+            <a data-userid="@friendSuggest.UserId" class="add-friend">+1 Addfriend</a>
         </div>
         <div class="clear-both"></div>
     </div>
-    <div class="suggest-friend">
-        <div class="sf-image float-left">
-            <img class="img50x50" src="~/Uploads/Users/scholes.jpg" />
-        </div>
-        <div class="sf-info float-left">
-            <a class="sf-name">Paul Scholes</a>
-            <a class="sf-manufet">2 ban chung</a>
-            <a class="add-friend">+1 ket ban</a>
-        </div>
-        <div class="clear-both"></div>
-    </div>
-    <div class="suggest-friend">
-        <div class="sf-image float-left">
-            <img class="img50x50" src="~/Uploads/Users/scholes.jpg" />
-        </div>
-        <div class="sf-info float-left">
-            <a class="sf-name">Paul Scholes</a>
-            <a class="sf-manufet">2 ban chung</a>
-            <a class="add-friend">+1 ket ban</a>
-        </div>
-        <div class="clear-both"></div>
-    </div>
-
+}
 </div>
