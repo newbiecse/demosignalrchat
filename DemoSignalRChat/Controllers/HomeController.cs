@@ -37,6 +37,9 @@ namespace DemoSignalRChat.Controllers
             // store friendlist
             ViewData["friendList"] = friendList;
 
+            // friend sugest
+            var friendListSugest = this._friendRepository.GetFriendListSugest(curUser.UserId);
+            ViewData["friendListSugest"] = friendListSugest;
 
             // get status newest
             this._statusRepository = new StatusRepository(this._dbContext);
@@ -47,6 +50,17 @@ namespace DemoSignalRChat.Controllers
 
             return View(curUser);
         }
+
+        [HttpGet]
+        public JsonResult GetListFriendWaitAccept()
+        {
+            var userId = User.Identity.GetUserId();
+            this._friendRepository = new FriendRepository(this._dbContext);
+
+            var result = this._friendRepository.GetFriendListWaitAccept(userId);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public JsonResult Search(string paramSearch)

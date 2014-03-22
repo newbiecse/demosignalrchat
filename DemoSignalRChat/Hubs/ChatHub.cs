@@ -6,12 +6,8 @@ using DemoSignalRChat.DAL;
 using Microsoft.Ajax.Utilities;
 using DemoSignalRChat.ViewModels;
 using System.Threading.Tasks;
-using System.Net;
-using NSoup.Nodes;
-using NSoup.Select;
 using DemoSignalRChat.Preview;
 using System;
-using System.Text;
 using DemoSignalRChat.ProcessPreData;
 
 
@@ -147,6 +143,9 @@ namespace DemoSignalRChat.Hubs
                 Clients.Clients(fListConnectionId).offChat(this._curUserChat.UserId);
         }
 
+
+
+
         public void Comment(string statusId, string cmtMessage)
         {
             this.Init();
@@ -240,6 +239,40 @@ namespace DemoSignalRChat.Hubs
             if (fromUser != null)
             {
                 Clients.Client(fromUser.ConnectionId).privateMessageReceived(this._curUserChat.UserId, message);
+            }
+        }
+
+        public void AddFriend(string friendId)
+        {
+            this.Init();
+
+            var friend = this._chatRepository.GetUserByUserId(ConnectedUsers, friendId);
+
+            // store message to database
+            IFriendRepository friendRepository = new FriendRepository(this._dbContext);
+            friendRepository.AddFriend(this._curUserChat.UserId, friendId);
+
+            // friend online
+            if (friend != null)
+            {
+                Clients.Client(friend.ConnectionId).notifyAddFriend(this._curUserChat.UserName);
+            }
+        }
+
+        public void AcceptFriend(string friendId)
+        {
+            this.Init();
+
+            var friend = this._chatRepository.GetUserByUserId(ConnectedUsers, friendId);
+
+            // store message to database
+            IFriendRepository friendRepository = new FriendRepository(this._dbContext);
+            friendRepository.AcceptFriend(friendId, this._curUserChat.UserId);
+
+            // friend online
+            if (friend != null)
+            {
+                Clients.Client(friend.ConnectionId).notifyAcceptedFriend(this._curUserChat.UserName);
             }
         }
 

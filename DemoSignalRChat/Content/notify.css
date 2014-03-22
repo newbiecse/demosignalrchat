@@ -1,0 +1,30 @@
+#notify-bottom-left{
+	list-style: none;
+	position: fixed;
+	bottom: 2px;
+	left: 5px;
+	padding: 0px;
+}
+
+.notify-require-friend a, .notify-status a{
+	z-index: 100;
+	display: block;
+	margin-bottom: 5px;
+	/*width: 170px;*/
+	/*height: 70px;*/
+	border: 1px solid;
+	padding: 10px;
+	color: #fff;
+	vertical-align: middle;
+	border-radius: 4px;
+}
+
+.notify-require-friend a{
+	background-color: #ed9c28;
+	border-color: #d58512;
+}
+
+.notify-status a{
+	background-color: #39b3d7;
+	border-color: #269abc;
+}
