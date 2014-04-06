@@ -154,7 +154,7 @@ namespace DemoSignalRChat.DAL
 
         public void AcceptFriend(string userId, string friendId)
         {
-            var accept = this._db.Friends.First(f => f.UserId == friendId && f.FriendId == userId);
+            var accept = this._db.Friends.First(f => f.UserId == userId && f.FriendId == friendId);
             accept.FriendStatus = FriendRepository.ISFRIENDED;
             this.Save();
         }

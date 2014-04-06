@@ -11,4 +11,6 @@
 
     $("#notify-bottom-left li").delay(5000).fadeOut('slow', "swing");
 
+    new Audio('/sound/notify_friend.FLV').play();
+
 };
