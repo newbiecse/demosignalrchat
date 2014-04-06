@@ -12,7 +12,7 @@ $(".friend-chat").click(function () {
         var strNewWindowChat =
               "<div class='window-chat'" + "id='" + windowId + "'>"
             + "    <div class='window-chat-header'>"
-            + "        <p>" + friendName + "</p>"
+            + "         <p>  <a>" + friendName + "</a> <button type='button' class='close' aria-hidden='true'>&times;</button>  </p>"
             + "    </div>"
             + "    <div class='window-chat-body' id='" + wBodyId + "'>"
             + "    </div>"

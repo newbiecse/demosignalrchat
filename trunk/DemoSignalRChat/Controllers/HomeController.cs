@@ -51,6 +51,8 @@ namespace DemoSignalRChat.Controllers
             return View(curUser);
         }
 
+
+
         [HttpGet]
         public JsonResult GetListFriendWaitAccept()
         {

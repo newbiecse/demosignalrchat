@@ -272,7 +272,7 @@ namespace DemoSignalRChat.Hubs
             // friend online
             if (friend != null)
             {
-                Clients.Client(friend.ConnectionId).notifyAcceptedFriend(this._curUserChat.UserName);
+                Clients.Client(friend.ConnectionId).notifyAcceptedFriend( this._curUserChat.UserId, this._curUserChat.UserName, this._curUserChat.Avatar);
             }
         }
 
