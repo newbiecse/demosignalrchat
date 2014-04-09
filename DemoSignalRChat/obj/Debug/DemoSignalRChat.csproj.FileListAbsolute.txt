@@ -190,3 +190,6 @@ G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRCha
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.init.resources
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csproj.GenerateResource.Cache
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.Modify_Share_table.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\GoogleMapsApi.dll
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\GoogleMapsApi.pdb
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\GoogleMapsApi.xml

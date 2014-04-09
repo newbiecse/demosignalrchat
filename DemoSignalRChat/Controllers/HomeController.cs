@@ -51,6 +51,21 @@ namespace DemoSignalRChat.Controllers
             return View(curUser);
         }
 
+        public ActionResult GetComments(string statusid)
+        {
+            ICommentRepository commentRepository = new CommentRepository(_dbContext);
+            var listCommented = commentRepository.GetCommentForStatus(statusid);
+            return View(listCommented);
+        }
+
+        [HttpPost]
+        public JsonResult GetPeopleLiked(string statusId)
+        {
+            ILikeRepository likeRepository = new LikeRepository(_dbContext);
+            var listUserLiked = likeRepository.GetListUserLiked(statusId);
+            return Json(listUserLiked, JsonRequestBehavior.AllowGet);
+        }
+
 
 
         [HttpGet]

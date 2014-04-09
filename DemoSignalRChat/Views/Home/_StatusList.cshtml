@@ -58,7 +58,7 @@
                             {
                                 @:unlike
                             }
-                        </a> &nbsp;<span class="glyphicon glyphicon-thumbs-up"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
+                        </a> &nbsp;<span data-statusid="@status.StatusId" class="glyphicon glyphicon-thumbs-up icon-liked" data-toggle="modal" data-target="#liked"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
                         <a class="share" data-statusid="@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.NumShared</span>
                     </div>
                 
@@ -66,28 +66,16 @@
                 </div><!-- .status-content -->
 
                 <div style="clear: left"></div>
-
+                
             </div><!-- .status-header -->
 
                 <hr />
 
             <div class="list-comment" id="list-comment-@status.StatusId">
-            @foreach(CommentViewModel comment in status.ListCommented)
-            {
-                    <div class="row comment">
-                        <div class="col-md-1">
-                            <a href="#">
-                                <img src="@comment.UserOwner.Avatar" class="img-rounded img33x33">
-                            </a>
-                        </div><!-- .comment-user -->
-                        <div class="col-md-10">
-                            <p class="comment-content">
-                                <a href="#">@comment.UserOwner.UserName</a>
-                                @Html.Raw(comment.Content)
-                            </p>
-                        </div><!-- .user-info -->
-                    </div><!-- comment -->
-            }
+
+
+                @Html.Action("GetComments", new { statusId = @status.StatusId })
+
                 <div class="row block-textarea" id="block-txtComment-@status.StatusId">
                     <div class="col-md-1">
                         <a href="#">

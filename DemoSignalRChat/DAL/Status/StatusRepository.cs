@@ -85,8 +85,7 @@ namespace DemoSignalRChat.DAL
                     UserOwner = userOwner,
                     LinkPreview = linkPreview,
                     NumShared = shareRepository.GetNumShare(statusId),
-                    ListUserLiked = likeRepository.GetListUserLiked(statusId),
-                    ListCommented = commentRepository.GetCommentForStatus(statusId)
+                    ListUserLiked = likeRepository.GetListUserLiked(statusId)
                 };
             return statusViewModel;
         }
