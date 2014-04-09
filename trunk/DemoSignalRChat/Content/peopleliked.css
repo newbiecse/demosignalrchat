@@ -1,0 +1,25 @@
+﻿.people-like{
+    height: 60px
+}
+
+.modal-body .user-image{
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+.modal-body .user-name{
+    float: left;
+    min-width: 350px;
+    margin-left: 20px;
+}
+
+.modal-body .user-name a{
+    position: relative;
+    left: 0px;
+    top: 15px;
+}
+
+.modal-body .button-relation{
+    float: left;
+}
