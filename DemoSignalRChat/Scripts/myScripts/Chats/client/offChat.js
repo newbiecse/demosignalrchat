@@ -4,5 +4,5 @@
 var chat = $.connection.chatHub;
 
 chat.client.offChat = function (userIdOffLine) {
-    $("#" + userIdOffLine).css("background-color", "#ffffff");
+    $("#img-online-" + userIdOffLine).show("fast");
 }
