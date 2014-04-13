@@ -26,7 +26,7 @@ namespace DemoSignalRChat.Preview
                         + "&nbsp;&nbsp;"
                         + messageProcessed
                     + "</p>"
-                    + "<p><a href='#'>like</a></p>"
+                    + "<p>" + DateTime.Now + " . <a href='#'>like</a></p>"
                 + "</div>"
                 + "<div class='clear-left'></div>"
             + "</div>";

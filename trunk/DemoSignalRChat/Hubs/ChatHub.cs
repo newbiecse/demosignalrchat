@@ -116,11 +116,12 @@ namespace DemoSignalRChat.Hubs
             // send to all friend list online
             var friendList_connectionID = this._chatRepository.GetFriendList_ConnectionId(this._friendListOnline);
 
+            // call client
+            Clients.Clients(friendList_connectionID).signOut(this._curUserChat.UserId);
+
             // remove current user
             this._chatRepository.RemoveUserConnected(ConnectedUsers, this._curUserChat);
 
-            // call client
-            Clients.Clients(friendList_connectionID).signOut(this._curUserChat.UserId);
             return base.OnDisconnected();
         }
 
