@@ -14,19 +14,22 @@ namespace DemoSignalRChat.Preview
             messageProcessed = Link.ReplaceAllLink(messageProcessed);
 
             return
-                     "<div class='row comment'>"
-                        + "<div class='col-md-1'>"
-                            + "<a href='#'>"
-                                + "<img src='" + userComment.Avatar + "' class='img-rounded img33x33'>"
-                            + "</a>"
-                        + "</div>"
-                        + "<div class='col-md-10'>"
-                            + "<p class='comment-content'>"
-                                + "<a href='#'>" + userComment.UserName + "</a>&nbsp;"
-                                + messageProcessed
-                            + "</p>"
-                        + "</div>"
-                    + "</div>";
+            "<div class='comment'>"
+                + "<div class='comment-user'>"
+                    + "<a href='#'>"
+                        + "<img src='" + userComment.Avatar + "' class='img-rounded img33x33'>"
+                    + "</a>"
+                + "</div>"
+                + "<div class='comment-content'>"
+                    + "<p>"
+                        + "<a href='#'>" + userComment.UserName + "</a>"
+                        + "&nbsp;&nbsp;"
+                        + messageProcessed
+                    + "</p>"
+                    + "<p><a href='#'>like</a></p>"
+                + "</div>"
+                + "<div class='clear-left'></div>"
+            + "</div>";
         }
 
         public static string ProcessMessage(string message)

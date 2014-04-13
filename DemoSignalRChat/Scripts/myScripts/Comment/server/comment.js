@@ -1,4 +1,4 @@
-﻿$(".txtComment").keypress(function (e) {
+﻿$("body").on("keypress", ".txtComment", function (e) {    
 
         if (e.keyCode == 13 && !e.shiftKey) {
             e.preventDefault();
@@ -15,4 +15,4 @@
             } // end if length
             return;
         } // end if enter
-    }); // end keypress
+    }); // end on

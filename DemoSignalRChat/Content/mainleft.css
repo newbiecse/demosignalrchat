@@ -8,14 +8,14 @@
 }
 
 #status-list{
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     margin-top: 20px;
     padding: 10px;
 }
 
 .list-comment{
     background-color: #F5F5F5;
-    margin-left: 70px;
+    padding-bottom: 20px;
     clear: both;
 }
 
@@ -25,42 +25,46 @@
 }
 
 .status{
-    margin-bottom: 40px;
-}
-
-.status-header{
-    position: relative;
-    border-top: 1px solid #eeeeee;
-}
-
-.status-user{
-    float: left;
-    width: 60px;
-    margin-right: 10px;
+    margin-bottom: 20px;
+    padding: 5px;
+    background-color: #ffffff;
 }
 
 .status-content{
+    margin-top: 15px;
 }
 
-.comment-content, .txtComment{
-    margin-left: 10px;
+.status-owner-image{
+    width: 43px;
+    margin-right: 10px;
+    float: left;
+}
+
+.status-owner-name{
+    float: left;
 }
 
 .preview{
-    margin-left: 70px;
+    margin-left: 0px;
     margin-top: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     min-height: 95px;
-    border: 1px solid #acc;
+    border-top: 1px solid #eeeeee;
 }
 
 .preview-image{
     float: left;
-}
-
-.preview-image{
     width: 90px;
     margin-right: 13px;
+}
+
+.preview-description{
+    float: left;
+    max-width: 386px;
+}
+
+.preview-description p{
+    color: #333333;   
 }
 
 .link-preview{
@@ -72,11 +76,26 @@
     text-decoration: none;
 }
 
-.preview-description p{
-    color: #333333;
+.box-like-share{
+    display: block;
+    width: 100%;
+    clear: left;
 }
 
-.box-like-share{
-    margin-left: 70px;
-    clear: left;
+.list-comment{
+    margin-left: 20px;
+}
+
+.comment-content, .txtComment{
+    margin-left: 10px;
+}
+
+.comment-user{
+    width: 35px;
+    float: left;
+}
+
+.comment-content{
+    max-width: 425px;
+    float: left;
 }

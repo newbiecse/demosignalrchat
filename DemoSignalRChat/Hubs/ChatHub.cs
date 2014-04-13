@@ -194,7 +194,7 @@ namespace DemoSignalRChat.Hubs
             this._statusRepository.AddStatus(status);
 
             this._statusMessageRepository.AddMessage(new StatusMessage { StatusId = statusId, Message = message });
-            message = ProcessMessage.ProcessMessageStatus(this._curUserChat, message, imageNames);
+            message = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, imageNames);
 
             this._statusImageRepository.AddRangeImage(statusId, imageNames);
 
@@ -219,7 +219,7 @@ namespace DemoSignalRChat.Hubs
                 this._statusLocationRepository.AddLocation(statusId, location);
             }
 
-            message = ProcessMessage.ProcessMessageStatus(this._curUserChat, message, null);
+            message = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, null);
 
             Clients.Clients(this._allUserRelate_ConnectionId).messageReceived(this._curUserChat.UserName, message);
         }

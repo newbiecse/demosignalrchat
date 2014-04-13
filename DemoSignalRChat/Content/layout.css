@@ -1,5 +1,5 @@
 ﻿body{
-    background-color: #ffffff;
+    background-color: #e6e6e6;
     font-size: 13px;
     font-weight: normal;
     line-height: 1.38;
@@ -18,8 +18,17 @@ a{
     cursor: pointer;
 }
 
+p, a{
+    word-wrap:break-word;
+}
+
 a.peple-name{
     font-weight: bold;
+}
+
+.clear-left{
+    clear: left;
+    /*height: 2px;*/
 }
 
 /*div{

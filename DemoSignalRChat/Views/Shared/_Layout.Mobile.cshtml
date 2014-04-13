@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/myStyle.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/images.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/Content/mainleft.css" />
+
+
+
+    @Styles.Render("~/Content/Mobile/css", "~/Content/jquerymobile/css")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+    <script>
+        $(document).ready(function () {
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>
+</head>
+<body>
+
+    <div data-role="page" data-theme="a">
+        @Html.Partial("_ViewSwitcher")
+
+        <div data-role="header">
+            <h1>@ViewBag.Title</h1>
+        </div>
+
+        <div data-role="content">
+            @RenderBody()
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

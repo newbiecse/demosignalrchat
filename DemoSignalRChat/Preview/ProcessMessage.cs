@@ -9,20 +9,30 @@ namespace DemoSignalRChat.Preview
 {
     public static class ProcessMessage
     {
-        public static string ProcessMessageStatus(UserViewModel curUser, string message, string[] imageNames)
+        public static string ProcessMessageStatus(string statusId, UserViewModel curUser, string message, string[] imageNames)
         {
             // Get first Url Preview
             var firstLinkPreview = new LinkPreview().GetFirstLinkPreView(message);
 
             // Detect Url after replace it Achor tag
-            message = ProcessComment.ProcessMessage(message);
+            string messageProcessed = ProcessComment.ProcessMessage(message);
 
-            if(firstLinkPreview == null)
+            string htmlStatus = "<div class='status'>";
+
+            htmlStatus += ProcessMessage.GetHtml_statusOwner(curUser);
+            htmlStatus += ProcessMessage.GetHtml_statusContent(messageProcessed);
+
+            if(firstLinkPreview != null)
             {
-                return ProcessMessage.StrMessageNotLink(curUser, message, imageNames);
+                htmlStatus += ProcessMessage.GetHtml_statusPreview(firstLinkPreview);
             }
 
-            return ProcessMessage.StrMessageHaveLink(curUser, message, firstLinkPreview);
+            htmlStatus += ProcessMessage.GetHtml_statusBoxLikeShare(statusId);
+            htmlStatus += ProcessMessage.GetHtml_statusListComment(statusId, curUser);
+
+            htmlStatus += "</div>";
+
+            return htmlStatus;
         }
 
 
@@ -43,59 +53,81 @@ namespace DemoSignalRChat.Preview
         }
 
 
-        public static string StrMessageHaveLink(UserViewModel curUser, string message, LinkPreview linkPreview)
+        public static string GetHtml_statusOwner(UserViewModel curUser)
         {
             return
-            "<div class='status'>"
-                    +"<div class='status-header'>"
-                            + "<div class='status-user'>"
-                                    + "<a href='#'>"
-                                            + "<img src='" + curUser.Avatar + "' class='img-circle img60x60' />"
-                                    + "</a>"
-                            + "</div>"
+                  "<div class='status-owner'>"
+                + "    <div class='status-owner-image'>"
+                + "        <img src='" + curUser.Avatar + "' class='img-circle img40x40' />"
+                + "    </div>"
+                + "    <div class='status-owner-name'>"
+                + "        <a class='peple-name' href='#'>" + curUser.UserName + "</a>"
+                + "        <br />"
+                + "        " + DateTime.Now
+                + "    </div>"
+                + "    <div class='clear-left'></div>"
+                + "</div>";
+        }
 
-                            + "<div class='status-content'>"
-                                    + "<a class='peple-name' href='#'>" + curUser.UserName + "</a> " + message
-                                    + "<a class='link-preview' href='" + linkPreview.url + "' target='_blank'>"
-		                                    + "<div class='preview'>"
-				                                    + "<div class='preview-image'>"
-						                                    + "<img src='" + linkPreview.src + "' class='img90x90' />"
-				                                    + "</div>"
-				                                    + "<div class='preview-description'>"
-						                                    + "<b>" + linkPreview.title + "</b>"
-                                                            + "<p>"
-                                                                + Regex.Match(linkPreview.url, @"://(.+?)/").Groups[1].Value + "<br />"
-						                                        + linkPreview.description
-                                                            + "</p>"
-				                                    + "</div>"
-		                                    + "</div>"
-                                    + "</a>"
-                                    + "<div class='box-like-share'>"
-		                                    + "<a>Like</a> &nbsp;<span class='glyphicon glyphicon-thumbs-up'></span> <span class='numLike'>0</span>"
-                                            + "&nbsp; &nbsp;"
-		                                    + "<a>Share</a> &nbsp;<span class='glyphicon glyphicon-share-alt'></span> <span class='numShare'>0</span>"
-                                    + "</div>"
-                            + "</div>"
-                    + "</div>"
+        public static string GetHtml_statusContent(string messageProcessed)
+        {
+            return
+              "<div class='status-content'>"
+                + messageProcessed
+             +"</div>";
+        }
 
-                    + "<hr />"
+        public static string GetHtml_statusPreview(LinkPreview linkPreview)
+        {
+            return
+                    "<a class='link-preview' href='" + linkPreview.url + "' target='_blank'>"
+                        +"<div class='preview'>"
+                            +"<div class='preview-image'>"
+                                +"<img src='" + linkPreview.src + "' class='img90x90' />"
+                            +"</div>"
+                            +"<div class='preview-description'>"
+                                +"<b>" + linkPreview.title + "</b>"
+                                +"<p>"
+                                    + Regex.Match(linkPreview.url, @"://(.+?)/").Groups[1].Value + " <br />"
+                                    + linkPreview.description
+                                +"</p>"
+                            +"</div>"
+                            +"<div class='clear-left'></div>"
+                        +"</div>"
+                    +"</a>";
+        }
 
-                    + "<div class='list-comment'>"
+        public static string GetHtml_statusBoxLikeShare(string statusId)
+        {
+            return
+            "<div class='box-like-share'>"
+                + "<a class='like' data-isliked='0' data-statusid='" + statusId + "'>"
+                    + "like"
+                + "</a> &nbsp;<span data-statusid='" + statusId + "' class='glyphicon glyphicon-thumbs-up icon-liked' data-toggle='modal' data-target='#liked'></span> <span id='numLike-" + statusId + "'>0</span>"
+                + "&nbsp;.&nbsp;"
+                + "<a class='share' data-statusid='" + statusId + "'>Share</a> &nbsp;<span class='glyphicon glyphicon-share-alt'></span> <span id='numShare-" + statusId + "'>0</span>"
+            + "</div>";
+        }
 
-                            + "<div class='row block-textarea'>"
-                                    + "<div class='col-md-1'>"
-                                            + "<a href='#'>"
-                                                    + "<img src='" + curUser.Avatar + "' alt='...' class='img-rounded img33x33'>"
-                                            + "</a>"
-                                    + "</div>"
-                                    + "<div class='col-md-10'>"
-                                            + "<textarea name='txtComment' rows='1' cols='50' class='form-control txtComment' placeholder='Enter comment...'></textarea>"
-                                    + "</div>"
-                            + "</div>"
-
-                    + "</div>"
+        public static string GetHtml_statusListComment(string statusId, UserViewModel curUser)
+        {
+            return
+            "<hr />"
+            +"<div class='list-comment' id='list-comment-" + statusId + "'>"
+                +"<div class='block-textarea' id='block-txtComment-" + statusId + "'>"
+                    +"<div class='comment-user'>"
+                        +"<a href='#'>"
+                            +"<img src='" + curUser.Avatar  + "' class='img-rounded img33x33 cur-user-avatar'>"
+                        +"</a>"
+                    +"</div>"
+                    +"<div class='comment-content'>"
+                        +"<textarea data-statusid='" + statusId + "' name='txtComment' rows='1' cols='59' class='form-control txtComment' placeholder='Enter comment...'></textarea>"
+                    +"</div>"
+                    +"<div class='clear-left'></div>"
+                +"</div>"
             +"</div>";
         }
+
 
         public static string StrImages(string[] imageNames)
         {
@@ -106,51 +138,5 @@ namespace DemoSignalRChat.Preview
             }
             return htmlImages;
         }
-
-        public static string StrMessageNotLink(UserViewModel curUser, string message, string[] imageNames)
-        {
-            return
-            "<div class='status'>"
-                    + "<div class='status-header'>"
-                            + "<div class='status-user'>"
-                                    + "<a href='#'>"
-                                            + "<img src='" + curUser.Avatar + "' class='img-circle img60x60' />"
-                                    + "</a>"
-                            + "</div>"
-
-                            + "<div class='status-content'>"
-                                    + "<a class='peple-name' href='#'>Tan</a> " + message
-                                    + "<div class='box-like-share'>"
-                                            + "<a>Like</a> &nbsp;<span class='glyphicon glyphicon-thumbs-up'></span> <span class='numLike'>0</span>"
-                                            + "&nbsp; &nbsp;"
-                                            + "<a>Share</a> &nbsp;<span class='glyphicon glyphicon-share-alt'></span> <span class='numShare'>0</span>"
-                                    + "</div>"
-                            + "</div>"
-
-                            + "<div class='images'>"
-                                    + StrImages(imageNames)
-                            + "</div>"
-
-                    + "</div>"
-
-                    + "<hr />"
-
-                    + "<div class='list-comment'>"
-
-                            + "<div class='row block-textarea'>"
-                                    + "<div class='col-md-1'>"
-                                            + "<a href='#'>"
-                                                    + "<img src='" + curUser.Avatar + "' alt='...' class='img-rounded img33x33'>"
-                                            + "</a>"
-                                    + "</div>"
-                                    + "<div class='col-md-10'>"
-                                            + "<textarea name='txtComment' rows='1' cols='50' class='form-control txtComment' placeholder='Enter comment...'></textarea>"
-                                    + "</div>"
-                            + "</div>"
-
-                    + "</div>"
-            + "</div>";
-        }
-
     }
 }
