@@ -1,4 +1,5 @@
-﻿using DemoSignalRChat.ViewModels;
+﻿using DemoSignalRChat.DAL;
+using DemoSignalRChat.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace DemoSignalRChat.Preview
                 htmlStatus += ProcessMessage.GetHtml_statusPreview(firstLinkPreview);
             }
 
-            htmlStatus += ProcessMessage.GetHtml_statusBoxLikeShare(statusId);
+            htmlStatus += ProcessMessage.GetHtml_statusBoxLikeShare(statusId, curUser.UserId);
             htmlStatus += ProcessMessage.GetHtml_statusListComment(statusId, curUser);
 
             htmlStatus += "</div>";
@@ -97,13 +98,19 @@ namespace DemoSignalRChat.Preview
                     +"</a>";
         }
 
-        public static string GetHtml_statusBoxLikeShare(string statusId)
+        public static string GetHtml_statusBoxLikeShare(string statusId, string userId)
         {
+            ApplicationDbContext dbContext = new ApplicationDbContext();
+            ILikeRepository likeRepository = new LikeRepository(dbContext);
+
+            int isLike = likeRepository.IsLiked(statusId, userId);
+            string strLike = (isLike == 1) ? "unlike" : "like";
+
             return
             "<div class='box-like-share'>"
-                + "<a class='like' data-isliked='0' data-statusid='" + statusId + "'>"
-                    + "like"
-                + "</a> &nbsp;<span data-statusid='" + statusId + "' class='glyphicon glyphicon-thumbs-up icon-liked' data-toggle='modal' data-target='#liked'></span> <span id='numLike-" + statusId + "'>0</span>"
+                + "<a class='like' data-isliked='" + isLike + "' data-statusid='" + statusId + "'>"
+                    + strLike
+                + "</a> &nbsp;<span data-statusid='" + statusId + "' class='glyphicon glyphicon-thumbs-up icon-liked' data-toggle='modal' data-target='#liked'></span> <span id='numLike-" + statusId + "'>" + likeRepository.Count(statusId) + "</span>"
                 + "&nbsp;.&nbsp;"
                 + "<a class='share' data-statusid='" + statusId + "'>Share</a> &nbsp;<span class='glyphicon glyphicon-share-alt'></span> <span id='numShare-" + statusId + "'>0</span>"
             + "</div>";

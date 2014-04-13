@@ -225,6 +225,19 @@ namespace DemoSignalRChat.Hubs
             Clients.Clients(this._allUserRelate_ConnectionId).messageReceived(this._curUserChat.UserName, message);
         }
 
+        public void Share(string statusId)
+        {
+            this.Init();
+            var share = new Share { TimeShared = DateTime.Now, StatusId = statusId, UserId = this._curUserChat.UserId };
+            this._shareRepository.AddShare(share);
+
+            var message = this._statusMessageRepository.GetMessageByStatusId(statusId);
+
+            var messageProcessed = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, null);
+
+            Clients.Clients(this._allUserRelate_ConnectionId).share(this._curUserChat.UserName, messageProcessed);
+        }
+
 
         public void SendPrivateMessage(string userRetrieved_Id, string message)
         {
