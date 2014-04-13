@@ -9,17 +9,19 @@
 
 @foreach (CommentViewModel comment in Model)
 {
-    <div class="row comment">
-        <div class="col-md-1">
+    <div class="comment">
+        <div class="comment-user">
             <a href="#">
                 <img src="@comment.UserOwner.Avatar" class="img-rounded img33x33">
             </a>
         </div><!-- .comment-user -->
-        <div class="col-md-10">
-            <p class="comment-content">
+        <div class="comment-content">
+            <p>
                 <a href="#">@comment.UserOwner.UserName</a>
                 @Html.Raw(comment.Content)
             </p>
+            <p><a href="#">Like</a></p>
         </div><!-- .user-info -->
+        <div style="clear: left;"></div>
     </div><!-- comment -->
 }
