@@ -31,14 +31,20 @@ namespace DemoSignalRChat.DAL
             return userRepository.GetRangeUser(listUserIdLiked);
         }
 
-        public bool IsLiked(string statusId, string userId)
+        public int IsLiked(string statusId, string userId)
         {
-            if(this._db.Likes.Find(statusId, userId) != null)
+            if(this._db.Likes.Count(l => l.UserId == userId && l.StatusId == statusId) > 0)
             {
-                return true;
+                return 1;
             }
-            return false;
+            return 0;
         }
+
+        public int Count(string statusId)
+        {
+            return this._db.Likes.Count(l => l.StatusId == statusId);
+        }
+
 
         public void Like(Like like)
         {

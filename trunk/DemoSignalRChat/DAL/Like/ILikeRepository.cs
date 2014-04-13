@@ -12,7 +12,8 @@ namespace DemoSignalRChat.DAL
     {
         IEnumerable<string> GetListUserIdLiked(string statusId);
         IEnumerable<UserViewModel> GetListUserLiked(string statusId);
-        bool IsLiked(string statusId, string userId);
+        int IsLiked(string statusId, string userId);
+        int Count(string statusId);
         void Like(Like like);
         void UnLike(string statusId, string userId);
         void Save();
