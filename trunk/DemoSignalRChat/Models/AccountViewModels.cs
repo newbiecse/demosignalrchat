@@ -50,6 +50,13 @@ namespace DemoSignalRChat.Models
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "Display name")]
+        [MinLength(4, ErrorMessage = "Displayname at least 4 characters")]
+        [MaxLength(40, ErrorMessage = "Displayname maximum 40 characters")]
+        public string DisplayName { get; set; }
+
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

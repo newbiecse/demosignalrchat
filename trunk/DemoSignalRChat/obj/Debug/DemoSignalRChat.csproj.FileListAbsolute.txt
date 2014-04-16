@@ -195,3 +195,4 @@ G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\bin\GoogleMapsApi.xml
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.addtablenewfeeds.resources
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.changeprimatykeytablenewfeeds.resources
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csprojResolveAssemblyReference.cache
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.AddDisplayname.resources
