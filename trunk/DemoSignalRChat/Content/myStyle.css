@@ -31,12 +31,15 @@
 }
 
 .window-chat-header {
-    background-color: #7D91BC;
+    background-color: #f0ad4e;
     height: 22px;
     margin-bottom: 0;
     color: #ffffff;
 }
 
+.window-chat-header-username{
+    margin-left: 10px;
+}
 .window-chat-body {
     margin-top: 0;
     /*width: 234px;*/

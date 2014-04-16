@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DemoSignalRChat.Preview;
 using System;
 using DemoSignalRChat.ProcessPreData;
+using DemoSignalRChat.DAL.New_Feeds;
 
 
 namespace DemoSignalRChat.Hubs
@@ -27,6 +28,7 @@ namespace DemoSignalRChat.Hubs
         IStatusMessageRepository _statusMessageRepository;
         IStatusLocationRepository _statusLocationRepository;
         IStatusImageRepository _statusImageRepository;
+        INewFeedsRepository _newFeedRepository;
 
         ILikeRepository _likeRepository;
         IShareRepository _shareRepository;
@@ -60,6 +62,8 @@ namespace DemoSignalRChat.Hubs
             this._likeRepository = new LikeRepository(this._dbContext);
             this._shareRepository = new ShareRepository(this._dbContext);
             this._commentRepository = new CommentRepository(this._dbContext);
+
+            this._newFeedRepository = new NewFeedsRepository(this._dbContext);
 
             // get current connectionId
             this._curConnectionId = this.Context.ConnectionId;
@@ -162,6 +166,17 @@ namespace DemoSignalRChat.Hubs
 
             this._commentRepository.AddComment(comment);
 
+            var newFeedId = SequentialGuid.Create();
+            NewFeeds newfeed = new NewFeeds
+            {
+                UserId = this._curUserChat.UserId,
+                NewFeedId = newFeedId,
+                TypeActionId = TypeAction.COMMENT,
+                StatusId_Or_UserId = commentId
+            };
+            this._newFeedRepository.AddNewFeed(newfeed);
+
+
             string commentDisplay = ProcessComment.ProcessNewComment(this._curUserChat, cmtMessage);
 
             Clients.Clients(this._allUserRelate_ConnectionId).comment(this._curUserChat.UserName, statusId, commentDisplay);
@@ -173,7 +188,20 @@ namespace DemoSignalRChat.Hubs
             var like = new Like { TimeLiked = DateTime.Now, StatusId = statusId, UserId = this._curUserChat.UserId };
             this._likeRepository.Like(like);
 
+            var newFeedId = SequentialGuid.Create();
+            NewFeeds newfeed = new NewFeeds
+            {
+                UserId = this._curUserChat.UserId,
+                NewFeedId = newFeedId,
+                TypeActionId = TypeAction.LIKE,
+                StatusId_Or_UserId = statusId
+            };
+            this._newFeedRepository.AddNewFeed(newfeed);
+
+            var ownerStatus = this._statusRepository.GetShortStatusByStatusId(statusId);
+
             Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUserChat.UserName, statusId);
+            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.UserName);
         }
 
         public void UnLike(string statusId)
@@ -204,7 +232,7 @@ namespace DemoSignalRChat.Hubs
             Clients.Clients(this._allUserRelate_ConnectionId).postImage(this._curUserChat.UserName, message);
         }
 
-        public void SendMessageToAll(string message, string location)
+        public void PostStatus(string message, string location)
         {
             this.Init();
 
@@ -220,9 +248,21 @@ namespace DemoSignalRChat.Hubs
                 this._statusLocationRepository.AddLocation(statusId, location);
             }
 
+            var newFeedId = SequentialGuid.Create();
+            NewFeeds newfeed = new NewFeeds
+            {
+                UserId = this._curUserChat.UserId,
+                NewFeedId = newFeedId,
+                TypeActionId = TypeAction.POST_STATUS,
+                StatusId_Or_UserId = statusId
+            };
+            this._newFeedRepository.AddNewFeed(newfeed);
+            
+
             message = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, null);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).messageReceived(this._curUserChat.UserName, message);
+            Clients.Clients(this._allUserRelate_ConnectionId).postCastStatus(this._curUserChat.UserName, message);
+            Clients.Clients(this._friendListConnectionId_Online).statusNewFeeds(this._curUserChat);
         }
 
         public void Share(string statusId)
@@ -235,7 +275,20 @@ namespace DemoSignalRChat.Hubs
 
             var messageProcessed = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, null);
 
+            var newFeedId = SequentialGuid.Create();
+            NewFeeds newfeed = new NewFeeds
+            {
+                UserId = this._curUserChat.UserId,
+                NewFeedId = newFeedId,
+                TypeActionId = TypeAction.SHARE,
+                StatusId_Or_UserId = statusId
+            };
+            this._newFeedRepository.AddNewFeed(newfeed);
+
+            var ownerStatus = this._statusRepository.GetShortStatusByStatusId(statusId);
+
             Clients.Clients(this._allUserRelate_ConnectionId).share(this._curUserChat.UserName, messageProcessed);
+            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.UserName);
         }
 
 

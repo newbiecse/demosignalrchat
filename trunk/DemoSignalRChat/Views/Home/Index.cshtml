@@ -25,7 +25,7 @@
 
     <div id="main-right" class="col-md-2 hidden-sm hidden-xs">
         <div class="row">
-            @Html.Partial("_News")
+            @Html.Action("GetNewFeeds", new { userId = Model.UserId })
         </div>
         <div class="row">
             @Html.Partial("_ChatList", ViewData["friendList"])
@@ -65,10 +65,10 @@
     <script src="~/Scripts/myScripts/Chats/openChatBox.js"></script>
     <script src="~/Scripts/myScripts/Chats/closeChatBox.js"></script>
 
-    <script src="~/Scripts/myScripts/Chats/client/messageReceived.js"></script>
+    <script src="~/Scripts/myScripts/Chats/client/postCastStatus.js"></script>
     <script src="~/Scripts/myScripts/Chats/client/privateMessageReceived.js"></script>
 
-    <script src="~/Scripts/myScripts/Chats/server/sendMessageToAll.js"></script>
+    <script src="~/Scripts/myScripts/Chats/server/postCastStatus.js"></script>
     <script src="~/Scripts/myScripts/Chats/server/sendPrivateMessage.js"></script>
 
     <script src="~/Scripts/myScripts/Like/client/like.js"></script>

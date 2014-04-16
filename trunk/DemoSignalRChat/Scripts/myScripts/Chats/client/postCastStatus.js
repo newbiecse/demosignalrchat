@@ -1,21 +1,21 @@
-﻿chat.client.share = function (userName, messageProcessed) {
-    //console.log(userName)
-    $("#status-list").prepend(messageProcessed);
-};// end share
+﻿chat.client.postCastStatus = function (userName, message) {
 
-chat.client.likeNewFeeds = function (friend, statusId, statusOwnerUsername) {
+    $("#status-list").prepend(message);
+};// end messageReceived
 
-    var htmlLikeNewFeeds =
+chat.client.statusNewFeeds = function (friend) {
+
+    var htmlStatusNewFeeds =
       "<div class='new'>"
             + "<div class='new-user'>"
                     + "<img class='img28x28' src='" + friend['Avatar'] + "' />"
             + " </div>"
             + "<div class='new-action'>"
                     + "<a href='#'>" + friend['UserName'] + "</a>"
-                    + " likes <a href='#'>" + statusOwnerUsername + "</a>'s status"
+                    + " posted a status on his wall"
             + "</div>"
             + "<div class='clear-left'></div>"
        + "</div>"
 
     $("#news").prepend(htmlLikeNewFeeds);
-};
+};// end messageReceived

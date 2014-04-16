@@ -11,6 +11,7 @@ namespace DemoSignalRChat.DAL
     interface IStatusRepository : IDisposable
     {
         IEnumerable<StatusViewModel> GetListStatusNewest(string userId);
+        StatusViewModel GetShortStatusByStatusId(string statusId);
         List<Status> GetMoreListStatus(string userId, DateTime TimePost);
         void AddStatus(Status status);
     }

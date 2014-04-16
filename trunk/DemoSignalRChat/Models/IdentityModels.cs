@@ -23,5 +23,6 @@ namespace DemoSignalRChat.Models
         public virtual ICollection<Share> Shares { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<LikeComment> LikeComments { get; set; }
+        public virtual ICollection<NewFeeds> NewFeeds { get; set; }
     }
 }

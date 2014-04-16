@@ -11,6 +11,7 @@ using DemoSignalRChat.Preview;
 using System;
 using System.Linq;
 using System.IO;
+using DemoSignalRChat.DAL.New_Feeds;
 
 namespace DemoSignalRChat.Controllers
 {
@@ -50,6 +51,14 @@ namespace DemoSignalRChat.Controllers
 
             return View(curUser);
         }
+
+        public ActionResult GetNewFeeds(string userId)
+        {
+            INewFeedsRepository newFeedsRepository = new NewFeedsRepository(_dbContext);
+            var newfeeds = newFeedsRepository.GetListNewFeeds(userId);
+            return View(newfeeds);
+        }
+
 
         public ActionResult GetComments(string statusid)
         {
