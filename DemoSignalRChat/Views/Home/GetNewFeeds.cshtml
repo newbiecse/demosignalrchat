@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+}
+@using DemoSignalRChat.ViewModels
+@model IEnumerable<NewFeedsViewModel>
+<div id="news">
+    @foreach(var newfeed in Model)
+    {
+        <div class="new">
+            <div class="new-user">
+                <img class="img28x28" src="@newfeed.Friend.Avatar" />
+            </div>
+            <div class="new-action">
+                <a href="#">@newfeed.Friend.UserName</a>
+                @switch (newfeed.TypeAtionId)
+                {
+                    case TypeAction.POST_STATUS:
+                        @: posted a status on his wall
+                    break;
+                    case TypeAction.COMMENT:
+                    @: commented a status's <a href="#">@newfeed.Comment.UserOwner.UserName</a>
+                    break;
+                    case TypeAction.LIKE:
+                    @: likes <a href="#">@newfeed.Status.UserOwner.UserName</a>'s status
+                    break;
+                    case TypeAction.SHARE:
+                    @: shares <a href="#">@newfeed.Status.UserOwner.UserName</a>'s status
+                    break;
+                    case TypeAction.ADD_FRIEND:
+                    @: and <a href="#">@newfeed.AnotherUser.UserName</a> are now friends
+                    break;
+                }
+            </div>
+            <div class="clear-left"></div>
+        </div>       
+    }
+</div>

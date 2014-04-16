@@ -26,6 +26,7 @@ namespace DemoSignalRChat.DAL
         public DbSet<Share> Shares { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<LikeComment> LikeComments { get; set; }
+        public DbSet<NewFeeds> NewFeeds { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -135,6 +136,22 @@ namespace DemoSignalRChat.DAL
                 .WithMany(u => u.LikeComments)
                 .HasForeignKey(lc => lc.UserId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<LikeComment>()
+                .HasKey(lc => new { lc.UserId, lc.CommentId })
+                .HasRequired<Comment>(l => l.Comment)
+                .WithMany(c => c.LikeComments)
+                .HasForeignKey(lc => lc.CommentId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<NewFeeds>()
+                .HasRequired<ApplicationUser>(nf => nf.User)
+                .WithMany(u => u.NewFeeds)
+                .HasForeignKey(lc => lc.UserId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<NewFeeds>()
+                .HasKey(nf => new { nf.NewFeedId });
 
 
             #region config-relation user-privateMessage

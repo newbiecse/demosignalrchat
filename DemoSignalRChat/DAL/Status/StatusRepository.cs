@@ -56,6 +56,29 @@ namespace DemoSignalRChat.DAL
             return this._db.Status.Find(statusId);
         }
 
+        public StatusViewModel GetShortStatusByStatusId(string statusId)
+        {
+            Status status = this.GetStatusByStatusId(statusId);
+            IStatusMessageRepository sttMessageRepository = new StatusMessageRepository(this._db);
+
+            IUserRepository userRepository = new UserRepository(this._db);
+
+            var message = sttMessageRepository.GetMessageByStatusId(statusId);
+            var messageProcessed = ProcessComment.ProcessMessage(message);
+
+            var userOwner = userRepository.GetUserById(status.UserId);
+
+            var statusViewModel = new
+                StatusViewModel
+            {
+                StatusId = statusId,
+                TimePost = status.TimePost,
+                Message = messageProcessed,
+                UserOwner = userOwner
+            };
+            return statusViewModel;
+        }
+
         public StatusViewModel GetStatusViewModelByStatusId(string statusId)
         {
             Status status = this.GetStatusByStatusId(statusId);
