@@ -81,7 +81,7 @@ namespace DemoSignalRChat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName, Sex = model.Sex };
+                var user = new ApplicationUser() { UserName = model.UserName, Sex = model.Sex, DisplayName = model.DisplayName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

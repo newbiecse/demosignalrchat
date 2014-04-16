@@ -19,7 +19,7 @@ namespace DemoSignalRChat.DAL
         public UserViewModel GetUserById(string userId)
         {
             var appUser = this._db.Users.Find(userId);
-            return new UserViewModel { UserId = appUser.Id, UserName = appUser.UserName, Avatar = appUser.Avatar };                
+            return new UserViewModel { UserId = appUser.Id, UserName = appUser.DisplayName, Avatar = appUser.Avatar };                
         }
 
         public IEnumerable<UserViewModel> GetRangeUser(IEnumerable<string> listUserId)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
 namespace DemoSignalRChat.Models
@@ -9,6 +10,7 @@ namespace DemoSignalRChat.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string DisplayName { get; set; }
         public int Sex { get; set; }
 
         public string Avatar { get; set; }

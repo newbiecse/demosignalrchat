@@ -1,0 +1,17 @@
+﻿@if (Request.IsAuthenticated)
+{
+                    <form id="searchform" class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <div class="input-group" style="width: 300px; position: relative;">
+                                <input type="text" class="form-control" placeholder="Search" name="paramSearch" id="txtSearch" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span><!-- \span -->
+                                <div id="search-result">
+                                </div>
+                            </div><!-- \.input-group -->
+                        </div><!-- \.form-group -->
+                    </form><!-- \form -->
+}
