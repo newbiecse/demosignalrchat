@@ -11,7 +11,7 @@ chat.client.statusNewFeeds = function (friend) {
                     + "<img class='img28x28' src='" + friend['Avatar'] + "' />"
             + " </div>"
             + "<div class='new-action'>"
-                    + "<a href='#'>" + friend['UserName'] + "</a>"
+                    + "<a href='#'>" + friend['Displayname'] + "</a>"
                     + " posted a status on his wall"
             + "</div>"
             + "<div class='clear-left'></div>"

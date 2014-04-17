@@ -179,7 +179,7 @@ namespace DemoSignalRChat.Hubs
 
             string commentDisplay = ProcessComment.ProcessNewComment(this._curUserChat, cmtMessage);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).comment(this._curUserChat.UserName, statusId, commentDisplay);
+            Clients.Clients(this._allUserRelate_ConnectionId).comment(this._curUserChat.Displayname, statusId, commentDisplay);
         }
 
         public void Like(string statusId)
@@ -200,8 +200,8 @@ namespace DemoSignalRChat.Hubs
 
             var ownerStatus = this._statusRepository.GetShortStatusByStatusId(statusId);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUserChat.UserName, statusId);
-            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.UserName);
+            Clients.Clients(this._allUserRelate_ConnectionId).like(this._curUserChat.Displayname, statusId);
+            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.Displayname);
         }
 
         public void UnLike(string statusId)
@@ -209,7 +209,7 @@ namespace DemoSignalRChat.Hubs
             this.Init();
             this._likeRepository.UnLike(statusId, this._curUserChat.UserId);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).unLike(this._curUserChat.UserName, statusId);
+            Clients.Clients(this._allUserRelate_ConnectionId).unLike(this._curUserChat.Displayname, statusId);
         }
 
 
@@ -229,7 +229,7 @@ namespace DemoSignalRChat.Hubs
 
 
 
-            Clients.Clients(this._allUserRelate_ConnectionId).postImage(this._curUserChat.UserName, message);
+            Clients.Clients(this._allUserRelate_ConnectionId).postImage(this._curUserChat.Displayname, message);
         }
 
         public void PostStatus(string message, string location)
@@ -261,7 +261,7 @@ namespace DemoSignalRChat.Hubs
 
             message = ProcessMessage.ProcessMessageStatus(statusId, this._curUserChat, message, null);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).postCastStatus(this._curUserChat.UserName, message);
+            Clients.Clients(this._allUserRelate_ConnectionId).postCastStatus(this._curUserChat.Displayname, message);
             Clients.Clients(this._friendListConnectionId_Online).statusNewFeeds(this._curUserChat);
         }
 
@@ -287,8 +287,8 @@ namespace DemoSignalRChat.Hubs
 
             var ownerStatus = this._statusRepository.GetShortStatusByStatusId(statusId);
 
-            Clients.Clients(this._allUserRelate_ConnectionId).share(this._curUserChat.UserName, messageProcessed);
-            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.UserName);
+            Clients.Clients(this._allUserRelate_ConnectionId).share(this._curUserChat.Displayname, messageProcessed);
+            Clients.Clients(this._friendListConnectionId_Online).likeNewFeeds(this._curUserChat, statusId, ownerStatus.UserOwner.Displayname);
         }
 
 
@@ -322,7 +322,7 @@ namespace DemoSignalRChat.Hubs
             // friend online
             if (friend != null)
             {
-                Clients.Client(friend.ConnectionId).notifyAddFriend(this._curUserChat.UserName);
+                Clients.Client(friend.ConnectionId).notifyAddFriend(this._curUserChat.Displayname);
             }
         }
 
@@ -339,7 +339,7 @@ namespace DemoSignalRChat.Hubs
             // friend online
             if (friend != null)
             {
-                Clients.Client(friend.ConnectionId).notifyAcceptedFriend( this._curUserChat.UserId, this._curUserChat.UserName, this._curUserChat.Avatar);
+                Clients.Client(friend.ConnectionId).notifyAcceptedFriend( this._curUserChat.UserId, this._curUserChat.Displayname, this._curUserChat.Avatar);
             }
         }
 

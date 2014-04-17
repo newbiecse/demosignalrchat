@@ -25,7 +25,7 @@ namespace DemoSignalRChat.ViewModels
 
             this.FriendList = (from u in this.db.Users
                               where friendIdList.Contains(u.Id)
-                              select new UserViewModel { UserId = u.Id, UserName = u.UserName }).ToList();
+                              select new UserViewModel { UserId = u.Id, Displayname = u.UserName }).ToList();
         }
     }
 }

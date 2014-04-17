@@ -18,7 +18,7 @@ $("#txtSearch").keyup(function () {
                 console.log(response);
                 if(response.length > 0)
                 {
-                    console.log(response[0]["UserName"]);
+                    console.log(response[0]["Displayname"]);
                 }// end if
 
                 var searchResult = $("#search-result");
@@ -35,7 +35,7 @@ $("#txtSearch").keyup(function () {
                             + "<img src='" + response[i]["Avatar"] + "' />"
                         + "</div>"
                         + "<div class='search-info'>"
-                            + "<span>" + response[i]["UserName"] + "</span>"
+                            + "<span>" + response[i]["Displayname"] + "</span>"
                             + "<span>University of technology</span>"
                         + "</div>"
                     + "</a>";

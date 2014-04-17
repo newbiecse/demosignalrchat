@@ -19,7 +19,7 @@ namespace DemoSignalRChat.DAL
         {
             return from u in this._db.Users
                    where u.UserName.ToLower().Contains(searchParam.ToLower())
-                   select new UserViewModel { UserId = u.Id, UserName = u.UserName, Avatar = u.Avatar };
+                   select new UserViewModel { UserId = u.Id, Displayname = u.UserName, Avatar = u.Avatar };
         }
 
 
