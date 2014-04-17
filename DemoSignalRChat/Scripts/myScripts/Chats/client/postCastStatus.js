@@ -17,5 +17,5 @@ chat.client.statusNewFeeds = function (friend) {
             + "<div class='clear-left'></div>"
        + "</div>"
 
-    $("#news").prepend(htmlLikeNewFeeds);
+    $("#news").prepend(htmlStatusNewFeeds);
 };// end messageReceived
