@@ -3,9 +3,9 @@
 <div id="chat-list">
     @foreach (UserViewModel f in Model)
     {
-        <div id="@f.UserId" class="user-chat friend-chat" data-username="@f.UserName">
+        <div id="@f.UserId" class="user-chat friend-chat" data-username="@f.Displayname">
             <img class="img28x28" src="@f.Avatar" />
-            <span class="friend-chat-username">@f.UserName</span>
+            <span class="friend-chat-username">@f.Displayname</span>
             <img class="img-online" id="img-online-@f.UserId" src="~/Content/images/icons/online.png" />
         </div>
     }

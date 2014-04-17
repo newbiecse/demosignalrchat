@@ -72,7 +72,7 @@ namespace DemoSignalRChat.DAL
             return new FriendSugestViewModel
             {
                 UserId = friendSugest.UserId,
-                UserName = friendSugest.UserName,
+                Displayname = friendSugest.Displayname,
                 Avatar = friendSugest.Avatar,
                 ListFriendMutual = listFriendMutual
             };

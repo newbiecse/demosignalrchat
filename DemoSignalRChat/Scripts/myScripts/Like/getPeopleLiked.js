@@ -28,7 +28,7 @@ $(".icon-liked").click(function () {
                                 + "        <img class='img50x50' src='" + response[i]["Avatar"] + "' />"
                                 + "    </div>"
                                 + "    <div class='user-name'>"
-                                + "        <a href='#'>" + response[i]["UserName"] + "</a>"
+                                + "        <a href='#'>" + response[i]["Displayname"] + "</a>"
                                 + "    </div>"
                                 + "    <div class='button-relation'>"
                                 + "        <button class='btn btn-success'>Add friend</button>"

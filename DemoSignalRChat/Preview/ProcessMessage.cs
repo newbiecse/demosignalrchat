@@ -62,7 +62,7 @@ namespace DemoSignalRChat.Preview
                 + "        <img src='" + curUser.Avatar + "' class='img-circle img40x40' />"
                 + "    </div>"
                 + "    <div class='status-owner-name'>"
-                + "        <a class='peple-name' href='#'>" + curUser.UserName + "</a>"
+                + "        <a class='peple-name' href='#'>" + curUser.Displayname + "</a>"
                 + "        <br />"
                 + "        " + DateTime.Now
                 + "    </div>"

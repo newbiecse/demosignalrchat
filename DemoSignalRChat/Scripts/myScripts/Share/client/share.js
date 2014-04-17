@@ -11,7 +11,7 @@ chat.client.likeNewFeeds = function (friend, statusId, statusOwnerUsername) {
                     + "<img class='img28x28' src='" + friend['Avatar'] + "' />"
             + " </div>"
             + "<div class='new-action'>"
-                    + "<a href='#'>" + friend['UserName'] + "</a>"
+                    + "<a href='#'>" + friend['Displayname'] + "</a>"
                     + " likes <a href='#'>" + statusOwnerUsername + "</a>'s status"
             + "</div>"
             + "<div class='clear-left'></div>"

@@ -12,23 +12,23 @@
                 <img class="img28x28" src="@newfeed.Friend.Avatar" />
             </div>
             <div class="new-action">
-                <a href="#">@newfeed.Friend.UserName</a>
+                <a href="#">@newfeed.Friend.Displayname</a>
                 @switch (newfeed.TypeAtionId)
                 {
                     case TypeAction.POST_STATUS:
                         @: posted a status on his wall
                     break;
                     case TypeAction.COMMENT:
-                    @: commented a status's <a href="#">@newfeed.Comment.UserOwner.UserName</a>
+                    @: commented a status's <a href="#">@newfeed.Comment.UserOwner.Displayname</a>
                     break;
                     case TypeAction.LIKE:
-                    @: likes <a href="#">@newfeed.Status.UserOwner.UserName</a>'s status
+                    @: likes <a href="#">@newfeed.Status.UserOwner.Displayname</a>'s status
                     break;
                     case TypeAction.SHARE:
-                    @: shares <a href="#">@newfeed.Status.UserOwner.UserName</a>'s status
+                    @: shares <a href="#">@newfeed.Status.UserOwner.Displayname</a>'s status
                     break;
                     case TypeAction.ADD_FRIEND:
-                    @: and <a href="#">@newfeed.AnotherUser.UserName</a> are now friends
+                    @: and <a href="#">@newfeed.AnotherUser.Displayname</a> are now friends
                     break;
                 }
             </div>

@@ -15,7 +15,7 @@
 			            + "<img class='img40x40' src='" + response[i]["Avatar"] + "' />"
 	            + "</div>"
 	            + "<div class='user-wait-info'>"
-			            + "<a>" + response[i]["UserName"] + "</a>"
+			            + "<a>" + response[i]["Displayname"] + "</a>"
 			            + "<span>16 ban chung</span>"
 	            + "</div>"
 	            + "<div class='user-wait-accept'>"

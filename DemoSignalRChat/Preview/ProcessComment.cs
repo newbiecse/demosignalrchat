@@ -22,7 +22,7 @@ namespace DemoSignalRChat.Preview
                 + "</div>"
                 + "<div class='comment-content'>"
                     + "<p>"
-                        + "<a href='#'>" + userComment.UserName + "</a>"
+                        + "<a href='#'>" + userComment.Displayname + "</a>"
                         + "&nbsp;&nbsp;"
                         + messageProcessed
                     + "</p>"
