@@ -1,4 +1,8 @@
-﻿@using DemoSignalRChat.ViewModels
+﻿@{
+    Layout = null;
+}
+
+@using DemoSignalRChat.ViewModels
 @using DemoSignalRChat.Preview
 @using System.Text.RegularExpressions
 @model IEnumerable<StatusViewModel>
@@ -7,8 +11,6 @@
     UserViewModel curUser = ViewBag.curUser;
 }
 
-<div id="status-list" class="row">
-
     @foreach (StatusViewModel status in Model)
     {
 
@@ -16,10 +18,10 @@
 
             <div class="status-owner">
                 <div class="status-owner-image">
-                    <img src="@status.UserOwner.Avatar" class="img-circle img40x40" />
+                    <img src="@curUser.Avatar" class="img-circle img40x40" />
                 </div>
                 <div class="status-owner-name">
-                    <a class="peple-name" href='#'>@status.UserOwner.Displayname</a>
+                    <a class="peple-name" href='#'>@curUser.Displayname</a> shared <a class="peple-name" href='#'>@status.UserOwner.Displayname</a>
                     <br />
                     @status.TimePost
                 </div>
@@ -30,32 +32,32 @@
                 @Html.Raw(status.Message)
             </div>
 
-             @if (status.LinkPreview != null)
-             {
-                    <a class='link-preview' href='@status.LinkPreview.url' target='_blank'>
-                        <div class='preview'>
-                            <div class='preview-image'>
-                                <img src='@status.LinkPreview.src' class='img90x90' />
-                            </div>
-                            <div class='preview-description'>
-                                <b>@status.LinkPreview.title</b>
-                                <p>
-                                    @Regex.Match(status.LinkPreview.url, @"://(.+?)/").Groups[1].Value <br />
-                                    @status.LinkPreview.description
-                                </p>
-                            </div>
-                            <div class="clear-left"></div>
+            @if (status.LinkPreview != null)
+            {
+                <a class='link-preview' href='@status.LinkPreview.url' target='_blank'>
+                    <div class='preview'>
+                        <div class='preview-image'>
+                            <img src='@status.LinkPreview.src' class='img90x90' />
                         </div>
-                    </a>
-              } 
+                        <div class='preview-description'>
+                            <b>@status.LinkPreview.title</b>
+                            <p>
+                                @Regex.Match(status.LinkPreview.url, @"://(.+?)/").Groups[1].Value <br />
+                                @status.LinkPreview.description
+                            </p>
+                        </div>
+                        <div class="clear-left"></div>
+                    </div>
+                </a>
+            }
 
             <div class="box-like-share">
                 @{
-                int isLiked = 0;
-                if (status.ListUserLiked.Select(u => u.UserId).Count(uId => uId == curUser.UserId) > 0)
-                {
-                    isLiked = 1;
-                }
+            int isLiked = 0;
+            if (status.ListUserLiked.Select(u => u.UserId).Count(uId => uId == curUser.UserId) > 0)
+            {
+                isLiked = 1;
+            }
                 }
                 <a class="like" data-isliked="@isLiked" data-statusid="@status.StatusId">
                     @if (isLiked == 0)
@@ -76,12 +78,12 @@
             <div class="list-comment" id="list-comment-@status.StatusId">
 
 
-                @Html.Action("GetComments", new { statusId = @status.StatusId })
+                @Html.Action("GetComments", "Home", new { statusId = @status.StatusId })
 
                 <div class="block-textarea" id="block-txtComment-@status.StatusId">
                     <div class="comment-user">
                         <a href="#">
-                            <img src="" class="img-rounded img33x33 cur-user-avatar">
+                            <img src="@curUser.Avatar" class="img-rounded img33x33 cur-user-avatar">
                         </a>
                     </div>
                     <div class="comment-content">
@@ -97,4 +99,3 @@
 
         </div><!-- .status -->
     }
-</div><!-- #status-list -->

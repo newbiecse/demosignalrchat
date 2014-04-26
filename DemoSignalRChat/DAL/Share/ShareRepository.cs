@@ -15,6 +15,15 @@ namespace DemoSignalRChat.DAL
             this._db = dbContext;
         }
 
+        public IEnumerable<string> GetStatusIdShared(string userId)
+        {
+            return (from share in this._db.Shares
+                   where share.UserId == userId
+                   select share.StatusId)
+                   .OrderByDescending(s => s)
+                   .Distinct();
+        }
+
         public void AddShare(Share share)
         {
             this._db.Shares.Add(share);

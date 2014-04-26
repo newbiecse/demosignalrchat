@@ -32,24 +32,51 @@ namespace DemoSignalRChat.Controllers
             var curUser = this._userRepository.GetUserById(curUserId);
             ViewBag.curUser = curUser;
 
-            // get fiendlist
-            this._friendRepository = new FriendRepository(_dbContext);
-            var friendList = this._friendRepository.GetFriendList(curUserId);
-            // store friendlist
-            ViewData["friendList"] = friendList;
+            return View(curUser);
+        }
 
-            // friend sugest
-            var friendListSugest = this._friendRepository.GetFriendListSugest(curUser.UserId);
-            ViewData["friendListSugest"] = friendListSugest;
+        public ActionResult Wall()
+        {
+            return View();
+        }
+
+
+        public ActionResult StatusNewest()
+        {
+            string curUserId = User.Identity.GetUserId();
+
+            this._userRepository = new UserRepository(_dbContext);
+            var curUser = this._userRepository.GetUserById(curUserId);
+            ViewBag.curUser = curUser;
 
             // get status newest
             this._statusRepository = new StatusRepository(this._dbContext);
             var listStatusNewest = this._statusRepository.GetListStatusNewest(curUserId);
-            // store status newest
-            ViewData["listStatusNewest"] = listStatusNewest;
 
+            return View(listStatusNewest);
+        }
 
-            return View(curUser);
+        public ActionResult FriendList()
+        {
+            string curUserId = User.Identity.GetUserId();
+
+            // get fiendlist
+            this._friendRepository = new FriendRepository(_dbContext);
+            var friendList = this._friendRepository.GetFriendList(curUserId);
+
+            return View(friendList);
+        }
+
+        public ActionResult FriendListSuggest()
+        {
+            string curUserId = User.Identity.GetUserId();
+
+            // friend sugest
+            this._friendRepository = new FriendRepository(_dbContext);
+            var friendListSugest = this._friendRepository.GetFriendListSugest(curUserId);
+            ViewData["friendListSugest"] = friendListSugest;
+
+            return View(friendListSugest);
         }
 
         public ActionResult GetNewFeeds(string userId)

@@ -11,5 +11,6 @@ namespace DemoSignalRChat.DAL
     {
         void AddShare(Share share);
         int GetNumShare(string statusId);
+        IEnumerable<string> GetStatusIdShared(string userId);
     }
 }

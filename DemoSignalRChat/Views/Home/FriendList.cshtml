@@ -1,4 +1,9 @@
-﻿@using DemoSignalRChat.ViewModels
+﻿
+@{
+    Layout = null;
+}
+
+@using DemoSignalRChat.ViewModels
 @model IEnumerable<UserViewModel>
 <div id="chat-list">
     @foreach (UserViewModel f in Model)
@@ -10,4 +15,3 @@
         </div>
     }
 </div>
-

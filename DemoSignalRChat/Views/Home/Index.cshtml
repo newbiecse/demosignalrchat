@@ -3,13 +3,13 @@
 
     <div id="groups" class="col-md-2">
         <h3>Favorites</h3>
-        <p><a>Lap trinh c#</a></p>
+        <p id="btn-wall"><a>wall</a></p>
         <p><a>Make money online</a></p>
     </div>
 
     <div id="main-left" class="col-md-5 col-sm-5 col-xs-12">
             @Html.Partial("_FormPost")
-            @Html.Partial("_StatusList", ViewData["listStatusNewest"])
+            @Html.Action("StatusNewest", "Home")
     </div><!--\#main-left-->
 
 
@@ -17,8 +17,8 @@
         <div class="row">
             @Html.Partial("_SuggestAttraction")
         </div>
-        <div class="row">
-            @Html.Partial("_SuggestFriend", ViewData["friendListSugest"])
+        <div class="row">            
+            @Html.Action("FriendListSuggest", "Home")
         </div>
     </div><!--\#main-center-->
 
@@ -28,7 +28,7 @@
             @Html.Action("GetNewFeeds", new { userId = Model.UserId })
         </div>
         <div class="row">
-            @Html.Partial("_ChatList", ViewData["friendList"])
+            @Html.Action("FriendList", "Home")
         </div>
     </div><!--\#main-right-->
 
@@ -152,7 +152,8 @@
 
 
 
-
+    
+    <script src="~/Scripts/myScripts/Wall/wall.js"></script>
 
 
 
