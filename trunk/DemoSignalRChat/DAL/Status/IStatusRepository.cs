@@ -12,6 +12,7 @@ namespace DemoSignalRChat.DAL
     {
         IEnumerable<StatusViewModel> GetListStatusNewest(string userId);
         StatusViewModel GetShortStatusByStatusId(string statusId);
+        IEnumerable<StatusViewModel> GetListStatusByRangeStatusId(IEnumerable<string> listStatusId);
         List<Status> GetMoreListStatus(string userId, DateTime TimePost);
         void AddStatus(Status status);
     }

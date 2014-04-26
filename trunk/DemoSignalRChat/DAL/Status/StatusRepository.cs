@@ -51,6 +51,16 @@ namespace DemoSignalRChat.DAL
                 .Take(5);
         }
 
+        public IEnumerable<StatusViewModel> GetListStatusByRangeStatusId(IEnumerable<string> listStatusId)
+        {
+            List<StatusViewModel> listStatus = new List<StatusViewModel>();
+            foreach(var stt in listStatusId)
+            {
+                listStatus.Add(this.GetStatusViewModelByStatusId(stt));
+            }
+            return listStatus;
+        }
+
         public Status GetStatusByStatusId(string statusId)
         {
             return this._db.Status.Find(statusId);

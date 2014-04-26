@@ -7,6 +7,10 @@
     resize: none;
 }
 
+#img-loader-wall{
+    display: none;
+}
+
 #status-list{
     /*background-color: #ffffff;*/
     margin-top: 20px;

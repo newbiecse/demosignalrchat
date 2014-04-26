@@ -45,11 +45,15 @@
                     
                     @Html.Partial("_SearchFormPartial")
                     
+
                     <ul class="nav navbar-nav navbar-right">
-                        @Html.Partial("_LoginPartial")
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Wall", "Index", "Wall", new { id = "btn-wall" })</li>
+
+                         @Html.Partial("_LoginPartial")
                     </ul><!--\ul.navbar-right-->
 
-                </div><!--\.navbar-collapse-->
+</div><!--\.navbar-collapse-->
             </div>
          </nav>
 

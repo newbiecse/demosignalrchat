@@ -1,5 +1,8 @@
 ﻿
-
+$("body").click(function () {
+    //alert("clicked");
+    $("#search-result").html("");
+});// end click
 
 $("#txtSearch").keyup(function () {
 

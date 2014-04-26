@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+
+@using DemoSignalRChat.ViewModels
+@using DemoSignalRChat.Preview
+@using System.Text.RegularExpressions
+@model IEnumerable<StatusViewModel>
+
+@{
+    UserViewModel curUser = ViewBag.curUser;
+}
+
+<div id="status-list" class="row">
+
+    <div id="img-loader-wall" class="status">
+        <img src="~/images/ajax-loader-wall.gif" />
+    </div>
+
+        @foreach (StatusViewModel status in Model)
+        {
+
+            <div class="status">
+
+                <div class="status-owner">
+                    <div class="status-owner-image">
+                        <img src="@status.UserOwner.Avatar" class="img-circle img40x40" />
+                    </div>
+                    <div class="status-owner-name">
+                        <a class="peple-name" href='#'>@status.UserOwner.Displayname</a>
+                        <br />
+                        @status.TimePost
+                    </div>
+                    <div class="clear-left"></div>
+                </div>
+
+                <div class="status-content">
+                    @Html.Raw(status.Message)
+                </div>
+
+                @if (status.LinkPreview != null)
+                {
+                    <a class='link-preview' href='@status.LinkPreview.url' target='_blank'>
+                        <div class='preview'>
+                            <div class='preview-image'>
+                                <img src='@status.LinkPreview.src' class='img90x90' />
+                            </div>
+                            <div class='preview-description'>
+                                <b>@status.LinkPreview.title</b>
+                                <p>
+                                    @Regex.Match(status.LinkPreview.url, @"://(.+?)/").Groups[1].Value <br />
+                                    @status.LinkPreview.description
+                                </p>
+                            </div>
+                            <div class="clear-left"></div>
+                        </div>
+                    </a>
+                }
+
+                <div class="box-like-share">
+                    @{
+                int isLiked = 0;
+                if (status.ListUserLiked.Select(u => u.UserId).Count(uId => uId == curUser.UserId) > 0)
+                {
+                    isLiked = 1;
+                }
+                    }
+                    <a class="like" data-isliked="@isLiked" data-statusid="@status.StatusId">
+                        @if (isLiked == 0)
+                        {
+                            @:like
+                            }
+                        else
+                        {
+                            @:unlike
+                            }
+                    </a> &nbsp;<span data-statusid="@status.StatusId" class="glyphicon glyphicon-thumbs-up icon-liked" data-toggle="modal" data-target="#liked"></span> <span id="numLike-@status.StatusId">@status.ListUserLiked.Count()</span>
+                    <a class="share" data-statusid="@status.StatusId">Share</a> &nbsp;<span class="glyphicon glyphicon-share-alt"></span> <span id="numShare-@status.StatusId">@status.NumShared</span>
+                </div><!-- box-like-share -->
+
+
+                <hr />
+
+                <div class="list-comment" id="list-comment-@status.StatusId">
+
+
+                    @Html.Action("GetComments", new { statusId = @status.StatusId })
+
+                    <div class="block-textarea" id="block-txtComment-@status.StatusId">
+                        <div class="comment-user">
+                            <a href="#">
+                                <img src="" class="img-rounded img33x33 cur-user-avatar">
+                            </a>
+                        </div>
+                        <div class="comment-content">
+                            <textarea data-statusid="@status.StatusId" name="txtComment" rows="1" cols="59" class="form-control txtComment" placeholder="Enter comment..."></textarea>
+                        </div>
+                        <div class="clear-left"></div>
+                    </div>
+
+
+                </div><!-- .list-comment -->
+
+
+
+            </div><!-- .status -->
+        }
+    </div><!-- #status-list -->
