@@ -37,7 +37,13 @@ namespace DemoSignalRChat.Controllers
 
         public ActionResult Wall()
         {
-            return View();
+            // get current user
+            string curUserId = User.Identity.GetUserId();
+            this._userRepository = new UserRepository(_dbContext);
+            var curUser = this._userRepository.GetUserById(curUserId);
+            ViewBag.curUser = curUser;
+
+            return View(curUser);
         }
 
 
