@@ -23,5 +23,5 @@ chat.client.privateMessageReceived = function (userIdSent, message) {
         // update window body of window chat
         $(_B_windowBodyId).append("<p class='msg msg-friend'>" + msg_emotion + "</p>");
         // scroll window body
-        $(_B_windowBodyId).scrollTop($(_B_wBodyId).height());
+        $(_B_windowBodyId).scrollTop($(_B_windowBodyId).height());
 };

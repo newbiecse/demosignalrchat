@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GoogleMapsApi">
+      <HintPath>..\packages\GoogleMapsApi.0.30.0.0\lib\net45\GoogleMapsApi.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -49,6 +52,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -161,109 +165,348 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleMobileConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\ApplicationDbContext.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\ViewSwitcherController.cs" />
+    <Compile Include="Controllers\WallController.cs" />
+    <Compile Include="DAL\Context\ApplicationDbContext.cs" />
+    <Compile Include="DAL\Comment\CommentRepository.cs" />
+    <Compile Include="DAL\Chat\IChatRepository.cs" />
+    <Compile Include="DAL\Comment\ICommentRepository.cs" />
+    <Compile Include="DAL\Friends\FriendRepository.cs" />
+    <Compile Include="DAL\IFriendRepository.cs" />
+    <Compile Include="DAL\Like\LikeComment\ILikeCommentRepositoty.cs" />
+    <Compile Include="DAL\Like\ILikeRepository.cs" />
+    <Compile Include="DAL\New_Feeds\INewFeedsRepository.cs" />
+    <Compile Include="DAL\New_Feeds\NewFeedsRepository.cs" />
+    <Compile Include="DAL\Search\ISearchRepository.cs" />
+    <Compile Include="DAL\Share\IShareRepository.cs" />
+    <Compile Include="DAL\Status\Image\IStatusImageRepository.cs" />
+    <Compile Include="DAL\Status\Message\IStatusMessageRepository.cs" />
+    <Compile Include="DAL\User\IUserRepository.cs" />
+    <Compile Include="DAL\Chat\ChatMessage\IPrivateMessageRepository.cs" />
+    <Compile Include="DAL\Status\IStatusRepository.cs" />
+    <Compile Include="DAL\Chat\ChatRepository.cs" />
+    <Compile Include="DAL\Like\LikeComment\LikeCommentRepository.cs" />
+    <Compile Include="DAL\Like\LikeRepository.cs" />
+    <Compile Include="DAL\Search\SearchRepository.cs" />
+    <Compile Include="DAL\Share\ShareRepository.cs" />
+    <Compile Include="DAL\Status\Image\StatusImageRepository.cs" />
+    <Compile Include="DAL\Status\Location\IStatusLocationRepository.cs" />
+    <Compile Include="DAL\Status\Location\StatusLocationRepository.cs" />
+    <Compile Include="DAL\Status\Message\StatusMessageRepository.cs" />
+    <Compile Include="DAL\User\UserRepository.cs" />
+    <Compile Include="DAL\Chat\ChatMessage\PrivateMessageRepository.cs" />
+    <Compile Include="DAL\Status\StatusRepository.cs" />
+    <Compile Include="DAL\Wall\IWallRepository.cs" />
+    <Compile Include="DAL\Wall\WallRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Migrations\201402080702412_init.cs" />
-    <Compile Include="Migrations\201402080702412_init.Designer.cs">
-      <DependentUpon>201402080702412_init.cs</DependentUpon>
+    <Compile Include="Logic\Travel\TSPAlgorithm.cs" />
+    <Compile Include="Migrations\201403100130535_init.cs" />
+    <Compile Include="Migrations\201403100130535_init.Designer.cs">
+      <DependentUpon>201403100130535_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402080710192_remove-cascade-delete.cs" />
-    <Compile Include="Migrations\201402080710192_remove-cascade-delete.Designer.cs">
-      <DependentUpon>201402080710192_remove-cascade-delete.cs</DependentUpon>
+    <Compile Include="Migrations\201403101423212_Modify_Share_table.cs" />
+    <Compile Include="Migrations\201403101423212_Modify_Share_table.Designer.cs">
+      <DependentUpon>201403101423212_Modify_Share_table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402080715473_add-column-status-to-table-friend.cs" />
-    <Compile Include="Migrations\201402080715473_add-column-status-to-table-friend.Designer.cs">
-      <DependentUpon>201402080715473_add-column-status-to-table-friend.cs</DependentUpon>
+    <Compile Include="Migrations\201404160953234_add-table-newfeeds.cs" />
+    <Compile Include="Migrations\201404160953234_add-table-newfeeds.Designer.cs">
+      <DependentUpon>201404160953234_add-table-newfeeds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402080739584_add-table-statusMessage.cs" />
-    <Compile Include="Migrations\201402080739584_add-table-statusMessage.Designer.cs">
-      <DependentUpon>201402080739584_add-table-statusMessage.cs</DependentUpon>
+    <Compile Include="Migrations\201404161021079_change-primaty-key-table-newfeeds.cs" />
+    <Compile Include="Migrations\201404161021079_change-primaty-key-table-newfeeds.Designer.cs">
+      <DependentUpon>201404161021079_change-primaty-key-table-newfeeds.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201402080754071_set-TimePost-is-Now-for-table-status.cs" />
-    <Compile Include="Migrations\201402080754071_set-TimePost-is-Now-for-table-status.Designer.cs">
-      <DependentUpon>201402080754071_set-TimePost-is-Now-for-table-status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080815473_add-table-privateMessage.cs" />
-    <Compile Include="Migrations\201402080815473_add-table-privateMessage.Designer.cs">
-      <DependentUpon>201402080815473_add-table-privateMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080820479_edit-column-name-table-privateMessage.cs" />
-    <Compile Include="Migrations\201402080820479_edit-column-name-table-privateMessage.Designer.cs">
-      <DependentUpon>201402080820479_edit-column-name-table-privateMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080833388_add-table-StatusLink.cs" />
-    <Compile Include="Migrations\201402080833388_add-table-StatusLink.Designer.cs">
-      <DependentUpon>201402080833388_add-table-StatusLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080835327_add-column-image-to-table-StatusLink.cs" />
-    <Compile Include="Migrations\201402080835327_add-column-image-to-table-StatusLink.Designer.cs">
-      <DependentUpon>201402080835327_add-column-image-to-table-StatusLink.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080838385_add-attribute-Required-to-field-userId-of-class-Status.cs" />
-    <Compile Include="Migrations\201402080838385_add-attribute-Required-to-field-userId-of-class-Status.Designer.cs">
-      <DependentUpon>201402080838385_add-attribute-Required-to-field-userId-of-class-Status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080842271_try-relation-user-status.cs" />
-    <Compile Include="Migrations\201402080842271_try-relation-user-status.Designer.cs">
-      <DependentUpon>201402080842271_try-relation-user-status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080847135_complete-relation-user-status.cs" />
-    <Compile Include="Migrations\201402080847135_complete-relation-user-status.Designer.cs">
-      <DependentUpon>201402080847135_complete-relation-user-status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080859302_add-table-status-image.cs" />
-    <Compile Include="Migrations\201402080859302_add-table-status-image.Designer.cs">
-      <DependentUpon>201402080859302_add-table-status-image.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402080901051_add-location-to-status.cs" />
-    <Compile Include="Migrations\201402080901051_add-location-to-status.Designer.cs">
-      <DependentUpon>201402080901051_add-location-to-status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402230205246_delete-status-link.cs" />
-    <Compile Include="Migrations\201402230205246_delete-status-link.Designer.cs">
-      <DependentUpon>201402230205246_delete-status-link.cs</DependentUpon>
+    <Compile Include="Migrations\201404162046067_Add-Displayname.cs" />
+    <Compile Include="Migrations\201404162046067_Add-Displayname.Designer.cs">
+      <DependentUpon>201404162046067_Add-Displayname.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Like.cs" />
+    <Compile Include="Models\LikeComment.cs" />
+    <Compile Include="Models\NewFeeds.cs" />
     <Compile Include="Models\PrivateMessage.cs" />
     <Compile Include="Models\MessageDetail.cs" />
+    <Compile Include="Models\Share.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\StatusImage.cs" />
+    <Compile Include="Models\StatusLocation.cs" />
     <Compile Include="Models\StatusMessage.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Preview\Img.cs" />
     <Compile Include="Preview\Link.cs" />
+    <Compile Include="Preview\LinkPreview.cs" />
+    <Compile Include="Preview\ProcessComment.cs" />
+    <Compile Include="Preview\ProcessMessage.cs" />
+    <Compile Include="Preview\Emotion.cs" />
+    <Compile Include="ProcessPreData\SequentialGuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\FriendListViewModel.cs" />
+    <Compile Include="ViewModels\FriendSugestViewModel.cs" />
+    <Compile Include="ViewModels\NewFeedsViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
+    <Compile Include="ViewModels\TypeAction.cs" />
     <Compile Include="ViewModels\UserChatViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DemoSignalRChat.mdf" />
-    <Content Include="App_Data\DemoSignalRChat_log.ldf">
-      <DependentUpon>DemoSignalRChat.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\group.css" />
+    <Content Include="Content\images.css" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\icons-18-black.png" />
+    <Content Include="Content\images\icons-18-white.png" />
+    <Content Include="Content\images\icons-36-black.png" />
+    <Content Include="Content\images\icons-36-white.png" />
+    <Content Include="Content\images\icons-png\action-black.png" />
+    <Content Include="Content\images\icons-png\action-white.png" />
+    <Content Include="Content\images\icons-png\alert-black.png" />
+    <Content Include="Content\images\icons-png\alert-white.png" />
+    <Content Include="Content\images\icons-png\arrow-d-black.png" />
+    <Content Include="Content\images\icons-png\arrow-d-l-black.png" />
+    <Content Include="Content\images\icons-png\arrow-d-l-white.png" />
+    <Content Include="Content\images\icons-png\arrow-d-r-black.png" />
+    <Content Include="Content\images\icons-png\arrow-d-r-white.png" />
+    <Content Include="Content\images\icons-png\arrow-d-white.png" />
+    <Content Include="Content\images\icons-png\arrow-l-black.png" />
+    <Content Include="Content\images\icons-png\arrow-l-white.png" />
+    <Content Include="Content\images\icons-png\arrow-r-black.png" />
+    <Content Include="Content\images\icons-png\arrow-r-white.png" />
+    <Content Include="Content\images\icons-png\arrow-u-black.png" />
+    <Content Include="Content\images\icons-png\arrow-u-l-black.png" />
+    <Content Include="Content\images\icons-png\arrow-u-l-white.png" />
+    <Content Include="Content\images\icons-png\arrow-u-r-black.png" />
+    <Content Include="Content\images\icons-png\arrow-u-r-white.png" />
+    <Content Include="Content\images\icons-png\arrow-u-white.png" />
+    <Content Include="Content\images\icons-png\audio-black.png" />
+    <Content Include="Content\images\icons-png\audio-white.png" />
+    <Content Include="Content\images\icons-png\back-black.png" />
+    <Content Include="Content\images\icons-png\back-white.png" />
+    <Content Include="Content\images\icons-png\bars-black.png" />
+    <Content Include="Content\images\icons-png\bars-white.png" />
+    <Content Include="Content\images\icons-png\bullets-black.png" />
+    <Content Include="Content\images\icons-png\bullets-white.png" />
+    <Content Include="Content\images\icons-png\calendar-black.png" />
+    <Content Include="Content\images\icons-png\calendar-white.png" />
+    <Content Include="Content\images\icons-png\camera-black.png" />
+    <Content Include="Content\images\icons-png\camera-white.png" />
+    <Content Include="Content\images\icons-png\carat-d-black.png" />
+    <Content Include="Content\images\icons-png\carat-d-white.png" />
+    <Content Include="Content\images\icons-png\carat-l-black.png" />
+    <Content Include="Content\images\icons-png\carat-l-white.png" />
+    <Content Include="Content\images\icons-png\carat-r-black.png" />
+    <Content Include="Content\images\icons-png\carat-r-white.png" />
+    <Content Include="Content\images\icons-png\carat-u-black.png" />
+    <Content Include="Content\images\icons-png\carat-u-white.png" />
+    <Content Include="Content\images\icons-png\check-black.png" />
+    <Content Include="Content\images\icons-png\check-white.png" />
+    <Content Include="Content\images\icons-png\clock-black.png" />
+    <Content Include="Content\images\icons-png\clock-white.png" />
+    <Content Include="Content\images\icons-png\cloud-black.png" />
+    <Content Include="Content\images\icons-png\cloud-white.png" />
+    <Content Include="Content\images\icons-png\comment-black.png" />
+    <Content Include="Content\images\icons-png\comment-white.png" />
+    <Content Include="Content\images\icons-png\delete-black.png" />
+    <Content Include="Content\images\icons-png\delete-white.png" />
+    <Content Include="Content\images\icons-png\edit-black.png" />
+    <Content Include="Content\images\icons-png\edit-white.png" />
+    <Content Include="Content\images\icons-png\eye-black.png" />
+    <Content Include="Content\images\icons-png\eye-white.png" />
+    <Content Include="Content\images\icons-png\forbidden-black.png" />
+    <Content Include="Content\images\icons-png\forbidden-white.png" />
+    <Content Include="Content\images\icons-png\forward-black.png" />
+    <Content Include="Content\images\icons-png\forward-white.png" />
+    <Content Include="Content\images\icons-png\gear-black.png" />
+    <Content Include="Content\images\icons-png\gear-white.png" />
+    <Content Include="Content\images\icons-png\grid-black.png" />
+    <Content Include="Content\images\icons-png\grid-white.png" />
+    <Content Include="Content\images\icons-png\heart-black.png" />
+    <Content Include="Content\images\icons-png\heart-white.png" />
+    <Content Include="Content\images\icons-png\home-black.png" />
+    <Content Include="Content\images\icons-png\home-white.png" />
+    <Content Include="Content\images\icons-png\info-black.png" />
+    <Content Include="Content\images\icons-png\info-white.png" />
+    <Content Include="Content\images\icons-png\location-black.png" />
+    <Content Include="Content\images\icons-png\location-white.png" />
+    <Content Include="Content\images\icons-png\lock-black.png" />
+    <Content Include="Content\images\icons-png\lock-white.png" />
+    <Content Include="Content\images\icons-png\mail-black.png" />
+    <Content Include="Content\images\icons-png\mail-white.png" />
+    <Content Include="Content\images\icons-png\minus-black.png" />
+    <Content Include="Content\images\icons-png\minus-white.png" />
+    <Content Include="Content\images\icons-png\navigation-black.png" />
+    <Content Include="Content\images\icons-png\navigation-white.png" />
+    <Content Include="Content\images\icons-png\phone-black.png" />
+    <Content Include="Content\images\icons-png\phone-white.png" />
+    <Content Include="Content\images\icons-png\plus-black.png" />
+    <Content Include="Content\images\icons-png\plus-white.png" />
+    <Content Include="Content\images\icons-png\power-black.png" />
+    <Content Include="Content\images\icons-png\power-white.png" />
+    <Content Include="Content\images\icons-png\recycle-black.png" />
+    <Content Include="Content\images\icons-png\recycle-white.png" />
+    <Content Include="Content\images\icons-png\refresh-black.png" />
+    <Content Include="Content\images\icons-png\refresh-white.png" />
+    <Content Include="Content\images\icons-png\search-black.png" />
+    <Content Include="Content\images\icons-png\search-white.png" />
+    <Content Include="Content\images\icons-png\shop-black.png" />
+    <Content Include="Content\images\icons-png\shop-white.png" />
+    <Content Include="Content\images\icons-png\star-black.png" />
+    <Content Include="Content\images\icons-png\star-white.png" />
+    <Content Include="Content\images\icons-png\tag-black.png" />
+    <Content Include="Content\images\icons-png\tag-white.png" />
+    <Content Include="Content\images\icons-png\user-black.png" />
+    <Content Include="Content\images\icons-png\user-white.png" />
+    <Content Include="Content\images\icons-png\video-black.png" />
+    <Content Include="Content\images\icons-png\video-white.png" />
+    <Content Include="Content\images\icons-svg\action-black.svg" />
+    <Content Include="Content\images\icons-svg\action-white.svg" />
+    <Content Include="Content\images\icons-svg\alert-black.svg" />
+    <Content Include="Content\images\icons-svg\alert-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-l-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-l-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-r-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-r-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-d-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-l-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-l-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-r-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-r-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-l-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-l-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-r-black.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-r-white.svg" />
+    <Content Include="Content\images\icons-svg\arrow-u-white.svg" />
+    <Content Include="Content\images\icons-svg\audio-black.svg" />
+    <Content Include="Content\images\icons-svg\audio-white.svg" />
+    <Content Include="Content\images\icons-svg\back-black.svg" />
+    <Content Include="Content\images\icons-svg\back-white.svg" />
+    <Content Include="Content\images\icons-svg\bars-black.svg" />
+    <Content Include="Content\images\icons-svg\bars-white.svg" />
+    <Content Include="Content\images\icons-svg\bullets-black.svg" />
+    <Content Include="Content\images\icons-svg\bullets-white.svg" />
+    <Content Include="Content\images\icons-svg\calendar-black.svg" />
+    <Content Include="Content\images\icons-svg\calendar-white.svg" />
+    <Content Include="Content\images\icons-svg\camera-black.svg" />
+    <Content Include="Content\images\icons-svg\camera-white.svg" />
+    <Content Include="Content\images\icons-svg\carat-d-black.svg" />
+    <Content Include="Content\images\icons-svg\carat-d-white.svg" />
+    <Content Include="Content\images\icons-svg\carat-l-black.svg" />
+    <Content Include="Content\images\icons-svg\carat-l-white.svg" />
+    <Content Include="Content\images\icons-svg\carat-r-black.svg" />
+    <Content Include="Content\images\icons-svg\carat-r-white.svg" />
+    <Content Include="Content\images\icons-svg\carat-u-black.svg" />
+    <Content Include="Content\images\icons-svg\carat-u-white.svg" />
+    <Content Include="Content\images\icons-svg\check-black.svg" />
+    <Content Include="Content\images\icons-svg\check-white.svg" />
+    <Content Include="Content\images\icons-svg\clock-black.svg" />
+    <Content Include="Content\images\icons-svg\clock-white.svg" />
+    <Content Include="Content\images\icons-svg\cloud-black.svg" />
+    <Content Include="Content\images\icons-svg\cloud-white.svg" />
+    <Content Include="Content\images\icons-svg\comment-black.svg" />
+    <Content Include="Content\images\icons-svg\comment-white.svg" />
+    <Content Include="Content\images\icons-svg\delete-black.svg" />
+    <Content Include="Content\images\icons-svg\delete-white.svg" />
+    <Content Include="Content\images\icons-svg\edit-black.svg" />
+    <Content Include="Content\images\icons-svg\edit-white.svg" />
+    <Content Include="Content\images\icons-svg\eye-black.svg" />
+    <Content Include="Content\images\icons-svg\eye-white.svg" />
+    <Content Include="Content\images\icons-svg\forbidden-black.svg" />
+    <Content Include="Content\images\icons-svg\forbidden-white.svg" />
+    <Content Include="Content\images\icons-svg\forward-black.svg" />
+    <Content Include="Content\images\icons-svg\forward-white.svg" />
+    <Content Include="Content\images\icons-svg\gear-black.svg" />
+    <Content Include="Content\images\icons-svg\gear-white.svg" />
+    <Content Include="Content\images\icons-svg\grid-black.svg" />
+    <Content Include="Content\images\icons-svg\grid-white.svg" />
+    <Content Include="Content\images\icons-svg\heart-black.svg" />
+    <Content Include="Content\images\icons-svg\heart-white.svg" />
+    <Content Include="Content\images\icons-svg\home-black.svg" />
+    <Content Include="Content\images\icons-svg\home-white.svg" />
+    <Content Include="Content\images\icons-svg\info-black.svg" />
+    <Content Include="Content\images\icons-svg\info-white.svg" />
+    <Content Include="Content\images\icons-svg\location-black.svg" />
+    <Content Include="Content\images\icons-svg\location-white.svg" />
+    <Content Include="Content\images\icons-svg\lock-black.svg" />
+    <Content Include="Content\images\icons-svg\lock-white.svg" />
+    <Content Include="Content\images\icons-svg\mail-black.svg" />
+    <Content Include="Content\images\icons-svg\mail-white.svg" />
+    <Content Include="Content\images\icons-svg\minus-black.svg" />
+    <Content Include="Content\images\icons-svg\minus-white.svg" />
+    <Content Include="Content\images\icons-svg\navigation-black.svg" />
+    <Content Include="Content\images\icons-svg\navigation-white.svg" />
+    <Content Include="Content\images\icons-svg\phone-black.svg" />
+    <Content Include="Content\images\icons-svg\phone-white.svg" />
+    <Content Include="Content\images\icons-svg\plus-black.svg" />
+    <Content Include="Content\images\icons-svg\plus-white.svg" />
+    <Content Include="Content\images\icons-svg\power-black.svg" />
+    <Content Include="Content\images\icons-svg\power-white.svg" />
+    <Content Include="Content\images\icons-svg\recycle-black.svg" />
+    <Content Include="Content\images\icons-svg\recycle-white.svg" />
+    <Content Include="Content\images\icons-svg\refresh-black.svg" />
+    <Content Include="Content\images\icons-svg\refresh-white.svg" />
+    <Content Include="Content\images\icons-svg\search-black.svg" />
+    <Content Include="Content\images\icons-svg\search-white.svg" />
+    <Content Include="Content\images\icons-svg\shop-black.svg" />
+    <Content Include="Content\images\icons-svg\shop-white.svg" />
+    <Content Include="Content\images\icons-svg\star-black.svg" />
+    <Content Include="Content\images\icons-svg\star-white.svg" />
+    <Content Include="Content\images\icons-svg\tag-black.svg" />
+    <Content Include="Content\images\icons-svg\tag-white.svg" />
+    <Content Include="Content\images\icons-svg\user-black.svg" />
+    <Content Include="Content\images\icons-svg\user-white.svg" />
+    <Content Include="Content\images\icons-svg\video-black.svg" />
+    <Content Include="Content\images\icons-svg\video-white.svg" />
+    <Content Include="Content\images\icons\online.png" />
+    <Content Include="Content\imageUpload.css" />
+    <Content Include="Content\jquery.mobile-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.external-png-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.external-png-1.4.2.min.css" />
+    <Content Include="Content\jquery.mobile.icons-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.icons-1.4.2.min.css" />
+    <Content Include="Content\jquery.mobile.inline-png-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.inline-png-1.4.2.min.css" />
+    <Content Include="Content\jquery.mobile.inline-svg-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.inline-svg-1.4.2.min.css" />
+    <Content Include="Content\jquery.mobile.structure-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.structure-1.4.2.min.css" />
+    <Content Include="Content\jquery.mobile.theme-1.4.2.css" />
+    <Content Include="Content\jquery.mobile.theme-1.4.2.min.css" />
+    <Content Include="Content\layout.css" />
+    <Content Include="Content\maincenter.css" />
+    <Content Include="Content\mainleft.css" />
+    <Content Include="Content\mainNavbar.css" />
+    <Content Include="Content\mainright.css" />
     <Content Include="Content\myStyle.css" />
+    <Content Include="Content\notify.css" />
+    <Content Include="Content\peopleliked.css" />
+    <Content Include="Content\searchResult.css" />
+    <Content Include="Content\Site.Mobile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="images\1.jpg" />
-    <Content Include="images\2.jpg" />
+    <Content Include="images\ajax-loader-wall.gif" />
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\Attractions\1.jpg" />
+    <Content Include="images\Attractions\2.jpg" />
     <Content Include="images\Emotions\happy.gif" />
     <Content Include="images\Emotions\sad.gif" />
     <Content Include="images\Emotions\tongue.gif" />
@@ -272,6 +515,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.2.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.2.min.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.2.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.signalR-2.0.0.js" />
     <Content Include="Scripts\jquery.signalR-2.0.0.min.js" />
@@ -280,8 +526,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\myScripts\Chats\closeChatBox.js" />
+    <Content Include="Scripts\myScripts\FriendAccept\client\accept.js" />
+    <Content Include="Scripts\myScripts\FriendAccept\server\accept.js" />
+    <Content Include="Scripts\myScripts\FriendAdd\client\addfriend.js" />
+    <Content Include="Scripts\myScripts\FriendAdd\server\addfriend.js" />
+    <Content Include="Scripts\myScripts\FriendWaitAccept\friendwaitaccept.js" />
+    <Content Include="Scripts\myScripts\Like\client\unlike.js" />
+    <Content Include="Scripts\myScripts\Like\getPeopleLiked.js" />
+    <Content Include="Scripts\myScripts\postImage\client\postImage.js" />
+    <Content Include="Scripts\myScripts\postImage\server\postImage.js" />
     <Content Include="Scripts\myScripts\Chats\server\chathubs.js" />
-    <Content Include="Scripts\myScripts\Chats\client\messageReceived.js" />
+    <Content Include="Scripts\myScripts\Chats\client\postCastStatus.js" />
     <Content Include="Scripts\myScripts\Chats\client\offChat.js" />
     <Content Include="Scripts\myScripts\Chats\client\onConnected.js" />
     <Content Include="Scripts\myScripts\Chats\client\onNewUserConnected.js" />
@@ -290,13 +546,59 @@
     <Content Include="Scripts\myScripts\Chats\openChatBox.js" />
     <Content Include="Scripts\myScripts\Chats\replaceEmotion.js" />
     <Content Include="Scripts\myScripts\Chats\replaceURLWithHTMLLinks.js" />
-    <Content Include="Scripts\myScripts\Chats\server\sendMessageToAll.js" />
+    <Content Include="Scripts\myScripts\Chats\server\postCastStatus.js" />
     <Content Include="Scripts\myScripts\Chats\server\sendPrivateMessage.js" />
     <Content Include="Scripts\myScripts\Chats\server\signOut.js" />
     <Content Include="Scripts\myScripts\Chats\server\turnOffChat.js" />
+    <Content Include="Scripts\myScripts\Comment\client\comment.js" />
+    <Content Include="Scripts\myScripts\Comment\server\comment.js" />
+    <Content Include="Scripts\myScripts\Layout\display_cur_user_avatar.js" />
+    <Content Include="Scripts\myScripts\Layout\jquery.autosize.js" />
+    <Content Include="Scripts\myScripts\Like\client\like.js" />
+    <Content Include="Scripts\myScripts\Like\server\like.js" />
+    <Content Include="Scripts\myScripts\Search\search.js" />
+    <Content Include="Scripts\myScripts\Share\client\share.js" />
+    <Content Include="Scripts\myScripts\Share\server\share.js" />
+    <Content Include="Scripts\myScripts\UploadImage\uploadImage.js" />
+    <Content Include="Scripts\myScripts\Wall\wall.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Sound\notify_message.mp3" />
+    <Content Include="Uploads\Users\backham.jpg" />
+    <Content Include="Uploads\Users\bale.jpg" />
+    <Content Include="Uploads\Users\carlos.jpg" />
+    <Content Include="Uploads\Users\casilas.jpg" />
+    <Content Include="Uploads\Users\coentrao.jpg" />
+    <Content Include="Uploads\Users\default.png" />
+    <Content Include="Uploads\Users\Drogba.jpg" />
+    <Content Include="Uploads\Users\Figo.jpg" />
+    <Content Include="Uploads\Users\gerrard.jpg" />
+    <Content Include="Uploads\Users\giang.jpg" />
+    <Content Include="Uploads\Users\Henry.jpg" />
+    <Content Include="Uploads\Users\kaka.jpg" />
+    <Content Include="Uploads\Users\lampard.jpg" />
+    <Content Include="Uploads\Users\maradona.jpg" />
+    <Content Include="Uploads\Users\messi.jpg" />
+    <Content Include="Uploads\Users\Minhtuan.jpg" />
+    <Content Include="Uploads\Users\neymar.jpg" />
+    <Content Include="Uploads\Users\Nistelrooy.jpg" />
+    <Content Include="Uploads\Users\ozil.jpg" />
+    <Content Include="Uploads\Users\pele.jpg" />
+    <Content Include="Uploads\Users\R9.jpg" />
+    <Content Include="Uploads\Users\ramires.jpg" />
+    <Content Include="Uploads\Users\Raul.jpg" />
+    <Content Include="Uploads\Users\rivaldo.jpg" />
+    <Content Include="Uploads\Users\ronaldo.jpg" />
+    <Content Include="Uploads\Users\rooben.jpg" />
+    <Content Include="Uploads\Users\rooney.jpg" />
+    <Content Include="Uploads\Users\schmeichel.jpg" />
+    <Content Include="Uploads\Users\scholes.jpg" />
+    <Content Include="Uploads\Users\tan.jpg" />
+    <Content Include="Uploads\Users\terry.jpg" />
+    <Content Include="Uploads\Users\torres.jpg" />
+    <Content Include="Uploads\Users\vandersar.jpg" />
+    <Content Include="Uploads\Users\Zidane.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -310,8 +612,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -326,7 +626,27 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\index_image.cshtml" />
     <Content Include="Views\Shared\_FriendList.cshtml" />
-    <Content Include="Views\Home\_PostStatus.cshtml" />
+    <Content Include="Views\Home\index_old.cshtml" />
+    <Content Include="Views\Home\_FormPost.cshtml" />
+    <Content Include="Views\Home\_PostImages.cshtml" />
+    <Content Include="Views\Home\_SuggestAttraction.cshtml" />
+    <Content Include="Sound\firt_message.FLV" />
+    <Content Include="Sound\notify_friend.FLV" />
+    <Content Include="Sound\received_message.FLV" />
+    <Content Include="Views\Home\GetComments.cshtml" />
+    <Content Include="Views\Home\GetLikesForStatus.cshtml" />
+    <Content Include="Views\Home\Liked.cshtml" />
+    <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Home\Index.mobile.cshtml" />
+    <Content Include="Views\Home\GetNewFeeds.cshtml" />
+    <Content Include="Views\Shared\_SearchFormPartial.cshtml" />
+    <Content Include="Views\Shared\_WaitingPartial.cshtml" />
+    <Content Include="Views\Home\FriendList.cshtml" />
+    <Content Include="Views\Home\FriendListSuggest.cshtml" />
+    <Content Include="Views\Home\StatusNewest.cshtml" />
+    <Content Include="Views\Home\Wall.cshtml" />
+    <Content Include="Views\Wall\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -335,52 +655,26 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201402080702412_init.resx">
-      <DependentUpon>201402080702412_init.cs</DependentUpon>
+    <Folder Include="App_Data\" />
+    <Folder Include="Uploads\Avatas\" />
+    <Folder Include="Views\Plan\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201403100130535_init.resx">
+      <DependentUpon>201403100130535_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080710192_remove-cascade-delete.resx">
-      <DependentUpon>201402080710192_remove-cascade-delete.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403101423212_Modify_Share_table.resx">
+      <DependentUpon>201403101423212_Modify_Share_table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080715473_add-column-status-to-table-friend.resx">
-      <DependentUpon>201402080715473_add-column-status-to-table-friend.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404160953234_add-table-newfeeds.resx">
+      <DependentUpon>201404160953234_add-table-newfeeds.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080739584_add-table-statusMessage.resx">
-      <DependentUpon>201402080739584_add-table-statusMessage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404161021079_change-primaty-key-table-newfeeds.resx">
+      <DependentUpon>201404161021079_change-primaty-key-table-newfeeds.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080754071_set-TimePost-is-Now-for-table-status.resx">
-      <DependentUpon>201402080754071_set-TimePost-is-Now-for-table-status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080815473_add-table-privateMessage.resx">
-      <DependentUpon>201402080815473_add-table-privateMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080820479_edit-column-name-table-privateMessage.resx">
-      <DependentUpon>201402080820479_edit-column-name-table-privateMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080833388_add-table-StatusLink.resx">
-      <DependentUpon>201402080833388_add-table-StatusLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080835327_add-column-image-to-table-StatusLink.resx">
-      <DependentUpon>201402080835327_add-column-image-to-table-StatusLink.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080838385_add-attribute-Required-to-field-userId-of-class-Status.resx">
-      <DependentUpon>201402080838385_add-attribute-Required-to-field-userId-of-class-Status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080842271_try-relation-user-status.resx">
-      <DependentUpon>201402080842271_try-relation-user-status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080847135_complete-relation-user-status.resx">
-      <DependentUpon>201402080847135_complete-relation-user-status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080859302_add-table-status-image.resx">
-      <DependentUpon>201402080859302_add-table-status-image.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402080901051_add-location-to-status.resx">
-      <DependentUpon>201402080901051_add-location-to-status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402230205246_delete-status-link.resx">
-      <DependentUpon>201402230205246_delete-status-link.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404162046067_Add-Displayname.resx">
+      <DependentUpon>201404162046067_Add-Displayname.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

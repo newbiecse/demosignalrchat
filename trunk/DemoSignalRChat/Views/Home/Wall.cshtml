@@ -3,4 +3,10 @@
     Layout = null;
 }
 
-<h1>Wall</h1>
+@using DemoSignalRChat.ViewModels
+@model UserViewModel
+
+@if (Request.IsAuthenticated)
+{
+    Html.ActionLink("aaaaaaaa", "Index", "Wall", new { id = "btn-wall" });
+}

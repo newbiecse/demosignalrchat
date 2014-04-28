@@ -48,7 +48,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Wall", "Index", "Wall", new { id = "btn-wall" })</li>
+                        @*<li>@Html.Action("Wall", "Home")</li>*@
 
                          @Html.Partial("_LoginPartial")
                     </ul><!--\ul.navbar-right-->
