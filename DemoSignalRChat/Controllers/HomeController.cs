@@ -35,12 +35,23 @@ namespace DemoSignalRChat.Controllers
             return View(curUser);
         }
 
-        public ActionResult Wall()
+        public ActionResult Wall(string userId)
         {
             // get current user
             string curUserId = User.Identity.GetUserId();
             this._userRepository = new UserRepository(_dbContext);
-            var curUser = this._userRepository.GetUserById(curUserId);
+            UserViewModel curUser = new UserViewModel();
+
+            if (userId == null)
+            {
+                curUser = this._userRepository.GetUserById(curUserId);
+            }
+            else
+            {
+                curUser = this._userRepository.GetUserById(curUserId);
+            }
+
+            
             ViewBag.curUser = curUser;
 
             return View(curUser);
