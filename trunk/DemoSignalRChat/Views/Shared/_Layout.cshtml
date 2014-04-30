@@ -48,9 +48,14 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        @*<li>@Html.Action("Wall", "Home")</li>*@
-
-                         @Html.Partial("_LoginPartial")
+                        <li>@Html.ActionLink("Wall", "Index", "Wall", new { id = "btn-wall" })</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="glyphicon glyphicon-cog"></b></a>
+                            <ul class="dropdown-menu">
+                                @Html.Partial("_LoginPartial")                                
+                            </ul>
+                        </li>
+                         
                     </ul><!--\ul.navbar-right-->
 
 </div><!--\.navbar-collapse-->
