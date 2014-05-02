@@ -1,0 +1,20 @@
+﻿
+@{
+    Layout = null;
+}
+
+@using DemoSignalRChat.ViewModels
+@model IEnumerable<UserViewModel>
+
+@foreach(UserViewModel u in Model)
+{
+    <a data-userID="@u.UserId" href="#" class='user-search'>
+        <div class='search-image'>
+            <img src='@u.Avatar' />
+        </div>
+        <div class='search-info'>
+            <span>@u.Displayname</span>
+            <span>University of technology</span>
+        </div>
+    </a>
+}

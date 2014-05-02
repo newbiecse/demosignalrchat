@@ -11,9 +11,13 @@
     UserViewModel curUser = ViewBag.curUser;
 }
 
-    @foreach (StatusViewModel status in Model)
-    {
+    <div id="img-loader-wall" class="status">
+        <img src="~/images/ajax-loader-wall.gif" />
+    </div>
 
+
+    @foreach (StatusViewModel status in Model)
+    {        
         <div class="status">
 
             <div class="status-owner">

@@ -133,13 +133,14 @@ namespace DemoSignalRChat.Controllers
 
 
         [HttpPost]
-        public JsonResult Search(string paramSearch)
+        public ActionResult Search(string paramSearch)
         {
             this._searchRepository = new SearchRepository(this._dbContext);
 
             var result = this._searchRepository.Search(paramSearch);
+            return View(result);
             //return View(this._searchRepository.Search(paramSearch));
-            return Json(result, JsonRequestBehavior.AllowGet);
+            //return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
