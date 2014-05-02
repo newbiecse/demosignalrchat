@@ -27,7 +27,7 @@
     float: left;
     width: 52px;
     height: 52px;
-    border: 1px solid green;
+    /*border: 1px solid green;*/
 }
 
 .search-image img{
@@ -39,7 +39,7 @@
     width: 200px;
     float: left;
     margin-left: 10px;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 .search-info span{

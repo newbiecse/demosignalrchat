@@ -26,10 +26,20 @@ namespace DemoSignalRChat.Controllers
         //
         // GET: /Wall/
 
-        public ActionResult Index()
+        //[HttpGet]
+        public ActionResult Index(string userId)
         {
             // get current user
-            string curUserId = User.Identity.GetUserId();
+            string curUserId;
+            if(string.IsNullOrEmpty(userId))
+            {
+                curUserId = User.Identity.GetUserId();
+            }
+            else
+            {
+                curUserId = userId;
+            }
+            
 
             this._shareRepository = new ShareRepository(this._dbContext);
 

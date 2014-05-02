@@ -647,6 +647,7 @@
     <Content Include="Views\Home\StatusNewest.cshtml" />
     <Content Include="Views\Home\Wall.cshtml" />
     <Content Include="Views\Wall\Index.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

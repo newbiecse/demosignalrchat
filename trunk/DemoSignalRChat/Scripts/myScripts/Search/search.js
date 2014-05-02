@@ -11,6 +11,8 @@ $("#txtSearch").keyup(function () {
 
         $form = $("#searchform");
 
+        $("#search-result").hide('fast').html("<div><img src='images/ajax-loader-wall.gif' /></div>");
+
         var request = $.ajax({
             url: "/Home/Search",
             type: "POST",
@@ -18,33 +20,8 @@ $("#txtSearch").keyup(function () {
         })// end ajax
             .done(function (response, textStatus, jqXHR) {
 
-                console.log(response);
-                if(response.length > 0)
-                {
-                    console.log(response[0]["Displayname"]);
-                }// end if
-
-                var searchResult = $("#search-result");
-
-                searchResult.html("");
-
-                var htmlSearch = "";
-
-                for(var i = 0; i < response.length; i++)
-                {
-                    htmlSearch +=
-                    "<a class='user-search'>"
-                        + "<div class='search-image'>"
-                            + "<img src='" + response[i]["Avatar"] + "' />"
-                        + "</div>"
-                        + "<div class='search-info'>"
-                            + "<span>" + response[i]["Displayname"] + "</span>"
-                            + "<span>University of technology</span>"
-                        + "</div>"
-                    + "</a>";
-                }// end for
-
-                searchResult.html(htmlSearch);
+                //console.log(response);
+                $("#search-result").hide().html(response).fadeIn('slow');
 
             })// end done
             .fail(function (response, textStatus, jqXHR) {
@@ -53,4 +30,9 @@ $("#txtSearch").keyup(function () {
 
         event.preventDefault();
     }// end if
+
+    else {
+        $("#search-result").html('');
+    }
+
 }); // end keyup

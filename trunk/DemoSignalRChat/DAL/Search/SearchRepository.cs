@@ -18,8 +18,8 @@ namespace DemoSignalRChat.DAL
         public IEnumerable<UserViewModel> Search(string searchParam)
         {
             return from u in this._db.Users
-                   where u.UserName.ToLower().Contains(searchParam.ToLower())
-                   select new UserViewModel { UserId = u.Id, Displayname = u.UserName, Avatar = u.Avatar };
+                   where u.DisplayName.ToLower().Contains(searchParam.ToLower())
+                   select new UserViewModel { UserId = u.Id, Displayname = u.DisplayName, Avatar = u.Avatar };
         }
 
 
