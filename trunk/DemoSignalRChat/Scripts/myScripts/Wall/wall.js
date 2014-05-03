@@ -13,7 +13,6 @@ function wall(paramUserId) {
         .done(function (response, textStatus, jqXHR) {
 
             $("#status-list").hide().html(response).fadeIn('slow');
-            console.log(response);
 
         })// end done
         .fail(function (response, textStatus, jqXHR) {
@@ -34,6 +33,11 @@ $("#btn-wall").click(function () {
 
 $("#search-result").on("click", ".user-search", function () {
 
-    wall($(this).attr("data-userId"));
-    console.log($(this).attr("data-userId"));
+    var userId = $(this).attr("data-userId");
+    wall(userId);
+
+    //var oldHref = $(location).attr('href');
+    //var newHref = oldHref + "wall/index/" + userId;
+    //console.log(newHref);
+    //$(location).attr('href', newHref);
 });
