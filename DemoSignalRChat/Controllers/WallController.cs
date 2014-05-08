@@ -30,6 +30,8 @@ namespace DemoSignalRChat.Controllers
         public ActionResult Index(string userId)
         {
             // get current user
+            Session.Remove("preStatusId");
+
             string curUserId;
             if(string.IsNullOrEmpty(userId))
             {

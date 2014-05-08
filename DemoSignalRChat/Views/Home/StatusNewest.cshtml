@@ -90,7 +90,7 @@
                     <div class="block-textarea" id="block-txtComment-@status.StatusId">
                         <div class="comment-user">
                             <a href="#">
-                                <img src="" class="img-rounded img33x33 cur-user-avatar">
+                                <img src="@curUser.Avatar" class="img-rounded img33x33 cur-user-avatar">
                             </a>
                         </div>
                         <div class="comment-content">
@@ -107,8 +107,8 @@
             </div><!-- .status -->
         }
 
-    <div data-laststatusid="@Model.Last().StatusId" id="load-more" class="status">
-        <a href="#">more older story</a>
+    <div id="div-load-more" data-laststatusid="@Model.Last().StatusId" class="status">
+        <a id="load-more">more older story</a>
     </div>
         
 

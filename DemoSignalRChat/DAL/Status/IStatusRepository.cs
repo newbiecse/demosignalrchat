@@ -10,7 +10,7 @@ namespace DemoSignalRChat.DAL
 {
     interface IStatusRepository : IDisposable
     {
-        IEnumerable<StatusViewModel> GetListStatusNewest(string userId);
+        IEnumerable<StatusViewModel> GetListStatusNewest(string userId, string preStatusId);
         StatusViewModel GetShortStatusByStatusId(string statusId);
         IEnumerable<StatusViewModel> GetListStatusByRangeStatusId(IEnumerable<string> listStatusId);
         List<Status> GetMoreListStatus(string userId, DateTime TimePost);

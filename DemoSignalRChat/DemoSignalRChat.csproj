@@ -552,13 +552,13 @@
     <Content Include="Scripts\myScripts\Chats\server\turnOffChat.js" />
     <Content Include="Scripts\myScripts\Comment\client\comment.js" />
     <Content Include="Scripts\myScripts\Comment\server\comment.js" />
-    <Content Include="Scripts\myScripts\Layout\display_cur_user_avatar.js" />
     <Content Include="Scripts\myScripts\Layout\jquery.autosize.js" />
     <Content Include="Scripts\myScripts\Like\client\like.js" />
     <Content Include="Scripts\myScripts\Like\server\like.js" />
     <Content Include="Scripts\myScripts\Search\search.js" />
     <Content Include="Scripts\myScripts\Share\client\share.js" />
     <Content Include="Scripts\myScripts\Share\server\share.js" />
+    <Content Include="Scripts\myScripts\Status\load_more_status.js" />
     <Content Include="Scripts\myScripts\UploadImage\uploadImage.js" />
     <Content Include="Scripts\myScripts\Wall\wall.js" />
     <Content Include="Scripts\respond.js" />
