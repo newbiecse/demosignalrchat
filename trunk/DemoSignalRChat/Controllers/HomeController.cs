@@ -67,8 +67,12 @@ namespace DemoSignalRChat.Controllers
             ViewBag.curUser = curUser;
 
             // get status newest
+            string preStatusId = (string)Session["preStatusId"];
             this._statusRepository = new StatusRepository(this._dbContext);
-            var listStatusNewest = this._statusRepository.GetListStatusNewest(curUserId);
+            var listStatusNewest = this._statusRepository.GetListStatusNewest(curUserId, preStatusId);
+
+            preStatusId = listStatusNewest.Last().StatusId;
+            Session.Add("preStatusId", preStatusId);
 
             return View(listStatusNewest);
         }

@@ -17,33 +17,31 @@ namespace DemoSignalRChat.DAL
             this._db = dbContext;
         }
 
-        public IEnumerable<string> GetListStatusId(string userId)
+        public IEnumerable<string> GetListStatusId(string userId, string preStatusId)
         {
             return this._db.Status
+                .Where(s => string.Compare( s.StatusId, preStatusId) == -1 )
                 .OrderByDescending(stt => stt.StatusId)
                 .Take(10)
                 .Select(stt => stt.StatusId);
         }
 
-        public IEnumerable<string> GetListStatusIdNewest(string userId)
+        public IEnumerable<string> GetListStatusIdNewest(string userId, string preStatusId)
         {
             IFriendRepository friendRepository = new FriendRepository(this._db);
-
-            List<string> listUserIdBoardcast = new List<string>();
-
             var friendListUserId = friendRepository.GetFriendListId(userId);
 
+            List<string> listUserIdBoardcast = new List<string>();
             if(friendListUserId != null && friendListUserId.Count() > 0)
             {
                 listUserIdBoardcast.AddRange(friendListUserId);
             }
-
             listUserIdBoardcast.Add(userId);
 
             List<string> listStatusIdNewest = new List<string>();
             foreach (var id in listUserIdBoardcast)
             {
-                var listStatusId = this.GetListStatusId(id);
+                var listStatusId = this.GetListStatusId(id, preStatusId);
                 listStatusIdNewest.AddRange(listStatusId);
             }
 
@@ -123,9 +121,9 @@ namespace DemoSignalRChat.DAL
             return statusViewModel;
         }
 
-        public IEnumerable<StatusViewModel>  GetListStatusNewest(string userId)
+        public IEnumerable<StatusViewModel>  GetListStatusNewest(string userId, string preStatusId)
         {
-            var listStatusIdNewest = this.GetListStatusIdNewest(userId).Distinct();
+            var listStatusIdNewest = this.GetListStatusIdNewest(userId, preStatusId).Distinct();
 
             List<StatusViewModel> listStatusNewest = new List<StatusViewModel>();
 
