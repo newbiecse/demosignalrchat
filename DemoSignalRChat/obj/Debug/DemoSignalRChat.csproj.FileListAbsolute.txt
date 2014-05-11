@@ -196,3 +196,8 @@ G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRCha
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.changeprimatykeytablenewfeeds.resources
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.csprojResolveAssemblyReference.cache
 G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.AddDisplayname.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.addtablecity.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.addtableplan.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.addrelationplancity.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.addrelationplanmember.resources
+G:\Tai_Lieu_Hoc\LuanVan\demosignalrchat\DemoSignalRChat\obj\Debug\DemoSignalRChat.Migrations.AddPlanName.resources

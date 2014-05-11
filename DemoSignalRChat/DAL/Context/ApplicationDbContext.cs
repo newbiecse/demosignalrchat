@@ -28,6 +28,10 @@ namespace DemoSignalRChat.DAL
         public DbSet<LikeComment> LikeComments { get; set; }
         public DbSet<NewFeeds> NewFeeds { get; set; }
 
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanStatus> PlanStatus { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             #region config-relation user-friend
@@ -153,6 +157,15 @@ namespace DemoSignalRChat.DAL
             modelBuilder.Entity<NewFeeds>()
                 .HasKey(nf => new { nf.NewFeedId });
 
+            modelBuilder.Entity<Plan>()
+                .HasRequired<ApplicationUser>(p => p.User)
+                .WithMany(u => u.Plans)
+                .HasForeignKey(p => p.AdminId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<PlanStatus>()
+                .HasKey(ps => new { ps.PlanId, ps.StatusId })
+                .HasRequired<Plan>(ps => ps.Plan);
 
             #region config-relation user-privateMessage
             // one-to-many

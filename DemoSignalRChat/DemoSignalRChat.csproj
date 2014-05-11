@@ -230,14 +230,37 @@
     <Compile Include="Migrations\201404162046067_Add-Displayname.Designer.cs">
       <DependentUpon>201404162046067_Add-Displayname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405100306091_add-table-city.cs" />
+    <Compile Include="Migrations\201405100306091_add-table-city.Designer.cs">
+      <DependentUpon>201405100306091_add-table-city.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405100356295_add-table-plan.cs" />
+    <Compile Include="Migrations\201405100356295_add-table-plan.Designer.cs">
+      <DependentUpon>201405100356295_add-table-plan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405100409433_add-relation-plan-city.cs" />
+    <Compile Include="Migrations\201405100409433_add-relation-plan-city.Designer.cs">
+      <DependentUpon>201405100409433_add-relation-plan-city.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405100413259_add-relation-plan-member.cs" />
+    <Compile Include="Migrations\201405100413259_add-relation-plan-member.Designer.cs">
+      <DependentUpon>201405100413259_add-relation-plan-member.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405111751213_Add-PlanName.cs" />
+    <Compile Include="Migrations\201405111751213_Add-PlanName.Designer.cs">
+      <DependentUpon>201405111751213_Add-PlanName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\LikeComment.cs" />
     <Compile Include="Models\NewFeeds.cs" />
+    <Compile Include="Models\Plan.cs" />
+    <Compile Include="Models\PlanStatus.cs" />
     <Compile Include="Models\PrivateMessage.cs" />
     <Compile Include="Models\MessageDetail.cs" />
     <Compile Include="Models\Share.cs" />
@@ -676,6 +699,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404162046067_Add-Displayname.resx">
       <DependentUpon>201404162046067_Add-Displayname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405100306091_add-table-city.resx">
+      <DependentUpon>201405100306091_add-table-city.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405100356295_add-table-plan.resx">
+      <DependentUpon>201405100356295_add-table-plan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405100409433_add-relation-plan-city.resx">
+      <DependentUpon>201405100409433_add-relation-plan-city.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405100413259_add-relation-plan-member.resx">
+      <DependentUpon>201405100413259_add-relation-plan-member.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405111751213_Add-PlanName.resx">
+      <DependentUpon>201405111751213_Add-PlanName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
